@@ -39,23 +39,28 @@ namespace LUDUMDARE39
 
 
             if (ks.IsKeyDown(Keys.Left))
-                mov.X -= 400 * (float)a_gt.ElapsedGameTime.TotalSeconds;
+                mov.X -= 100 * (float)a_gt.ElapsedGameTime.TotalSeconds;
             if (ks.IsKeyDown(Keys.Right))
-                mov.X += 400 * (float)a_gt.ElapsedGameTime.TotalSeconds;
+                mov.X += 100 * (float)a_gt.ElapsedGameTime.TotalSeconds;
 
 
             if (pos.Y < 0)
                 pos.Y = 0;
-            if (pos.Y > 102)
-                pos.Y = 102;
-            if (pos.Y == 102)
+            if (pos.Y > 92)
+                pos.Y = 92;
+            if (pos.Y == 92)
             {
                 if (ks.IsKeyDown(Keys.Up))
-                    Yvel = 15;
+                {
+                    if (ks.IsKeyDown(Keys.Left) || ks.IsKeyDown(Keys.Right))
+                        Yvel = 4;
+                    else
+                        Yvel = 6;
+                }
                 else
                     Yvel = 0;
             }
-            if (pos.Y < 102)
+            if (pos.Y < 92)
                 Yvel -= 10 * (float)a_gt.ElapsedGameTime.TotalSeconds;
             mov.Y -= Yvel;
         }

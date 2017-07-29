@@ -42,6 +42,7 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Classes\Boss.cs" />
     <Compile Include="Classes\Game1.cs" />
     <Compile Include="Classes\Player.cs" />
     <Compile Include="Program.cs" />

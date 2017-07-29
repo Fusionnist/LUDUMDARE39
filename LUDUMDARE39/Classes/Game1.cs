@@ -12,6 +12,7 @@ namespace LUDUMDARE39
         int scale;
         Rectangle virtualDim;
         CollisionStuff colman;
+        Lifebar lifebar;
 
         STexture bg;
         Input flippy;
@@ -78,6 +79,8 @@ namespace LUDUMDARE39
 
             };
             colman = new CollisionStuff(player, boss, switches);
+
+            lifebar = new Lifebar(new STexture[2] { new STexture(Content.Load<Texture2D>("barcont"), 1, 22, 1, "barcontainer", new Rectangle(0, 0, 22, 5)), new STexture(Content.Load<Texture2D>("barint"), 1, 20, 1, "barinterior", new Rectangle(0, 0, 20, 3)) }, new Vector2(0, 0));
         }
 
         protected override void UnloadContent()
@@ -93,6 +96,7 @@ namespace LUDUMDARE39
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
             colman.Update(gameTime, virtualDim, flippy);
+            lifebar.hp = colman.boss.hp;
             base.Update(gameTime);
         }
 
@@ -104,6 +108,7 @@ namespace LUDUMDARE39
             foreach (Switch s in colman.switches) { s.Draw(spriteBatch); }
             colman.player.Draw(spriteBatch);
             colman.boss.Draw(spriteBatch);
+            lifebar.Draw(spriteBatch);
             spriteBatch.End();
 
             Matrix m = Matrix.CreateScale(scale);

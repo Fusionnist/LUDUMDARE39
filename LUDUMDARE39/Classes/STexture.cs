@@ -20,7 +20,7 @@ namespace LUDUMDARE39
             tex = a_tex;
         }
 
-        public STexture(Texture2D a_tex, int a_FC, int a_FL, int a_FT)
+        public STexture(Texture2D a_tex, int a_FC, int a_FL, float a_FT)
         {
             tex = a_tex;
             framecount = a_FC;

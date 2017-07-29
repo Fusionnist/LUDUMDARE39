@@ -8,32 +8,42 @@ namespace LUDUMDARE39
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
         }
+
         protected override void Initialize()
         {
-            base.Initialize();
+            base.Initialize();        
         }
+
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
         }
+
         protected override void UnloadContent()
         {
+            Content.Unload();
         }
+
         protected override void Update(GameTime gameTime)
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
             base.Update(gameTime);
         }
+
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
+
+            spriteBatch.Begin();
+            spriteBatch.End();
+
             base.Draw(gameTime);
         }
     }

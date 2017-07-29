@@ -38,8 +38,8 @@ namespace LUDUMDARE39
             else { scale = xscale; }
 
             target = new RenderTarget2D(GraphicsDevice, virtualDim.Width, virtualDim.Height);
-            virtualDim.X = (int)((GraphicsDevice.Viewport.Width/scale- virtualDim.Width) /2);
-            virtualDim.Y = (int)((GraphicsDevice.Viewport.Height/scale - virtualDim.Height) /2);
+            virtualDim.X = (GraphicsDevice.Viewport.Width/scale- virtualDim.Width) /2;
+            virtualDim.Y = (GraphicsDevice.Viewport.Height/scale - virtualDim.Height) /2;
         }
         protected override void Initialize()
         {

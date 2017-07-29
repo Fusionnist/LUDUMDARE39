@@ -27,13 +27,13 @@ namespace LUDUMDARE39
         {            
             pos += mov;
             mov = Vector2.Zero;
-            if (pos.X > virtualDims.Width - tex.framelength)
-                pos.X = virtualDims.Width - tex.framelength;
-            if (pos.X < 0)
+            if (GetHB().X > virtualDims.Width - GetHB().Width)
+                pos.X = virtualDims.Width - GetHB().Width;
+            if (GetHB().X < 0)
                 pos.X = 0;
-            if (pos.Y > virtualDims.Height - tex.frameheight)
-                pos.Y = virtualDims.Height - tex.frameheight;
-            if (pos.Y < 0)
+            if (GetHB().Y > virtualDims.Height - GetHB().Height)
+                pos.Y = virtualDims.Height - GetHB().Height;
+            if (GetHB().Y < 0)
                 pos.Y = 0;
 
             base.Update(a_gt);
@@ -49,7 +49,7 @@ namespace LUDUMDARE39
             if (ks.IsKeyDown(Keys.Right))
                 mov.X += 100 * (float)a_gt.ElapsedGameTime.TotalSeconds;
 
-            if (pos.Y >= virtualDims.Height - tex.frameheight)
+            if (GetHB().Y >= virtualDims.Height - tex.frameheight)
                 isOnGround = true;
 
             if (isOnGround)
@@ -65,7 +65,7 @@ namespace LUDUMDARE39
                 else
                     Yvel = 0;
             }
-            if (pos.Y < virtualDims.Height - tex.frameheight)
+            if (GetHB().Y < virtualDims.Height - GetHB().Height)
                 Yvel -= 10 * (float)a_gt.ElapsedGameTime.TotalSeconds;
             mov.Y -= Yvel;
         }

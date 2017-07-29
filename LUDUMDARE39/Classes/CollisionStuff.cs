@@ -13,11 +13,13 @@ namespace LUDUMDARE39
     {
         public Player player { get; set; }
         public Boss boss { get; set; }
+        public Switch[] switches { get; set; }
 
-        public CollisionStuff(Player a_pl, Boss a_bs)
+        public CollisionStuff(Player a_pl, Boss a_bs, Switch[] a_sws)
         {
             player = a_pl;
             boss = a_bs;
+            switches = a_sws;
         }
 
         public void Update(GameTime a_gt, Rectangle virtualdims)
@@ -47,6 +49,14 @@ namespace LUDUMDARE39
                     player.isOnBoss = false;
                     player.isOnGround = false;
                 }
+            }
+        }
+
+        public void FlipSwitches(Input input)
+        {
+            foreach (var sw in switches)
+            {
+                
             }
         }
     }

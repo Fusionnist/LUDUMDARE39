@@ -63,23 +63,22 @@ namespace LUDUMDARE39
                     {
                         record = Vector2.Distance(pos, s.plug.pos);
                         nearestPlug = s.plug.pos;
-                        if (nearestPlug.X - pos.X < 1 && nearestPlug.X - pos.X > -1) { pos.X = nearestPlug.X; isPlugged = true; }
-                        
+                        if (nearestPlug.X - pos.X < 1 && nearestPlug.X - pos.X > -1) { pos.X = nearestPlug.X; isPlugged = true; }                        
                     }
-                }
-                if (!isPlugged) { hp -= 10 * (float)a_gt.ElapsedGameTime.TotalSeconds; SeekPlug(a_gt); }
-                else
-                {
-                    hp += 8 * (float)a_gt.ElapsedGameTime.TotalSeconds;
-                }
-
-                pos += mov;
-                mov = Vector2.Zero;
-
-                SetPlatformData();
-
-                base.Update(a_gt);
+                }                
             }
+            if (!isPlugged) { hp -= 10 * (float)a_gt.ElapsedGameTime.TotalSeconds; SeekPlug(a_gt); }
+            else
+            {
+                hp += 8 * (float)a_gt.ElapsedGameTime.TotalSeconds;
+            }
+
+            pos += mov;
+            mov = Vector2.Zero;
+
+            SetPlatformData();
+
+            base.Update(a_gt);
         }
     }
 }

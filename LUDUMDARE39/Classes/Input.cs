@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace LUDUMDARE39
 {
-    class Input
+    public class Input
     {
         public Input(Keys key_)
         {
@@ -17,7 +17,7 @@ namespace LUDUMDARE39
         }
         Keys key;
         bool isPressed, isReleased;
-        void Update(KeyboardState kbs_)
+        public void Update(KeyboardState kbs_)
         {
             if (kbs_.IsKeyDown(key))
             {

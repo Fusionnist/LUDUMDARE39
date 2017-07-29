@@ -37,7 +37,7 @@ namespace LUDUMDARE39
 
         public void CheckPlayerOnBoss()
         {
-            if (player.mov.Y > 0 && player.truehb.X + player.mov.X > boss.platformStart.X - player.truehb.Width && player.pos.X + player.mov.X < boss.platformEnd.X && player.pos.Y + 16 <= boss.platformStart.Y && player.pos.Y + 16 + player.mov.Y > boss.platformStart.Y)
+            if (player.mov.Y > 0 && player.pos.X + player.mov.X > boss.platformStart.X - player.tex.framelength && player.pos.X + player.mov.X < boss.platformEnd.X && player.pos.Y + 16 <= boss.platformStart.Y && player.pos.Y + 16 + player.mov.Y > boss.platformStart.Y)
             {
                 player.Yvel = 0;
                 player.mov.Y = 0;

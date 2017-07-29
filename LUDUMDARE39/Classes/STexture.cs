@@ -17,14 +17,16 @@ namespace LUDUMDARE39
         float frametime, frametimer;
         public int framelength { get; set; }
         public int frameheight { get; set; }
+        public Rectangle hb;
 
-        public STexture(Texture2D a_tex)
+        public STexture(Texture2D a_tex, Rectangle a_hb)
         {
             tex = a_tex;
             frameheight = a_tex.Height;
+            hb = a_hb;
         }
 
-        public STexture(Texture2D a_tex, int a_FC, int a_FL, float a_FT, string name_)
+        public STexture(Texture2D a_tex, int a_FC, int a_FL, float a_FT, string name_, Rectangle a_hb)
         {
             name = name_;
             tex = a_tex;
@@ -34,6 +36,7 @@ namespace LUDUMDARE39
             currentframe = 1;
             frametimer = frametime;
             frameheight = a_tex.Height;
+            hb = a_hb;
         }
 
         public void Update(GameTime a_gt)

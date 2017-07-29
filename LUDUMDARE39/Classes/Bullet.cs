@@ -41,35 +41,46 @@ namespace LUDUMDARE39
         {
             base.Update(a_gt);
 
-            velocity -= velLoss * (float)a_gt.ElapsedGameTime.TotalSeconds;
-            mov += velocity * (float)a_gt.ElapsedGameTime.TotalSeconds;
-            mov.X *= xyDir.X;
-            mov.Y *= xyDir.Y;
+            if (!isExploding)
+            {
+                velocity -= velLoss * (float)a_gt.ElapsedGameTime.TotalSeconds;
+                mov += velocity * (float)a_gt.ElapsedGameTime.TotalSeconds;
+                mov.X *= xyDir.X;
+                mov.Y *= xyDir.Y;
 
-            if (lifeTimed) {
-                lifeTime -= (float)a_gt.ElapsedGameTime.TotalSeconds;
-                if (lifeTime <= 0) { isExploding = true; }
-            }
+                if (lifeTimed)
+                {
+                    lifeTime -= (float)a_gt.ElapsedGameTime.TotalSeconds;
+                    if (lifeTime <= 0) { isExploding = true; }
+                }
 
-            pos += mov;
-            mov = Vector2.Zero;
+                pos += mov;
+                mov = Vector2.Zero;
 
-            if (GetHB().Y + GetHB().Height > vdims_.Y + vdims_.Height) {
-                pos.Y = vdims_.Y + vdims_.Height - GetHB().Height; ; bounces--;
-                if (bouncy) { velocity.Y = bvel.Y;}
-                else { xyDir.Y *= -1;  }
-            }
-            if (GetHB().Y < vdims_.Y) {
-                pos.Y = vdims_.Y; bounces--;
-                if (bouncy) { }
-                else { xyDir.Y *= -1; }
-            }
-            if (GetHB().X + GetHB().Width > vdims_.X + vdims_.Width) {
-                pos.X = vdims_.X + vdims_.Width - GetHB().Height; bounces--; xyDir.X *= -1;                
-            }
-            if (GetHB().X < vdims_.X) { xyDir.X *= -1; pos.X = vdims_.X; bounces--; }
+                if (GetHB().Y + GetHB().Height > vdims_.Y + vdims_.Height)
+                {
+                    pos.Y = vdims_.Y + vdims_.Height - GetHB().Height; ; bounces--;
+                    if (bouncy) { velocity.Y = bvel.Y; }
+                    else { xyDir.Y *= -1; }
+                }
+                if (GetHB().Y < vdims_.Y)
+                {
+                    pos.Y = vdims_.Y; bounces--;
+                    if (bouncy) { }
+                    else { xyDir.Y *= -1; }
+                }
+                if (GetHB().X + GetHB().Width > vdims_.X + vdims_.Width)
+                {
+                    pos.X = vdims_.X + vdims_.Width - GetHB().Height; bounces--; xyDir.X *= -1;
+                }
+                if (GetHB().X < vdims_.X) { xyDir.X *= -1; pos.X = vdims_.X; bounces--; }
 
-            if(bounces == 0) { isExploding = true; }
+                if (bounces == 0) { isExploding = true; }
+            }
+            if (isExploding)
+            {
+
+            }
         }
     }
 }

@@ -58,7 +58,7 @@ namespace LUDUMDARE39
         {
             //temp
             testbullet = new Bullet(
-                new STexture[1] { new STexture(Content.Load<Texture2D>("test"), 4, 16, 0.1f, "test", new Rectangle(0, 0, 16, 16)) },
+                new STexture[1] { new STexture(Content.Load<Texture2D>("test"), 4, 16, 0.1f, "test", new Rectangle(0, 0, 16, 16), true) },
                 new Vector2(50,50),
                 4,
                 10f,
@@ -72,31 +72,31 @@ namespace LUDUMDARE39
 
 
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            Player player = new Player(new STexture[1] { new STexture(Content.Load<Texture2D>("test"), 4, 16, 0.1f, "test", new Rectangle(0, 0, 16, 16))}, new Vector2(50, virtualDim.Height - 16));
-            Boss boss = new Boss(new STexture[1] { new STexture(Content.Load<Texture2D>("test"), 4, 16, 0.1f, "test", new Rectangle(0, 0, 16, 16)) }, new Vector2(10, virtualDim.Height - 16));
-            bg = new STexture(Content.Load<Texture2D>("scene"), 1, 192, 0.1f, "switchon", new Rectangle(0, 0, 192, 108));
+            Player player = new Player(new STexture[1] { new STexture(Content.Load<Texture2D>("test"), 4, 16, 0.1f, "test", new Rectangle(0, 0, 16, 16),true)}, new Vector2(50, virtualDim.Height - 16));
+            Boss boss = new Boss(new STexture[1] { new STexture(Content.Load<Texture2D>("test"), 4, 16, 0.1f, "test", new Rectangle(0, 0, 16, 16),true) }, new Vector2(10, virtualDim.Height - 16));
+            bg = new STexture(Content.Load<Texture2D>("scene"), new Rectangle(0, 0, 192, 108), "switchon");
             Switch[] switches = new Switch[] {
                 new Switch(new STexture[]{
-                new STexture(Content.Load<Texture2D>("switchon"), 1, 16, 0.1f, "switchon", new Rectangle(0, 0, 16, 16)),
-                new STexture(Content.Load<Texture2D>("switchoff"), 1, 16, 0.1f, "switchoff", new Rectangle(0, 0, 16, 16)) },
+                new STexture(Content.Load<Texture2D>("switchon"), new Rectangle(0, 0, 16, 16), "switchon"),
+                new STexture(Content.Load<Texture2D>("switchoff"), new Rectangle(0, 0, 16, 16), "switchoff") },
                 new Vector2(0,0),
                 new Plug(new STexture[]{
-                new STexture(Content.Load<Texture2D>("switchon"), 1, 16, 0.1f, "switchon", new Rectangle(0, 0, 16, 16)),
-                new STexture(Content.Load<Texture2D>("switchoff"), 1, 16, 0.1f, "switchoff", new Rectangle(0, 0, 16, 16)) },
+                new STexture(Content.Load<Texture2D>("switchon"), new Rectangle(0, 0, 16, 16), "switchon"),
+                new STexture(Content.Load<Texture2D>("switchoff"), new Rectangle(0, 0, 16, 16), "switchoff") },
                 new Vector2(66, 66))),
 
                 new Switch(new STexture[]{
-                new STexture(Content.Load<Texture2D>("switchon"), 1, 16, 0.1f, "switchon", new Rectangle(0, 0, 16, 16)),
-                new STexture(Content.Load<Texture2D>("switchoff"), 1, 16, 0.1f, "switchoff", new Rectangle(0, 0, 16, 16)) },
+                new STexture(Content.Load<Texture2D>("switchon"), new Rectangle(0, 0, 16, 16), "switchon"),
+                new STexture(Content.Load<Texture2D>("switchoff"), new Rectangle(0, 0, 16, 16), "switchoff") },
                 new Vector2(40,0),
                 new Plug(new STexture[]{
-                new STexture(Content.Load<Texture2D>("switchon"), 1, 16, 0.1f, "switchon", new Rectangle(0, 0, 16, 16)),
-                new STexture(Content.Load<Texture2D>("switchoff"), 1, 16, 0.1f, "switchoff", new Rectangle(0, 0, 16, 16)) },
+                new STexture(Content.Load<Texture2D>("switchon"), new Rectangle(0, 0, 16, 16), "switchon"),
+                new STexture(Content.Load<Texture2D>("switchoff"), new Rectangle(0, 0, 16, 16), "switchoff") },
                 new Vector2(33, 66)))
             };
             colman = new CollisionStuff(player, boss, switches);
 
-            lifebar = new Lifebar(new STexture[2] { new STexture(Content.Load<Texture2D>("barcont"), 1, 22, 1, "barcontainer", new Rectangle(0, 0, 22, 5)), new STexture(Content.Load<Texture2D>("barint"), 1, 20, 1, "barinterior", new Rectangle(0, 0, 20, 3)) }, new Vector2(0, 0));
+            lifebar = new Lifebar(new STexture[2] { new STexture(Content.Load<Texture2D>("barcont"), new Rectangle(0, 0, 22, 5), "barcontainer"), new STexture(Content.Load<Texture2D>("barint"), new Rectangle(0, 0, 20, 3), "barinterior") }, new Vector2(0, 0));
         }
 
         protected override void UnloadContent()

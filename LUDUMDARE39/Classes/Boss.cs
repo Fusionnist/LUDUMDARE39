@@ -13,7 +13,7 @@ namespace LUDUMDARE39
     class Boss : Sprite
     {
         float shotTime, shotTimer;
-        public Vector2 platformStart, platformEnd, mov;
+        public Vector2 platformStart, platformEnd, mov, plugDist;
         public BossMovement movType;
         bool isPlugged;
         Vector2 nearestPlug;
@@ -29,6 +29,7 @@ namespace LUDUMDARE39
             shotTimer = 10f;
             shotTime = 2f;
             isPlugged = false;
+            plugDist = new Vector2(8, 8);
         }
         void SetPlatformData()
         {
@@ -41,8 +42,8 @@ namespace LUDUMDARE39
         }
         void SeekPlug(GameTime a_gt)
         {
-            if (nearestPlug.X > pos.X) { mov.X += 10 * (float)a_gt.ElapsedGameTime.TotalSeconds; }//temp
-            if (nearestPlug.X < pos.X) { mov.X += -10 * (float)a_gt.ElapsedGameTime.TotalSeconds; }//temp
+            if (nearestPlug.X > pos.X + plugDist.X) { mov.X += 10 * (float)a_gt.ElapsedGameTime.TotalSeconds; }//temp
+            if (nearestPlug.X < pos.X + plugDist.X) { mov.X += -10 * (float)a_gt.ElapsedGameTime.TotalSeconds; }//temp
         }
         void Shoot()
         {
@@ -59,11 +60,11 @@ namespace LUDUMDARE39
             {
                 if (s.isOn)
                 {
-                    if ((Vector2.Distance(pos, s.plug.pos)) < record)
+                    if ((Vector2.Distance(pos + plugDist, s.plug.pos)) < record)
                     {
-                        record = Vector2.Distance(pos, s.plug.pos);
+                        record = Vector2.Distance(pos + plugDist, s.plug.pos);
                         nearestPlug = s.plug.pos;
-                        if (nearestPlug.X - pos.X < 1 && nearestPlug.X - pos.X > -1) { pos.X = nearestPlug.X; isPlugged = true; }                        
+                        if (nearestPlug.X - pos.X + plugDist.X < 1 && nearestPlug.X - pos.X - plugDist.X > -1) { pos.X = nearestPlug.X - plugDist.X; isPlugged = true; }                        
                     }
                 }                
             }

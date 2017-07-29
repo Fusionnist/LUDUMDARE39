@@ -60,7 +60,7 @@ namespace LUDUMDARE39
             switches = new Switch[] {
                 new Switch(new STexture[]{
                 new STexture(Content.Load<Texture2D>("switchon"), 4, 16, 0.1f, "switchon"),
-                new STexture(Content.Load<Texture2D>("switchoff"), 4, 16, 0.1f, "test") },
+                new STexture(Content.Load<Texture2D>("switchoff"), 4, 16, 0.1f, "switchoff") },
                 new Vector2(0,0)),
 
                 new Switch(new STexture[]{

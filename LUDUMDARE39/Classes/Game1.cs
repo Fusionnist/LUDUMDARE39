@@ -8,10 +8,10 @@ namespace LUDUMDARE39
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        Player player;
         RenderTarget2D target;
         int scale;
         Rectangle virtualDim;
+        CollisionStuff colman;
 
         public Game1()
         {
@@ -23,10 +23,6 @@ namespace LUDUMDARE39
             graphics.ApplyChanges();
 
             UpdateGraphicsValues();
-        }
-        void FlipSwitches()
-        {
-
         }
         void UpdateGraphicsValues()
         {
@@ -42,8 +38,8 @@ namespace LUDUMDARE39
             else { scale = xscale; }
 
             target = new RenderTarget2D(GraphicsDevice, virtualDim.Width, virtualDim.Height);
-            virtualDim.X = (GraphicsDevice.Viewport.Width/scale- virtualDim.Width) /2;
-            virtualDim.Y = (GraphicsDevice.Viewport.Height/scale - virtualDim.Height) /2;
+            virtualDim.X = (int)((GraphicsDevice.Viewport.Width/scale- virtualDim.Width) /2);
+            virtualDim.Y = (int)((GraphicsDevice.Viewport.Height/scale - virtualDim.Height) /2);
         }
         protected override void Initialize()
         {
@@ -53,8 +49,9 @@ namespace LUDUMDARE39
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            player = new Player(new STexture(Content.Load<Texture2D>("test"), 4, 16, 0.1f, "plant"), new Vector2(90, 104));
-        
+            Player player = new Player(new STexture(Content.Load<Texture2D>("test"), 4, 16, 0.1f), new Vector2(50, virtualDim.Y - 16));
+            Boss boss = new Boss(new STexture(Content.Load<Texture2D>("test"), 4, 16, 0.1f), new Vector2(10, virtualDim.Y - 16));
+            colman = new CollisionStuff(player, boss);
         }
 
         protected override void UnloadContent()
@@ -66,7 +63,7 @@ namespace LUDUMDARE39
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
-            player.Update(gameTime, virtualDim);
+            colman.Update(gameTime, virtualDim);
             base.Update(gameTime);
         }
 
@@ -75,7 +72,7 @@ namespace LUDUMDARE39
             GraphicsDevice.SetRenderTarget(target);
             GraphicsDevice.Clear(Color.CornflowerBlue);
             spriteBatch.Begin();
-            player.Draw(spriteBatch);
+            colman.player.Draw(spriteBatch);
             spriteBatch.End();
 
             Matrix m = Matrix.CreateScale(scale);

@@ -22,9 +22,9 @@ namespace LUDUMDARE39
         {
             isOn = !isOn;
             if (isOn)
-                SelectTexture("on");
+                SelectTexture("switchon");
             else
-                SelectTexture("off");
+                SelectTexture("switchoff");
         }
     }
 }

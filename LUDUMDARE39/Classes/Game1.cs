@@ -69,7 +69,7 @@ namespace LUDUMDARE39
 
                 new Switch(new STexture[]{
                 new STexture(Content.Load<Texture2D>("switchon"), 1, 16, 0.1f, "switchon", new Rectangle(0, 0, 16, 16)),
-                new STexture(Content.Load<Texture2D>("switchoff"), 1, 16, 0.1f, "test", new Rectangle(0, 0, 16, 16)) },
+                new STexture(Content.Load<Texture2D>("switchoff"), 1, 16, 0.1f, "switchoff", new Rectangle(0, 0, 16, 16)) },
                 new Vector2(40,0),
                 new Plug(new STexture[]{
                 new STexture(Content.Load<Texture2D>("switchon"), 1, 16, 0.1f, "switchon", new Rectangle(0, 0, 16, 16)),

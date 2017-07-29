@@ -63,5 +63,10 @@ namespace LUDUMDARE39
                     sw.Activate();
             }
         }
+
+        public void BossPushPlayer()
+        {
+
+        }
     }
 }

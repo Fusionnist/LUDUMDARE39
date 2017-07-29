@@ -12,10 +12,12 @@ namespace LUDUMDARE39
     class Player : Sprite
     {
         Vector2 mov;
+        float Yvel;
 
         public Player(STexture a_tex, Vector2 a_pos): base(a_tex, a_pos)
         {
             mov = Vector2.Zero;
+            Yvel = 0;
         }
 
         public override void Update(GameTime a_gt)
@@ -23,16 +25,39 @@ namespace LUDUMDARE39
             Move(a_gt);
             pos += mov;
             mov = Vector2.Zero;
+            if (pos.X > 1904)
+                pos.X = 1904;
+            if (pos.X < 0)
+                pos.X = 0;
+
             base.Update(a_gt);
         }
 
         public void Move(GameTime a_gt)
         {
             KeyboardState ks = Keyboard.GetState();
+
+
             if (ks.IsKeyDown(Keys.Left))
-                mov.X -= 250 * (float)a_gt.ElapsedGameTime.TotalSeconds;
+                mov.X -= 400 * (float)a_gt.ElapsedGameTime.TotalSeconds;
             if (ks.IsKeyDown(Keys.Right))
-                mov.X += 250 * (float)a_gt.ElapsedGameTime.TotalSeconds;
+                mov.X += 400 * (float)a_gt.ElapsedGameTime.TotalSeconds;
+
+
+            if (pos.Y < 0)
+                pos.Y = 0;
+            if (pos.Y > 1048)
+                pos.Y = 1048;
+            if (pos.Y == 1048)
+            {
+                if (ks.IsKeyDown(Keys.Up))
+                    Yvel = 15;
+                else
+                    Yvel = 0;
+            }
+            if (pos.Y < 1048)
+                Yvel -= 10 * (float)a_gt.ElapsedGameTime.TotalSeconds;
+            mov.Y -= Yvel;
         }
     }
 }

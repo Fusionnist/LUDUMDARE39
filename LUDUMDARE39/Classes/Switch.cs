@@ -27,5 +27,11 @@ namespace LUDUMDARE39
             if (isOn) { SelectTexture("switchon"); }
             if (!isOn) { SelectTexture("switchoff"); }
         }
+
+        public override void Draw(SpriteBatch a_sb)
+        {
+            base.Draw(a_sb);
+            plug.Draw(a_sb);
+        }
     }
 }

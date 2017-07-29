@@ -61,12 +61,20 @@ namespace LUDUMDARE39
                 new Switch(new STexture[]{
                 new STexture(Content.Load<Texture2D>("switchon"), 1, 16, 0.1f, "switchon", new Rectangle(0, 0, 16, 16)),
                 new STexture(Content.Load<Texture2D>("switchoff"), 1, 16, 0.1f, "switchoff", new Rectangle(0, 0, 16, 16)) },
-                new Vector2(0,0)),
+                new Vector2(0,0),
+                new Plug(new STexture[]{
+                new STexture(Content.Load<Texture2D>("switchon"), 1, 16, 0.1f, "switchon", new Rectangle(0, 0, 16, 16)),
+                new STexture(Content.Load<Texture2D>("switchoff"), 1, 16, 0.1f, "switchoff", new Rectangle(0, 0, 16, 16)) },
+                new Vector2(66, 66))),
 
                 new Switch(new STexture[]{
                 new STexture(Content.Load<Texture2D>("switchon"), 1, 16, 0.1f, "switchon", new Rectangle(0, 0, 16, 16)),
                 new STexture(Content.Load<Texture2D>("switchoff"), 1, 16, 0.1f, "test", new Rectangle(0, 0, 16, 16)) },
-                new Vector2(40,0)),
+                new Vector2(40,0),
+                new Plug(new STexture[]{
+                new STexture(Content.Load<Texture2D>("switchon"), 1, 16, 0.1f, "switchon", new Rectangle(0, 0, 16, 16)),
+                new STexture(Content.Load<Texture2D>("switchoff"), 1, 16, 0.1f, "switchoff", new Rectangle(0, 0, 16, 16)) },
+                new Vector2(33, 66)))
 
             };
             colman = new CollisionStuff(player, boss, switches);
@@ -93,9 +101,9 @@ namespace LUDUMDARE39
             GraphicsDevice.SetRenderTarget(target);
             spriteBatch.Begin();
             bg.Draw(spriteBatch, Vector2.Zero);
+            foreach (Switch s in colman.switches) { s.Draw(spriteBatch); }
             colman.player.Draw(spriteBatch);
             colman.boss.Draw(spriteBatch);
-            foreach(Switch s in colman.switches) { s.Draw(spriteBatch); }
             spriteBatch.End();
 
             Matrix m = Matrix.CreateScale(scale);

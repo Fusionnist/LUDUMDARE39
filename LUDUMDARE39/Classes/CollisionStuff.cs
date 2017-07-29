@@ -29,6 +29,7 @@ namespace LUDUMDARE39
             CheckPlayerOnBoss();
             player.Update(a_gt, virtualdims);
             boss.Update(a_gt, virtualdims, switches, player.pos);
+            BossPushPlayer();
             foreach (var switc in switches)
                 switc.Update(a_gt);
             FlipSwitches(input);
@@ -66,7 +67,10 @@ namespace LUDUMDARE39
 
         public void BossPushPlayer()
         {
-
+            if (player.pos.X < boss.pos.X && player.pos.X > boss.pos.X - 16 && player.pos.Y > boss.pos.Y - 16)
+                player.pos.X = boss.pos.X - 16;
+            if (player.pos.X > boss.pos.X && player.pos.X < boss.pos.X + 16 && player.pos.Y > boss.pos.Y - 16)
+                player.pos.X = boss.pos.X + 16;
         }
     }
 }

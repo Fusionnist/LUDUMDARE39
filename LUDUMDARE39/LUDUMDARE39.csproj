@@ -116,6 +116,8 @@
     <None Include="app.manifest" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\barcont.png" />
+    <Content Include="Content\barint.png" />
     <Content Include="Content\scene.png" />
     <Content Include="Content\switchoff.png" />
     <Content Include="Content\switchon.png" />

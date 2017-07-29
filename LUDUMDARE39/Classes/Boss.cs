@@ -33,8 +33,12 @@ namespace LUDUMDARE39
         }
         void SeekPlug(GameTime a_gt)
         {
-            if (nearestPlug.X > pos.X) { mov.X += 10 * (float)a_gt.ElapsedGameTime.TotalSeconds; }//temp
-            if (nearestPlug.X < pos.X) { mov.X += -10 * (float)a_gt.ElapsedGameTime.TotalSeconds; }//temp
+            if(nearestPlug.X - pos.X < 1 && nearestPlug.X - pos.X > -1) { pos.X = nearestPlug.X; }
+            else
+            {
+                if (nearestPlug.X > pos.X) { mov.X += 10 * (float)a_gt.ElapsedGameTime.TotalSeconds; }//temp
+                if (nearestPlug.X < pos.X) { mov.X += -10 * (float)a_gt.ElapsedGameTime.TotalSeconds; }//temp
+            }
         }
         public void Update(GameTime a_gt, Rectangle virtualDims, Switch[] switches_, Vector2 playerpos_)
         {

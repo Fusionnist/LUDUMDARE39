@@ -11,8 +11,8 @@ namespace LUDUMDARE39
 {
     class Sprite
     {
-        STexture tex;
-        Vector2 pos;
+        protected STexture tex;
+        protected Vector2 pos;
 
         public Sprite(STexture a_tex, Vector2 a_pos)
         {
@@ -20,7 +20,7 @@ namespace LUDUMDARE39
             pos = a_pos;
         }
 
-        public void Update(GameTime a_gt)
+        public virtual void Update(GameTime a_gt)
         {
             tex.Update(a_gt);
         }

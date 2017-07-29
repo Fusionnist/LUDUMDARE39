@@ -56,7 +56,8 @@ namespace LUDUMDARE39
         }            
         void Shoot()
         {
-            bullets.Add(new Bullet(bullettexes, pos - new Vector2(0, 20), 0, -1, false, new Vector2(0, 50), Vector2.Zero, new Point(1, -1), false, 100));
+            STexture[] ts = new STexture[] { bullettexes[0].Clone() };
+            bullets.Add(new Bullet(ts, pos - new Vector2(0, 20), 3, -1, false, new Vector2(0, 50), Vector2.Zero, new Point(1, -1), false, 100));
         }
         public void Update(GameTime a_gt, Rectangle virtualDims, Switch[] switches_, Vector2 playerpos_)
         {
@@ -89,7 +90,7 @@ namespace LUDUMDARE39
 
             pos += mov;
             mov = Vector2.Zero;
-
+            
             SetPlatformData();
 
             base.Update(a_gt);

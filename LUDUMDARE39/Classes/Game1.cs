@@ -92,7 +92,7 @@ namespace LUDUMDARE39
         {
             //test
             foreach (var bullet in colman.boss.bullets)
-                bullet.Update(gameTime);
+                bullet.Update(gameTime, virtualDim);
 
             KeyboardState kbs = Keyboard.GetState();
             flippy.Update(kbs);

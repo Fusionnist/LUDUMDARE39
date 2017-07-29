@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace LUDUMDARE39
 {
-    class STexture
+    public class STexture
     {
         Texture2D tex;
         public string name;

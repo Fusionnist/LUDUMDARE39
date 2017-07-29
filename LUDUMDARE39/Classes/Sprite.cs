@@ -9,15 +9,16 @@ using Microsoft.Xna.Framework.Input;
 
 namespace LUDUMDARE39
 {
-    class Sprite
+    public class Sprite
     {
-        protected STexture tex;
-        protected STexture[] texes;
-        protected Vector2 pos;
+        public STexture tex;
+        public STexture[] texes;
+        public Vector2 pos;
 
-        public Sprite(STexture a_tex, Vector2 a_pos)
+        public Sprite(STexture[] a_texes, Vector2 a_pos)
         {
-            tex = a_tex;
+            tex = a_texes[0];
+            texes = a_texes;
             pos = a_pos;
         }
 
@@ -25,7 +26,7 @@ namespace LUDUMDARE39
         {
             tex.Update(a_gt);
         }
-        void SelectTexture(string name)
+        public void SelectTexture(string name)
         {
             foreach(STexture t in texes) { if (t.name == name) { tex = t; } }
         }

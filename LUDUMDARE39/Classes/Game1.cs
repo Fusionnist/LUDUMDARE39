@@ -24,6 +24,10 @@ namespace LUDUMDARE39
 
             UpdateGraphicsValues();
         }
+        void FlipSwitches()
+        {
+
+        }
         void UpdateGraphicsValues()
         {
             virtualDim = new Rectangle(0,0,192,108);
@@ -49,7 +53,7 @@ namespace LUDUMDARE39
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            player = new Player(new STexture(Content.Load<Texture2D>("test"), 4, 16, 0.1f), new Vector2(90, 104));
+            player = new Player(new STexture(Content.Load<Texture2D>("test"), 4, 16, 0.1f, "plant"), new Vector2(90, 104));
         
         }
 

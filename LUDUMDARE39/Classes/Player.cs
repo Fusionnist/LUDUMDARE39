@@ -49,7 +49,7 @@ namespace LUDUMDARE39
             if (ks.IsKeyDown(Keys.Right))
                 mov.X += 100 * (float)a_gt.ElapsedGameTime.TotalSeconds;
 
-            if (GetHB().Y >= virtualDims.Height - tex.frameheight)
+            if (GetHB().Y >= virtualDims.Height - GetHB().Height)
                 isOnGround = true;
 
             if (isOnGround)

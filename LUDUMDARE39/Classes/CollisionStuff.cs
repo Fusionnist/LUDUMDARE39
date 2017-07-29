@@ -37,13 +37,13 @@ namespace LUDUMDARE39
 
         public void CheckPlayerOnBoss()
         {
-            if (player.mov.Y > 0 && player.GetHB().X + player.mov.X > boss.platformStart.X - player.GetHB().Width && player.GetHB().X + player.mov.X < boss.platformEnd.X && player.GetHB().Y + 16 <= boss.platformStart.Y && player.GetHB().Y + 16 + player.mov.Y > boss.platformStart.Y)
+            if (player.mov.Y > 0 && player.GetHB().X + player.mov.X > boss.platformStart.X - player.GetHB().Width && player.GetHB().X + player.mov.X < boss.platformEnd.X && player.GetHB().Y + player.GetHB().Height <= boss.platformStart.Y && player.GetHB().Y + player.GetHB().Height + player.mov.Y > boss.platformStart.Y)
             {
                 player.Yvel = 0;
                 player.mov.Y = 0;
                 player.isOnGround = true;
                 player.isOnBoss = true;
-                player.pos.Y = boss.platformStart.Y - 16;
+                player.pos.Y = boss.platformStart.Y - player.GetHB().Height;
                 player.mov.X += boss.mov.X;
             }
             else
@@ -67,10 +67,10 @@ namespace LUDUMDARE39
 
         public void BossPushPlayer()
         {
-            if (player.GetHB().X < boss.GetHB().X && player.GetHB().X > boss.GetHB().X - 16 && player.GetHB().Y > boss.GetHB().Y - 16)
-                player.pos.X = boss.GetHB().X - 16;
-            if (player.GetHB().X > boss.GetHB().X && player.GetHB().X < boss.GetHB().X + 16 && player.GetHB().Y > boss.GetHB().Y - 16)
-                player.pos.X = boss.GetHB().X + 16;
+            if (player.GetHB().X < boss.GetHB().X && player.GetHB().X > boss.GetHB().X - player.GetHB().Width && player.GetHB().Y > boss.GetHB().Y - player.GetHB().Height)
+                player.pos.X = boss.GetHB().X - player.GetHB().Width;
+            if (player.GetHB().X > boss.GetHB().X && player.GetHB().X < boss.GetHB().X + player.GetHB().Width && player.GetHB().Y > boss.GetHB().Y - player.GetHB().Height)
+                player.pos.X = boss.GetHB().X + player.GetHB().Height;
         }
     }
 }

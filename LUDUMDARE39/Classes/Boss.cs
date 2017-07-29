@@ -16,11 +16,14 @@ namespace LUDUMDARE39
         public BossMovement movType;
         bool isPlugged;
         Vector2 nearestPlug;
+        float hp, maxhp;
 
         public Boss(STexture[] a_tex, Vector2 a_pos): base(a_tex, a_pos)
         {
             SetPlatformData();
             movType = BossMovement.Right;
+            hp = 100;
+            maxhp = 100;
         }
         void SetPlatformData()
         {
@@ -44,7 +47,9 @@ namespace LUDUMDARE39
         {
             if (!isPlugged)
             {
+                hp -= 10 * (float)a_gt.ElapsedGameTime.TotalSeconds;
                 float record = 1000;
+                nearestPlug = pos;
                 foreach (Switch s in switches_)
                 {
                     if (s.isOn)
@@ -58,8 +63,8 @@ namespace LUDUMDARE39
                 }
                 SeekPlug(a_gt);
             }
-            else { 
-                //recharge
+            else {
+                hp += 8 * (float)a_gt.ElapsedGameTime.TotalSeconds;
             }
 
             pos += mov;

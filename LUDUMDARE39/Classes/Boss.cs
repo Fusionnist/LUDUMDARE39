@@ -64,7 +64,8 @@ namespace LUDUMDARE39
                     {
                         record = Vector2.Distance(new Vector2(GetHB().X, GetHB().Y) , new Vector2(s.plug.GetHB().X, s.plug.GetHB().Y));
                         nearestPlug = new Vector2(s.plug.GetHB().X, s.plug.GetHB().Y);
-                        if (nearestPlug.X - GetHB().X < 1 && nearestPlug.X - GetHB().X - plugDist.X > -1) { pos.X = nearestPlug.X - plugDist.X; isPlugged = true; }                        
+                        if (nearestPlug.X - GetHB().X < 1 && nearestPlug.X - GetHB().X > -1)
+                        { pos.X = nearestPlug.X; isPlugged = true; }                        
                     }
                 }                
             }

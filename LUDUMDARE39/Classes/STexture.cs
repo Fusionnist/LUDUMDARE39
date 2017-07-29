@@ -57,7 +57,7 @@ namespace LUDUMDARE39
 
         public void Draw(SpriteBatch a_sb, Vector2 a_pos)
         {
-            a_sb.Draw(tex, a_pos, sourceRectangle: new Rectangle(framelength * (currentframe - 1), 0, framelength, tex.Height));
+            a_sb.Draw(tex, a_pos - new Vector2(hb.X, hb.Y), sourceRectangle: new Rectangle(framelength * (currentframe - 1), 0, framelength, tex.Height));
         }
     }
 }

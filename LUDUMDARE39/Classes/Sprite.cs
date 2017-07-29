@@ -21,17 +21,22 @@ namespace LUDUMDARE39
             tex = a_texes[0];
             texes = a_texes;
             pos = a_pos;
-            truehb = new Rectangle((int)(pos.X + tex.hb.X), (int)(pos.Y + tex.hb.Y), tex.hb.Width, tex.hb.Height);
+            truehb = tex.hb;
         }
-
+        void PositionHB()
+        {
+            truehb.X = (int)pos.X;
+            truehb.Y = (int)pos.Y;
+        }
         public virtual void Update(GameTime a_gt)
         {
+            PositionHB();
             tex.Update(a_gt);
-            truehb = new Rectangle((int)(pos.X + tex.hb.X), (int)(pos.Y + tex.hb.Y), tex.hb.Width, tex.hb.Height);
         }
         public void SelectTexture(string name)
         {
             foreach(STexture t in texes) { if (t.name == name) { tex = t; t.Reset(); } }
+            truehb = tex.hb;
         }
         public virtual void Draw (SpriteBatch a_sb)
         {

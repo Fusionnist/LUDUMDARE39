@@ -17,7 +17,7 @@ namespace LUDUMDARE39
         public BossMovement movType;
         bool isPlugged;
         Vector2 nearestPlug;
-        float hp, maxhp;
+        public float hp, maxhp;
 
         public Boss(STexture[] a_tex, Vector2 a_pos): base(a_tex, a_pos)
         {
@@ -28,6 +28,7 @@ namespace LUDUMDARE39
 
             shotTimer = 10f;
             shotTime = 2f;
+            isPlugged = false;
         }
         void SetPlatformData()
         {

@@ -11,6 +11,8 @@ namespace LUDUMDARE39
 {
     class Lifebar : Sprite
     {
+        public float hp;
+
         public Lifebar(STexture[] a_texes, Vector2 a_pos): base(a_texes, a_pos)
         {
 
@@ -19,7 +21,7 @@ namespace LUDUMDARE39
         public override void Draw(SpriteBatch a_sb)
         {
             texes[0].Draw(a_sb, new Vector2((int)pos.X, (int)pos.Y));
-            texes[1].Draw(a_sb, new Vector2((int)pos.X + 1, (int)pos.Y + 1));
+            a_sb.Draw(texes[1].tex, new Vector2((int)pos.X + 1, (int)pos.Y + 1), sourceRectangle: new Rectangle(0, 0, (int)(hp / 5), 3));
         }
     }
 }

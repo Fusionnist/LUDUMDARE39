@@ -11,7 +11,7 @@ namespace LUDUMDARE39
 {
     public class STexture
     {
-        Texture2D tex;
+        public Texture2D tex;
         public string name;
         int framecount, currentframe;
         float frametime, frametimer;

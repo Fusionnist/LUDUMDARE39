@@ -13,13 +13,14 @@ namespace LUDUMDARE39
     {
         public Vector2 mov;
         public float Yvel;
-        public bool isOnGround;
+        public bool isOnGround, isOnBoss;
 
         public Player(STexture[] a_tex, Vector2 a_pos): base(a_tex, a_pos)
         {
             mov = Vector2.Zero;
             Yvel = 0;
             isOnGround = true;
+            isOnBoss = false;
         }
 
         public void Update(GameTime a_gt, Rectangle virtualDims)

@@ -41,7 +41,7 @@ namespace LUDUMDARE39
         }
         void SeekPlug(GameTime a_gt)
         {
-            if(nearestPlug.X - pos.X < 1 && nearestPlug.X - pos.X > -1) { pos.X = nearestPlug.X; }
+            if(nearestPlug.X - pos.X < 1 && nearestPlug.X - pos.X > -1) { pos.X = nearestPlug.X;}
             else
             {
                 if (nearestPlug.X > pos.X) { mov.X += 10 * (float)a_gt.ElapsedGameTime.TotalSeconds; }//temp

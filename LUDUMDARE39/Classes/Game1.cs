@@ -10,14 +10,14 @@ namespace LUDUMDARE39
         SpriteBatch spriteBatch;
         Player player;
         RenderTarget2D target;
-        float scale;
+        int scale;
         Rectangle virtualDim;
 
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
+            graphics.PreferredBackBufferHeight = 500;
             graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
             Window.IsBorderless = true;
             graphics.ApplyChanges();
@@ -28,8 +28,8 @@ namespace LUDUMDARE39
         {
             virtualDim = new Rectangle(0,0,192,108);
 
-            float xscale = GraphicsDevice.Viewport.Width / virtualDim.Width;
-            float yscale = GraphicsDevice.Viewport.Height / virtualDim.Height;
+            int xscale = GraphicsDevice.Viewport.Width / virtualDim.Width;
+            int yscale = GraphicsDevice.Viewport.Height / virtualDim.Height;
 
             if (xscale > yscale)
             {
@@ -38,8 +38,8 @@ namespace LUDUMDARE39
             else { scale = xscale; }
 
             target = new RenderTarget2D(GraphicsDevice, virtualDim.Width, virtualDim.Height);
-            virtualDim.X = (int)(GraphicsDevice.Viewport.Width - virtualDim.Width * scale);
-            virtualDim.Y = (int)(GraphicsDevice.Viewport.Height - virtualDim.Height * scale);
+            virtualDim.X = (int)((GraphicsDevice.Viewport.Width/scale- virtualDim.Width) /2);
+            virtualDim.Y = (int)((GraphicsDevice.Viewport.Height/scale - virtualDim.Height) /2);
         }
         protected override void Initialize()
         {

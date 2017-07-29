@@ -15,7 +15,7 @@ namespace LUDUMDARE39
         float shotTime, shotTimer;
         public Vector2 platformStart, platformEnd, mov, plugDist;
         public BossMovement movType;
-        bool isPlugged;
+        bool isPlugged, isNearPlug;
         Vector2 nearestPlug;
         public float hp, maxhp;
         public List<Bullet> bullets;
@@ -46,26 +46,32 @@ namespace LUDUMDARE39
         }
         void SeekPlug(GameTime a_gt)
         {
-            if (nearestPlug.X > GetHB().X) { mov.X += 10 * (float)a_gt.ElapsedGameTime.TotalSeconds; }//temp
-            if (nearestPlug.X < GetHB().X ) { mov.X += -10 * (float)a_gt.ElapsedGameTime.TotalSeconds; }//temp
-        }
+            if (isNearPlug)
+            {
+                if (nearestPlug.X > GetHB().X)
+                { mov.X += 10 * (float)a_gt.ElapsedGameTime.TotalSeconds; }//temp
+                if (nearestPlug.X < GetHB().X)
+                { mov.X += -10 * (float)a_gt.ElapsedGameTime.TotalSeconds; }//temp
+            }
+        }            
         void Shoot()
         {
             bullets.Add(new Bullet(bullettexes, pos - new Vector2(0, 20), 0, -1, false, new Vector2(0, 50), Vector2.Zero, new Point(1, -1), false, 100));
         }
         public void Update(GameTime a_gt, Rectangle virtualDims, Switch[] switches_, Vector2 playerpos_)
         {
+            isNearPlug = false;
             isPlugged = false;
             shotTimer -= (float)a_gt.ElapsedGameTime.TotalSeconds;
             if (shotTimer <= 0) { shotTimer = shotTime; Shoot(); }
             float record = 1000;
-            nearestPlug = pos;
             foreach (Switch s in switches_)
             {
                 if (s.isOn)
                 {
                     if ((Vector2.Distance(new Vector2(GetHB().X, GetHB().Y), new Vector2(s.plug.GetHB().X, s.plug.GetHB().Y))) < record)
                     {
+                        isNearPlug = true;
                         record = Vector2.Distance(new Vector2(GetHB().X, GetHB().Y) , new Vector2(s.plug.GetHB().X, s.plug.GetHB().Y));
                         nearestPlug = new Vector2(s.plug.GetHB().X, s.plug.GetHB().Y);
                         if (nearestPlug.X - GetHB().X < 1 && nearestPlug.X - GetHB().X > -1)

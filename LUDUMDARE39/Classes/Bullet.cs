@@ -75,11 +75,11 @@ namespace LUDUMDARE39
                 }
                 if (GetHB().X < vdims_.X) { xyDir.X *= -1; pos.X = vdims_.X; bounces--; }
 
-                if (bounces == 0) { isExploding = true; }
+                if (bounces == 0) { isExploding = true; SelectTexture("explosion"); }
             }
             if (isExploding)
             {
-
+                if (tex.complete) { isDead = true; }
             }
         }
     }

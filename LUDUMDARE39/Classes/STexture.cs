@@ -18,7 +18,7 @@ namespace LUDUMDARE39
         public int framelength { get; set; }
         public int frameheight { get; set; }
         public Rectangle hb;
-        bool loops, complete;
+        public bool loops, complete;
 
         public STexture(Texture2D a_tex, Rectangle a_hb, string name_)
         {
@@ -42,6 +42,10 @@ namespace LUDUMDARE39
             frametimer = frametime;
             frameheight = a_tex.Height;
             hb = a_hb;
+        }
+        public STexture Clone()
+        {
+            return new STexture(tex, framecount, framelength, frametime, name, hb, loops);
         }
         public void Reset()
         {

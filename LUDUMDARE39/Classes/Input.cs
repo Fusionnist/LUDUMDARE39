@@ -33,11 +33,11 @@ namespace LUDUMDARE39
                 isReleased = true;
             }
         }
-        bool IsDown()
+        public bool IsDown()
         {
             return !isReleased;
         }
-        bool IsPressed()
+        public bool IsPressed()
         {
             return isPressed;
         }

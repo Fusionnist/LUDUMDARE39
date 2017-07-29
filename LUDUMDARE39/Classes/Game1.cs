@@ -19,8 +19,8 @@ namespace LUDUMDARE39
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
-            graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
+            graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height/2;
+            graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width/2;
             Window.IsBorderless = true;
             graphics.ApplyChanges();
 
@@ -80,13 +80,16 @@ namespace LUDUMDARE39
             KeyboardState kbs = Keyboard.GetState();
             flippy.Update(kbs);
 
+            FlipSwitches();
+
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
             colman.Update(gameTime, virtualDim);
             base.Update(gameTime);
         }
         void FlipSwitches() {
-
+            if (flippy.IsPressed())
+            { switches[0].Activate(); }
         }
         protected override void Draw(GameTime gameTime)
         {          

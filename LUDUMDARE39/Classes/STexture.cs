@@ -38,7 +38,11 @@ namespace LUDUMDARE39
             frameheight = a_tex.Height;
             hb = a_hb;
         }
-
+        public void Reset()
+        {
+            currentframe = 1;
+            frametimer = frametime;
+        }
         public void Update(GameTime a_gt)
         {
             frametimer -= (float)a_gt.ElapsedGameTime.TotalSeconds;

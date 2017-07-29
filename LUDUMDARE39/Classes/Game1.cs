@@ -38,7 +38,8 @@ namespace LUDUMDARE39
             else { scale = xscale; }
 
             target = new RenderTarget2D(GraphicsDevice, virtualDim.Width, virtualDim.Height);
-            virtualDim.X
+            virtualDim.X = (int)(GraphicsDevice.Viewport.Width - virtualDim.Width * scale);
+            virtualDim.Y = (int)(GraphicsDevice.Viewport.Height - virtualDim.Height * scale);
         }
         protected override void Initialize()
         {
@@ -66,17 +67,17 @@ namespace LUDUMDARE39
         }
 
         protected override void Draw(GameTime gameTime)
-        {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+        {          
             GraphicsDevice.SetRenderTarget(target);
+            GraphicsDevice.Clear(Color.CornflowerBlue);
             spriteBatch.Begin();
             player.Draw(spriteBatch);
             spriteBatch.End();
 
             Matrix m = Matrix.CreateScale(scale);
             GraphicsDevice.SetRenderTarget(null);
-            spriteBatch.Begin(transformMatrix:m);
-            spriteBatch.Draw(texture: target,position: Vector2.Zero);
+            spriteBatch.Begin(transformMatrix:m, samplerState:SamplerState.PointWrap);
+            spriteBatch.Draw(texture: target,destinationRectangle:virtualDim);
             spriteBatch.End();
             base.Draw(gameTime);
         }

@@ -12,15 +12,21 @@ namespace LUDUMDARE39
     class Switch : Sprite
     {
         public bool isOn;
-        public Switch(STexture[] a_texes, Vector2 a_pos):base(a_texes, a_pos)
+        public Sprite[] plugs;
+        public Switch(STexture[] a_texes, Vector2 a_pos, Sprite[] plugs_):base(a_texes, a_pos)
         {
-
+            plugs = plugs_;
         }
         public void Activate()
         {
             isOn = !isOn;
             if (isOn) { SelectTexture("switchon"); }
             if (!isOn) { SelectTexture("switchoff"); }
+        }
+        public override void Draw(SpriteBatch a_sb)
+        {
+            foreach(Sprite s in plugs) { s.Draw(a_sb); }
+            base.Draw(a_sb);
         }
     }
 }

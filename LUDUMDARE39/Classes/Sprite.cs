@@ -31,9 +31,9 @@ namespace LUDUMDARE39
         }
         public void SelectTexture(string name)
         {
-            foreach(STexture t in texes) { if (t.name == name) { tex = t; } }
+            foreach(STexture t in texes) { if (t.name == name) { tex = t; t.Reset(); } }
         }
-        public void Draw (SpriteBatch a_sb)
+        public virtual void Draw (SpriteBatch a_sb)
         {
             tex.Draw(a_sb, new Vector2((int)pos.X, (int)pos.Y));
         }

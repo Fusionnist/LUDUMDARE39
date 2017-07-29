@@ -12,7 +12,7 @@ namespace LUDUMDARE39
 {
     class Boss : Sprite
     {
-        Vector2 platformStart, platformEnd;
+        public Vector2 platformStart, platformEnd;
 
         public Boss(STexture a_tex, Vector2 a_pos): base(a_tex, a_pos)
         {

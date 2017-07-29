@@ -12,7 +12,7 @@ namespace LUDUMDARE39
     class Sprite
     {
         protected STexture tex;
-        protected Vector2 pos;
+        public Vector2 pos;
 
         public Sprite(STexture a_tex, Vector2 a_pos)
         {

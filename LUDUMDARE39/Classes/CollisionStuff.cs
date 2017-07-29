@@ -28,7 +28,7 @@ namespace LUDUMDARE39
             boss.Move(a_gt);
             CheckPlayerOnBoss();
             player.Update(a_gt, virtualdims);
-            boss.Update(a_gt, virtualdims);
+            boss.Update(a_gt, virtualdims, switches, player.pos);
             foreach (var switc in switches)
                 switc.Update(a_gt);
             FlipSwitches(input);

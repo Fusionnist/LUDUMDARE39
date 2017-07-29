@@ -20,6 +20,7 @@ namespace LUDUMDARE39
 
         public override void Update(GameTime a_gt)
         {
+            Move(a_gt);
             pos += mov;
             mov = Vector2.Zero;
             base.Update(a_gt);
@@ -29,9 +30,9 @@ namespace LUDUMDARE39
         {
             KeyboardState ks = Keyboard.GetState();
             if (ks.IsKeyDown(Keys.Left))
-                mov.X -= 25 * (float)a_gt.ElapsedGameTime.TotalSeconds;
+                mov.X -= 250 * (float)a_gt.ElapsedGameTime.TotalSeconds;
             if (ks.IsKeyDown(Keys.Right))
-                mov.X += 25 * (float)a_gt.ElapsedGameTime.TotalSeconds;
+                mov.X += 250 * (float)a_gt.ElapsedGameTime.TotalSeconds;
         }
     }
 }

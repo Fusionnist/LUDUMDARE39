@@ -48,7 +48,7 @@ namespace LUDUMDARE39
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            player = new Player(new STexture(Content.Load<Texture2D>("test"), 4, 16, 0.1f), new Vector2(900, 1048));
+            player = new Player(new STexture(Content.Load<Texture2D>("test"), 4, 16, 0.1f), new Vector2(90, 104));
         
         }
 

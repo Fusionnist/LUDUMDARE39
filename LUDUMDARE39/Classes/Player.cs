@@ -25,8 +25,8 @@ namespace LUDUMDARE39
             Move(a_gt);
             pos += mov;
             mov = Vector2.Zero;
-            if (pos.X > 1904)
-                pos.X = 1904;
+            if (pos.X > 176)
+                pos.X = 176;
             if (pos.X < 0)
                 pos.X = 0;
 
@@ -46,16 +46,16 @@ namespace LUDUMDARE39
 
             if (pos.Y < 0)
                 pos.Y = 0;
-            if (pos.Y > 1048)
-                pos.Y = 1048;
-            if (pos.Y == 1048)
+            if (pos.Y > 102)
+                pos.Y = 102;
+            if (pos.Y == 102)
             {
                 if (ks.IsKeyDown(Keys.Up))
                     Yvel = 15;
                 else
                     Yvel = 0;
             }
-            if (pos.Y < 1048)
+            if (pos.Y < 102)
                 Yvel -= 10 * (float)a_gt.ElapsedGameTime.TotalSeconds;
             mov.Y -= Yvel;
         }

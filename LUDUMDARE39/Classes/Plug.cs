@@ -18,6 +18,13 @@ namespace LUDUMDARE39
             isOn = true;
         }
 
-       
+        public void Activate()
+        {
+            isOn = !isOn;
+            if (isOn)
+                SelectTexture("on");
+            else
+                SelectTexture("off");
+        }
     }
 }

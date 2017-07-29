@@ -12,6 +12,7 @@ namespace LUDUMDARE39
     class STexture
     {
         Texture2D tex;
+        public string name;
         int framecount, currentframe;
         float frametime, frametimer;
         public int framelength { get; set; }
@@ -23,8 +24,9 @@ namespace LUDUMDARE39
             frameheight = a_tex.Height;
         }
 
-        public STexture(Texture2D a_tex, int a_FC, int a_FL, float a_FT)
+        public STexture(Texture2D a_tex, int a_FC, int a_FL, float a_FT, string name_)
         {
+            name = name_;
             tex = a_tex;
             framecount = a_FC;
             framelength = a_FL;

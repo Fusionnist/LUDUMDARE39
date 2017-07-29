@@ -14,7 +14,7 @@ namespace LUDUMDARE39
         CollisionStuff colman;
 
         Input flippy;
-        Switch[] switches;
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -55,9 +55,8 @@ namespace LUDUMDARE39
             spriteBatch = new SpriteBatch(GraphicsDevice);
             Player player = new Player(new STexture[1] { new STexture(Content.Load<Texture2D>("test"), 4, 16, 0.1f, "test", new Rectangle(0, 0, 16, 16))}, new Vector2(50, virtualDim.Height - 16));
             Boss boss = new Boss(new STexture[1] { new STexture(Content.Load<Texture2D>("test"), 4, 16, 0.1f, "test", new Rectangle(0, 0, 16, 16)) }, new Vector2(10, virtualDim.Height - 16));
-            colman = new CollisionStuff(player, boss);
 
-            switches = new Switch[] {
+            Switch[] switches = new Switch[] {
                 new Switch(new STexture[]{
                 new STexture(Content.Load<Texture2D>("switchon"), 4, 16, 0.1f, "switchon", new Rectangle(0, 0, 16, 16)),
                 new STexture(Content.Load<Texture2D>("switchoff"), 4, 16, 0.1f, "switchoff", new Rectangle(0, 0, 16, 16)) },
@@ -67,7 +66,9 @@ namespace LUDUMDARE39
                 new STexture(Content.Load<Texture2D>("switchon"), 4, 16, 0.1f, "switchon", new Rectangle(0, 0, 16, 16)),
                 new STexture(Content.Load<Texture2D>("switchoff"), 4, 16, 0.1f, "test", new Rectangle(0, 0, 16, 16)) },
                 new Vector2(40,0)),
+
             };
+            colman = new CollisionStuff(player, boss, switches);
         }
 
         protected override void UnloadContent()
@@ -80,17 +81,12 @@ namespace LUDUMDARE39
             KeyboardState kbs = Keyboard.GetState();
             flippy.Update(kbs);
 
-            FlipSwitches();
-
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
             colman.Update(gameTime, virtualDim);
             base.Update(gameTime);
         }
-        void FlipSwitches() {
-            if (flippy.IsPressed())
-            { switches[0].Activate(); }
-        }
+
         protected override void Draw(GameTime gameTime)
         {          
             GraphicsDevice.SetRenderTarget(target);
@@ -98,7 +94,7 @@ namespace LUDUMDARE39
             spriteBatch.Begin();
             colman.player.Draw(spriteBatch);
             colman.boss.Draw(spriteBatch);
-            foreach(Switch s in switches) { s.Draw(spriteBatch); }
+            foreach(Switch s in colman.switches) { s.Draw(spriteBatch); }
             spriteBatch.End();
 
             Matrix m = Matrix.CreateScale(scale);

@@ -39,6 +39,7 @@ namespace LUDUMDARE39
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
+            player.Update(gameTime);
             base.Update(gameTime);
         }
 
@@ -47,6 +48,7 @@ namespace LUDUMDARE39
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             spriteBatch.Begin();
+            player.Draw(spriteBatch);
             spriteBatch.End();
 
             base.Draw(gameTime);

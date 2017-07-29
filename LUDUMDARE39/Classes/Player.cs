@@ -59,7 +59,7 @@ namespace LUDUMDARE39
                     if (ks.IsKeyDown(Keys.Left) || ks.IsKeyDown(Keys.Right))
                         Yvel = 4;
                     else
-                        Yvel = 6;
+                        Yvel = 5.5f;
                     isOnGround = false;
                 }
                 else

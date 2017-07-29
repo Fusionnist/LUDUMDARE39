@@ -27,6 +27,7 @@ namespace LUDUMDARE39
         public virtual void Update(GameTime a_gt)
         {
             tex.Update(a_gt);
+            truehb = new Rectangle((int)(pos.X + tex.hb.X), (int)(pos.Y + tex.hb.Y), tex.hb.Width, tex.hb.Height);
         }
         public void SelectTexture(string name)
         {

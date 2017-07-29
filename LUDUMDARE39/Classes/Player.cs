@@ -13,7 +13,7 @@ namespace LUDUMDARE39
     {
         public Vector2 mov;
         public float Yvel;
-        public bool isOnGround, isOnBoss;
+        public bool isOnGround, isOnBoss, isInHighJump;
 
         public Player(STexture[] a_tex, Vector2 a_pos): base(a_tex, a_pos)
         {
@@ -21,6 +21,7 @@ namespace LUDUMDARE39
             Yvel = 0;
             isOnGround = true;
             isOnBoss = false;
+            isInHighJump = false;
         }
 
         public void Update(GameTime a_gt, Rectangle virtualDims)
@@ -48,22 +49,25 @@ namespace LUDUMDARE39
                 mov.X -= 100 * (float)a_gt.ElapsedGameTime.TotalSeconds;
             if (ks.IsKeyDown(Keys.Right))
                 mov.X += 100 * (float)a_gt.ElapsedGameTime.TotalSeconds;
+            if (isInHighJump)
+                mov.X /= 2;
+
 
             if (GetHB().Y >= virtualDims.Height - GetHB().Height)
                 isOnGround = true;
-
             if (isOnGround)
             {
+                isInHighJump = false;
                 if (ks.IsKeyDown(Keys.Up))
                 {
                     if (ks.IsKeyDown(Keys.Left) || ks.IsKeyDown(Keys.Right))
                         Yvel = 4;
                     else
-                        Yvel = 5.5f;
+                    { Yvel = 5.5f; isInHighJump = true; }
                     isOnGround = false;
                 }
                 else
-                    Yvel = 0;
+                { Yvel = 0;}
             }
             if (GetHB().Y < virtualDims.Height - GetHB().Height)
                 Yvel -= 10 * (float)a_gt.ElapsedGameTime.TotalSeconds;

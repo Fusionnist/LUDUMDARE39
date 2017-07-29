@@ -14,12 +14,14 @@ namespace LUDUMDARE39
         public STexture tex;
         public STexture[] texes;
         public Vector2 pos;
+        public Rectangle truehb;
 
         public Sprite(STexture[] a_texes, Vector2 a_pos)
         {
             tex = a_texes[0];
             texes = a_texes;
             pos = a_pos;
+            truehb = new Rectangle((int)(pos.X + tex.hb.X), (int)(pos.Y + tex.hb.Y), tex.hb.Width, tex.hb.Height);
         }
 
         public virtual void Update(GameTime a_gt)

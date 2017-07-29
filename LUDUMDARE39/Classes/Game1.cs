@@ -20,8 +20,8 @@ namespace LUDUMDARE39
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height/2;
-            graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width/2;
+            graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
+            graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
             Window.IsBorderless = true;
             graphics.ApplyChanges();
 
@@ -56,16 +56,16 @@ namespace LUDUMDARE39
             spriteBatch = new SpriteBatch(GraphicsDevice);
             Player player = new Player(new STexture[1] { new STexture(Content.Load<Texture2D>("test"), 4, 16, 0.1f, "test", new Rectangle(0, 0, 16, 16))}, new Vector2(50, virtualDim.Height - 16));
             Boss boss = new Boss(new STexture[1] { new STexture(Content.Load<Texture2D>("test"), 4, 16, 0.1f, "test", new Rectangle(0, 0, 16, 16)) }, new Vector2(10, virtualDim.Height - 16));
-            
+            bg = new STexture(Content.Load<Texture2D>("scene"), 1, 192, 0.1f, "switchon", new Rectangle(0, 0, 192, 108));
             Switch[] switches = new Switch[] {
                 new Switch(new STexture[]{
-                new STexture(Content.Load<Texture2D>("switchon"), 4, 16, 0.1f, "switchon", new Rectangle(0, 0, 16, 16)),
-                new STexture(Content.Load<Texture2D>("switchoff"), 4, 16, 0.1f, "switchoff", new Rectangle(0, 0, 16, 16)) },
+                new STexture(Content.Load<Texture2D>("switchon"), 1, 16, 0.1f, "switchon", new Rectangle(0, 0, 16, 16)),
+                new STexture(Content.Load<Texture2D>("switchoff"), 1, 16, 0.1f, "switchoff", new Rectangle(0, 0, 16, 16)) },
                 new Vector2(0,0)),
 
                 new Switch(new STexture[]{
-                new STexture(Content.Load<Texture2D>("switchon"), 4, 16, 0.1f, "switchon", new Rectangle(0, 0, 16, 16)),
-                new STexture(Content.Load<Texture2D>("switchoff"), 4, 16, 0.1f, "test", new Rectangle(0, 0, 16, 16)) },
+                new STexture(Content.Load<Texture2D>("switchon"), 1, 16, 0.1f, "switchon", new Rectangle(0, 0, 16, 16)),
+                new STexture(Content.Load<Texture2D>("switchoff"), 1, 16, 0.1f, "test", new Rectangle(0, 0, 16, 16)) },
                 new Vector2(40,0)),
 
             };
@@ -91,8 +91,8 @@ namespace LUDUMDARE39
         protected override void Draw(GameTime gameTime)
         {          
             GraphicsDevice.SetRenderTarget(target);
-            GraphicsDevice.Clear(Color.CornflowerBlue);
             spriteBatch.Begin();
+            bg.Draw(spriteBatch, Vector2.Zero);
             colman.player.Draw(spriteBatch);
             colman.boss.Draw(spriteBatch);
             foreach(Switch s in colman.switches) { s.Draw(spriteBatch); }

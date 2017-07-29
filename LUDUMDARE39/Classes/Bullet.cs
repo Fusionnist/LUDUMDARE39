@@ -38,7 +38,10 @@ namespace LUDUMDARE39
         {
             base.Update(a_gt);
         
-            if (truehb.Y > vdims_.Y + vdims_.Height) { }
+            if (GetHB().Y + GetHB().Height > vdims_.Y + vdims_.Height) { xyDir.Y *= -1; pos.Y = vdims_.Y + vdims_.Height; }
+            if (GetHB().Y + GetHB().Height < vdims_.Y + vdims_.Height) { xyDir.Y *= -1; pos.Y = vdims_.Y + vdims_.Height; }
+            if (GetHB().X + GetHB().Width > vdims_.X + vdims_.Width) { xyDir.X *= -1; pos.X = vdims_.X + vdims_.Width; }
+            if (GetHB().X + GetHB().Width > vdims_.X + vdims_.Width) { xyDir.X *= -1; pos.X = vdims_.X + vdims_.Width; }
         }
     }
 }

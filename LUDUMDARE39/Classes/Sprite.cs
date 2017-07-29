@@ -32,7 +32,7 @@ namespace LUDUMDARE39
 
         public Rectangle GetHB()
         {
-            truehb = new Rectangle((int)pos.X + tex.hb.X, (int)pos.Y + tex.hb.Y, (int)pos.X + tex.hb.Width, (int)pos.Y + tex.hb.Height);
+            truehb = new Rectangle((int)pos.X + tex.hb.X, (int)pos.Y + tex.hb.Y, tex.hb.Width, tex.hb.Height);
             return truehb;
         }
 

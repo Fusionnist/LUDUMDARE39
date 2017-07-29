@@ -33,8 +33,8 @@ namespace LUDUMDARE39
         }
         void SetPlatformData()
         {
-            platformStart = pos;
-            platformEnd = new Vector2(pos.X + tex.framelength, pos.Y);
+            platformStart = new Vector2(GetHB().X, GetHB().Y);
+            platformEnd = new Vector2(GetHB().X + tex.framelength, GetHB().Y);
         }
         public void Move(GameTime a_gt)
         {
@@ -42,8 +42,8 @@ namespace LUDUMDARE39
         }
         void SeekPlug(GameTime a_gt)
         {
-            if (nearestPlug.X > pos.X + plugDist.X) { mov.X += 10 * (float)a_gt.ElapsedGameTime.TotalSeconds; }//temp
-            if (nearestPlug.X < pos.X + plugDist.X) { mov.X += -10 * (float)a_gt.ElapsedGameTime.TotalSeconds; }//temp
+            if (nearestPlug.X > GetHB().X) { mov.X += 10 * (float)a_gt.ElapsedGameTime.TotalSeconds; }//temp
+            if (nearestPlug.X < GetHB().X ) { mov.X += -10 * (float)a_gt.ElapsedGameTime.TotalSeconds; }//temp
         }
         void Shoot()
         {
@@ -60,11 +60,11 @@ namespace LUDUMDARE39
             {
                 if (s.isOn)
                 {
-                    if ((Vector2.Distance(pos + plugDist, s.plug.pos)) < record)
+                    if ((Vector2.Distance(new Vector2(GetHB().X, GetHB().Y), new Vector2(s.plug.GetHB().X, s.plug.GetHB().Y))) < record)
                     {
-                        record = Vector2.Distance(pos + plugDist, s.plug.pos);
-                        nearestPlug = s.plug.pos;
-                        if (nearestPlug.X - pos.X + plugDist.X < 1 && nearestPlug.X - pos.X - plugDist.X > -1) { pos.X = nearestPlug.X - plugDist.X; isPlugged = true; }                        
+                        record = Vector2.Distance(new Vector2(GetHB().X, GetHB().Y) , new Vector2(s.plug.GetHB().X, s.plug.GetHB().Y));
+                        nearestPlug = new Vector2(s.plug.GetHB().X, s.plug.GetHB().Y);
+                        if (nearestPlug.X - GetHB().X < 1 && nearestPlug.X - GetHB().X - plugDist.X > -1) { pos.X = nearestPlug.X - plugDist.X; isPlugged = true; }                        
                     }
                 }                
             }

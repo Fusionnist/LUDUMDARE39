@@ -22,13 +22,16 @@ namespace LUDUMDARE39
             switches = a_sws;
         }
 
-        public void Update(GameTime a_gt, Rectangle virtualdims)
+        public void Update(GameTime a_gt, Rectangle virtualdims, Input input)
         {
             player.Move(a_gt, virtualdims);
             boss.Move(a_gt);
             CheckPlayerOnBoss();
             player.Update(a_gt, virtualdims);
             boss.Update(a_gt, virtualdims);
+            foreach (var switc in switches)
+                switc.Update(a_gt);
+            FlipSwitches(input);
         }
 
         public void CheckPlayerOnBoss()
@@ -56,7 +59,8 @@ namespace LUDUMDARE39
         {
             foreach (var sw in switches)
             {
-                
+                if (sw.truehb.Intersects(player.truehb) && input.IsPressed())
+                    sw.Activate();
             }
         }
     }

@@ -83,7 +83,7 @@ namespace LUDUMDARE39
 
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
-            colman.Update(gameTime, virtualDim);
+            colman.Update(gameTime, virtualDim, flippy);
             base.Update(gameTime);
         }
 

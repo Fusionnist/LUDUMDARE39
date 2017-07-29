@@ -115,6 +115,7 @@
     <None Include="app.manifest" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\scene.png" />
     <Content Include="Content\switchoff.png" />
     <Content Include="Content\switchon.png" />
     <Content Include="Content\test.png" />

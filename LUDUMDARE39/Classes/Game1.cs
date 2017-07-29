@@ -13,6 +13,7 @@ namespace LUDUMDARE39
         Rectangle virtualDim;
         CollisionStuff colman;
 
+        STexture bg;
         Input flippy;
 
         public Game1()
@@ -55,7 +56,7 @@ namespace LUDUMDARE39
             spriteBatch = new SpriteBatch(GraphicsDevice);
             Player player = new Player(new STexture[1] { new STexture(Content.Load<Texture2D>("test"), 4, 16, 0.1f, "test", new Rectangle(0, 0, 16, 16))}, new Vector2(50, virtualDim.Height - 16));
             Boss boss = new Boss(new STexture[1] { new STexture(Content.Load<Texture2D>("test"), 4, 16, 0.1f, "test", new Rectangle(0, 0, 16, 16)) }, new Vector2(10, virtualDim.Height - 16));
-
+            
             Switch[] switches = new Switch[] {
                 new Switch(new STexture[]{
                 new STexture(Content.Load<Texture2D>("switchon"), 4, 16, 0.1f, "switchon", new Rectangle(0, 0, 16, 16)),

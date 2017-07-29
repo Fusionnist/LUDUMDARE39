@@ -12,12 +12,14 @@ namespace LUDUMDARE39
     class Player : Sprite
     {
         public Vector2 mov;
-        float Yvel;
+        public float Yvel;
+        public bool isOnGround;
 
-        public Player(STexture a_tex, Vector2 a_pos): base(a_tex, a_pos)
+        public Player(STexture[] a_tex, Vector2 a_pos): base(a_tex, a_pos)
         {
             mov = Vector2.Zero;
             Yvel = 0;
+            isOnGround = true;
         }
 
         public void Update(GameTime a_gt, Rectangle virtualDims)
@@ -47,6 +49,9 @@ namespace LUDUMDARE39
                 mov.X += 100 * (float)a_gt.ElapsedGameTime.TotalSeconds;
 
             if (pos.Y >= virtualDims.Height - tex.frameheight)
+                isOnGround = true;
+
+            if (isOnGround)
             {
                 if (ks.IsKeyDown(Keys.Up))
                 {
@@ -54,6 +59,7 @@ namespace LUDUMDARE39
                         Yvel = 4;
                     else
                         Yvel = 6;
+                    isOnGround = false;
                 }
                 else
                     Yvel = 0;

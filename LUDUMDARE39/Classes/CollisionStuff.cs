@@ -23,13 +23,20 @@ namespace LUDUMDARE39
         public void Update(GameTime a_gt, Rectangle virtualdims)
         {
             player.Move(a_gt, virtualdims);
+            CheckPlayerOnBoss();
             player.Update(a_gt, virtualdims);
             boss.Update(a_gt);
         }
 
         public void CheckPlayerOnBoss()
         {
-            if (player.mov.Y > 0 && player.pos.X + player.mov.X > boss.platformStart - player.tex)
+            if (player.mov.Y > 0 && player.pos.X + player.mov.X > boss.platformStart.X - player.tex.framelength && player.pos.X + player.mov.X < boss.platformEnd.X && player.pos.Y + 16 <= boss.platformStart.Y && player.pos.Y + 16 + player.mov.Y > boss.platformStart.Y)
+            {
+                player.Yvel = 0;
+                player.mov.Y = 0;
+                player.isOnGround = true;
+                player.pos.Y = boss.platformStart.Y - 16;
+            }
         }
     }
 }

@@ -49,8 +49,8 @@ namespace LUDUMDARE39
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            Player player = new Player(new STexture(Content.Load<Texture2D>("test"), 4, 16, 0.1f), new Vector2(50, virtualDim.Y - 16));
-            Boss boss = new Boss(new STexture(Content.Load<Texture2D>("test"), 4, 16, 0.1f), new Vector2(10, virtualDim.Y - 16));
+            Player player = new Player(new STexture[1] { new STexture(Content.Load<Texture2D>("test"), 4, 16, 0.1f, "test")}, new Vector2(50, virtualDim.Height - 16));
+            Boss boss = new Boss(new STexture[1] { new STexture(Content.Load<Texture2D>("test"), 4, 16, 0.1f, "test") }, new Vector2(10, virtualDim.Height - 16));
             colman = new CollisionStuff(player, boss);
         }
 
@@ -73,6 +73,7 @@ namespace LUDUMDARE39
             GraphicsDevice.Clear(Color.CornflowerBlue);
             spriteBatch.Begin();
             colman.player.Draw(spriteBatch);
+            colman.boss.Draw(spriteBatch);
             spriteBatch.End();
 
             Matrix m = Matrix.CreateScale(scale);

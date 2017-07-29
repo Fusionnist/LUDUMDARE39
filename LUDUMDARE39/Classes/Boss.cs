@@ -12,6 +12,7 @@ namespace LUDUMDARE39
 {
     class Boss : Sprite
     {
+        float shotTime, shotTimer;
         public Vector2 platformStart, platformEnd, mov;
         public BossMovement movType;
         bool isPlugged;
@@ -24,6 +25,9 @@ namespace LUDUMDARE39
             movType = BossMovement.Right;
             hp = 100;
             maxhp = 100;
+
+            shotTimer = 10f;
+            shotTime = 2f;
         }
         void SetPlatformData()
         {
@@ -43,8 +47,15 @@ namespace LUDUMDARE39
                 if (nearestPlug.X < pos.X) { mov.X += -10 * (float)a_gt.ElapsedGameTime.TotalSeconds; }//temp
             }
         }
+        void Shoot()
+        {
+
+        }
         public void Update(GameTime a_gt, Rectangle virtualDims, Switch[] switches_, Vector2 playerpos_)
         {
+            shotTimer -= (float)a_gt.ElapsedGameTime.TotalSeconds;
+            if(shotTimer <= 0) { shotTimer = shotTime; Shoot(); }
+
             if (!isPlugged)
             {
                 hp -= 10 * (float)a_gt.ElapsedGameTime.TotalSeconds;

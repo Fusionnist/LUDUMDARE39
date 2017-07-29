@@ -18,18 +18,22 @@ namespace LUDUMDARE39
         bool isPlugged;
         Vector2 nearestPlug;
         public float hp, maxhp;
+        public List<Bullet> bullets;
+        STexture[] bullettexes;
 
-        public Boss(STexture[] a_tex, Vector2 a_pos) : base(a_tex, a_pos)
+        public Boss(STexture[] a_tex, Vector2 a_pos, STexture[] a_bullettexes) : base(a_tex, a_pos)
         {
             SetPlatformData();
             movType = BossMovement.Right;
             hp = 100;
             maxhp = 100;
 
-            shotTimer = 10f;
-            shotTime = 2f;
+            shotTimer = 10;
+            shotTime = 2;
             isPlugged = false;
-            plugDist = new Vector2(8, 8);
+            plugDist = new Vector2(8);
+            bullets = new List<Bullet> { };
+            bullettexes = a_bullettexes;
         }
         void SetPlatformData()
         {
@@ -47,7 +51,7 @@ namespace LUDUMDARE39
         }
         void Shoot()
         {
-
+            bullets.Add(new Bullet(bullettexes, pos - new Vector2(0, 20), 0, -1, false, new Vector2(0, 50), Vector2.Zero, new Point(1, -1), false, 100));
         }
         public void Update(GameTime a_gt, Rectangle virtualDims, Switch[] switches_, Vector2 playerpos_)
         {
@@ -73,6 +77,8 @@ namespace LUDUMDARE39
             else
             {
                 hp += 8 * (float)a_gt.ElapsedGameTime.TotalSeconds;
+                if (hp > 100)
+                    hp = 100;
             }
 
             pos += mov;

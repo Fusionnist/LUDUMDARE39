@@ -17,8 +17,6 @@ namespace LUDUMDARE39
         STexture bg;
         Input flippy;
 
-        Bullet testbullet;
-
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -56,24 +54,10 @@ namespace LUDUMDARE39
 
         protected override void LoadContent()
         {
-            //temp
-            testbullet = new Bullet(
-                new STexture[1] { new STexture(Content.Load<Texture2D>("test"), 4, 16, 0.1f, "test", new Rectangle(0, 0, 16, 16), true) },
-                new Vector2(50,50),
-                4,
-                10f,
-                true,
-                new Vector2(50),
-                new Vector2(0,80),
-                new Point(-1,-1),
-                true,
-                50
-                );
-
 
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            Player player = new Player(new STexture[1] { new STexture(Content.Load<Texture2D>("test"), 4, 16, 0.1f, "test", new Rectangle(0, 0, 16, 16),true)}, new Vector2(50, virtualDim.Height - 16));
-            Boss boss = new Boss(new STexture[1] { new STexture(Content.Load<Texture2D>("test"), 4, 16, 0.1f, "test", new Rectangle(0, 0, 16, 16),true) }, new Vector2(10, virtualDim.Height - 16));
+            Player player = new Player(new STexture[1] { new STexture(Content.Load<Texture2D>("test"), 4, 16, 0.1f, "test", new Rectangle(0, 0, 16, 16), true) }, new Vector2(50, virtualDim.Height - 16));
+            Boss boss = new Boss(new STexture[1] { new STexture(Content.Load<Texture2D>("test"), 4, 16, 0.1f, "test", new Rectangle(0, 0, 16, 16), true) }, new Vector2(10, virtualDim.Height - 16), new STexture[2] { new STexture(Content.Load<Texture2D>("test"), 4, 16, 0.1f, "test", new Rectangle(0, 0, 16, 16), true), new STexture(Content.Load<Texture2D>("switchon"), new Rectangle(0, 0, 16, 16), "explosion") });
             bg = new STexture(Content.Load<Texture2D>("scene"), new Rectangle(0, 0, 192, 108), "switchon");
             Switch[] switches = new Switch[] {
                 new Switch(new STexture[]{
@@ -107,7 +91,8 @@ namespace LUDUMDARE39
         protected override void Update(GameTime gameTime)
         {
             //test
-            testbullet.Update(gameTime, virtualDim);
+            foreach (var bullet in colman.boss.bullets)
+                bullet.Update(gameTime);
 
             KeyboardState kbs = Keyboard.GetState();
             flippy.Update(kbs);
@@ -127,7 +112,8 @@ namespace LUDUMDARE39
             foreach (Switch s in colman.switches) { s.Draw(spriteBatch); }
             colman.player.Draw(spriteBatch);
             colman.boss.Draw(spriteBatch);
-            testbullet.Draw(spriteBatch); //test!
+            foreach (var bullet in colman.boss.bullets)
+                bullet.Draw(spriteBatch);
             lifebar.Draw(spriteBatch);
             spriteBatch.End();
 

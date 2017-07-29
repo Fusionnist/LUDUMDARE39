@@ -20,20 +20,20 @@ namespace LUDUMDARE39
             Yvel = 0;
         }
 
-        public override void Update(GameTime a_gt)
+        public void Update(GameTime a_gt, Rectangle virtualDims)
         {
-            Move(a_gt);
+            Move(a_gt, virtualDims);
             pos += mov;
             mov = Vector2.Zero;
-            if (pos.X > 176)
-                pos.X = 176;
+            if (pos.X > virtualDims.Width - tex.framelength)
+                pos.X = virtualDims.Width - tex.framelength;
             if (pos.X < 0)
                 pos.X = 0;
 
             base.Update(a_gt);
         }
 
-        public void Move(GameTime a_gt)
+        public void Move(GameTime a_gt, Rectangle virtualDims)
         {
             KeyboardState ks = Keyboard.GetState();
 
@@ -46,9 +46,9 @@ namespace LUDUMDARE39
 
             if (pos.Y < 0)
                 pos.Y = 0;
-            if (pos.Y > 92)
-                pos.Y = 92;
-            if (pos.Y == 92)
+            if (pos.Y > virtualDims.Height - tex.frameheight)
+                pos.Y = virtualDims.Height - tex.frameheight;
+            if (pos.Y == virtualDims.Height - tex.frameheight)
             {
                 if (ks.IsKeyDown(Keys.Up))
                 {
@@ -60,7 +60,7 @@ namespace LUDUMDARE39
                 else
                     Yvel = 0;
             }
-            if (pos.Y < 92)
+            if (pos.Y < virtualDims.Height - tex.frameheight)
                 Yvel -= 10 * (float)a_gt.ElapsedGameTime.TotalSeconds;
             mov.Y -= Yvel;
         }

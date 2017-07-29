@@ -27,7 +27,7 @@ namespace LUDUMDARE39
 
         public void Draw (SpriteBatch a_sb)
         {
-            tex.Draw(a_sb, pos);
+            tex.Draw(a_sb, new Vector2((int)pos.X, (int)pos.Y));
         }
     }
 }

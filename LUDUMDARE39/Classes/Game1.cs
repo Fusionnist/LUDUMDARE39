@@ -11,7 +11,7 @@ namespace LUDUMDARE39
         Player player;
         RenderTarget2D target;
         float scale;
-        Point virtualDim;
+        Rectangle virtualDim;
 
         public Game1()
         {
@@ -22,14 +22,14 @@ namespace LUDUMDARE39
             Window.IsBorderless = true;
             graphics.ApplyChanges();
 
-            SetupGraphics();
+            UpdateGraphicsValues();
         }
-        void SetupGraphics()
+        void UpdateGraphicsValues()
         {
-            virtualDim = new Point(192,108);
+            virtualDim = new Rectangle(0,0,192,108);
 
-            float xscale = GraphicsDevice.Viewport.Width / virtualDim.X;
-            float yscale = GraphicsDevice.Viewport.Height / virtualDim.Y;
+            float xscale = GraphicsDevice.Viewport.Width / virtualDim.Width;
+            float yscale = GraphicsDevice.Viewport.Height / virtualDim.Height;
 
             if (xscale > yscale)
             {
@@ -37,7 +37,8 @@ namespace LUDUMDARE39
             }
             else { scale = xscale; }
 
-            target = new RenderTarget2D(GraphicsDevice, virtualDim.X, virtualDim.Y);
+            target = new RenderTarget2D(GraphicsDevice, virtualDim.Width, virtualDim.Height);
+            virtualDim.X
         }
         protected override void Initialize()
         {

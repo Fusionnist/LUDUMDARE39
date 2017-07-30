@@ -11,7 +11,7 @@ namespace LUDUMDARE39
 {
     public class Bullet:Sprite
     {
-        int bounces;
+        public int bounces;
         Vector2 velocity, bvel;
         float lifeTime;
         bool lifeTimed;
@@ -19,7 +19,7 @@ namespace LUDUMDARE39
         Vector2 mov;
         Point xyDir;
         float maxv;
-        bool isExploding, isDead, bouncy;
+        public bool isExploding, isDead, bouncy;
 
         public Bullet(STexture[] texes_, Vector2 pos_, int bounces_,float lifet_, bool lifeTD_, Vector2 vel_, Vector2 velLoss_, Point xyDir_,bool bouncy_, float maxVel_):base(texes_, pos_)
         {
@@ -75,7 +75,7 @@ namespace LUDUMDARE39
                 }
                 if (GetHB().X < vdims_.X) { xyDir.X *= -1; pos.X = vdims_.X; bounces--; }
 
-                if (bounces == 0) { isExploding = true; SelectTexture("explosion"); }
+                if (bounces <= 0) { isExploding = true; SelectTexture("explosion"); }
             }
             if (isExploding)
             {

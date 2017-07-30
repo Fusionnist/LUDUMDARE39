@@ -63,20 +63,29 @@ namespace LUDUMDARE39
                 new Switch(new STexture[]{
                 new STexture(Content.Load<Texture2D>("switchon"), new Rectangle(0, 0, 16, 16), "switchon"),
                 new STexture(Content.Load<Texture2D>("switchoff"), new Rectangle(0, 0, 16, 16), "switchoff") },
-                new Vector2(0,0),
+                new Vector2(7,15),
                 new Plug(new STexture[]{
                 new STexture(Content.Load<Texture2D>("switchon"), new Rectangle(0, 0, 16, 16), "switchon"),
                 new STexture(Content.Load<Texture2D>("switchoff"), new Rectangle(0, 0, 16, 16), "switchoff") },
-                new Vector2(66, 66))),
+                new Vector2(7, 80))),
 
                 new Switch(new STexture[]{
                 new STexture(Content.Load<Texture2D>("switchon"), new Rectangle(0, 0, 16, 16), "switchon"),
                 new STexture(Content.Load<Texture2D>("switchoff"), new Rectangle(0, 0, 16, 16), "switchoff") },
-                new Vector2(40,0),
+                new Vector2(88,15),
                 new Plug(new STexture[]{
                 new STexture(Content.Load<Texture2D>("switchon"), new Rectangle(0, 0, 16, 16), "switchon"),
                 new STexture(Content.Load<Texture2D>("switchoff"), new Rectangle(0, 0, 16, 16), "switchoff") },
-                new Vector2(33, 66)))
+                new Vector2(88, 80))),
+
+                new Switch(new STexture[]{
+                new STexture(Content.Load<Texture2D>("switchon"), new Rectangle(0, 0, 16, 16), "switchon"),
+                new STexture(Content.Load<Texture2D>("switchoff"), new Rectangle(0, 0, 16, 16), "switchoff") },
+                new Vector2(172,15),
+                new Plug(new STexture[]{
+                new STexture(Content.Load<Texture2D>("switchon"), new Rectangle(0, 0, 16, 16), "switchon"),
+                new STexture(Content.Load<Texture2D>("switchoff"), new Rectangle(0, 0, 16, 16), "switchoff") },
+                new Vector2(172, 80))),
             };
             colman = new CollisionStuff(player, boss, switches);
 

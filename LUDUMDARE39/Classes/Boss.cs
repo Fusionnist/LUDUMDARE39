@@ -32,7 +32,7 @@ namespace LUDUMDARE39
             maxhp = 100;
             shotSound = a_ss;
             shotTimer = 1;
-            shotTime = 2;
+            shotTime = 1;
             isPlugged = false;
             plugDist = new Vector2(8);
             bullets = new List<Bullet> { };

@@ -31,12 +31,12 @@ namespace LUDUMDARE39
         {            
             pos += mov;
             mov = Vector2.Zero;
-            if (GetHB().X > virtualDims.Width - GetHB().Width)
-                pos.X = virtualDims.Width - GetHB().Width;
+            if (GetHB().X > virtualDims.Width + virtualDims.X - GetHB().Width)
+                pos.X = virtualDims.Width + virtualDims.X - GetHB().Width;
             if (GetHB().X < 0)
                 pos.X = 0;
-            if (GetHB().Y > virtualDims.Height - GetHB().Height)
-                pos.Y = virtualDims.Height - GetHB().Height;
+            if (GetHB().Y + GetHB().Height > virtualDims.Height + virtualDims.Y )
+                pos.Y = virtualDims.Height + virtualDims.Y - GetHB().Height;
             if (GetHB().Y < 0)
                 pos.Y = 0;
 
@@ -66,7 +66,7 @@ namespace LUDUMDARE39
             }
 
 
-            if (GetHB().Y >= virtualDims.Height - GetHB().Height)
+            if (GetHB().Y >= virtualDims.Height + virtualDims.Y - GetHB().Height)
                 isOnGround = true;
             if (isOnGround)
             {

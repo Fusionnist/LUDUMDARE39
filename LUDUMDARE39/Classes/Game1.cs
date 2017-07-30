@@ -110,13 +110,13 @@ namespace LUDUMDARE39
             foreach (var bullet in colman.boss.bullets)
                 bullet.Update(gameTime, roomDim);
 
-            if (colman.boss.isPlugged) { cityHp -= 0.2f * (float)gameTime.ElapsedGameTime.TotalSeconds; }
-            else { cityHp += 0.1f * (float)gameTime.ElapsedGameTime.TotalSeconds; }
+            if (colman.boss.isPlugged) { cityHp -= 0.1f * (float)gameTime.ElapsedGameTime.TotalSeconds; }
+            else { cityHp += 0.05f * (float)gameTime.ElapsedGameTime.TotalSeconds; }
 
             if (cityHp <= 3) { bg = c3; }
             if (cityHp <= 2) { bg = c2; }
             if (cityHp <= 1) { bg = c1; }
-            if (cityHp <= 0) { } //die
+            if (cityHp <= 0) { cityHp = 0; } //die
 
             KeyboardState kbs = Keyboard.GetState();
             flippy.Update(kbs);

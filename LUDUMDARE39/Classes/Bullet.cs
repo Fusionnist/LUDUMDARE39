@@ -35,6 +35,9 @@ namespace LUDUMDARE39
         public void CalculateTarget(Vector2 tar_, float timeToTar_)
         {
             velocity.X = (tar_.X - pos.X) / timeToTar_;
+            if(pos.X < tar_.X) { xyDir.X = 1; }
+            else { xyDir.X = -1; }
+            xyDir.Y = -1;
             velLoss.X = 0;
         }
 

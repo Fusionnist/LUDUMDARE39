@@ -15,7 +15,7 @@ namespace LUDUMDARE39
         float shotTime, shotTimer;
         public Vector2 platformStart, platformEnd, mov, plugDist;
         public BossMovement movType;
-        bool isPlugged, isNearPlug;
+        public bool isPlugged, isNearPlug;
         Vector2 nearestPlug;
         public float hp, maxhp;
         public List<Bullet> bullets;

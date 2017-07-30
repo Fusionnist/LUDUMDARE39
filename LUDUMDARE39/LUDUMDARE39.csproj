@@ -119,7 +119,12 @@
   <ItemGroup>
     <Content Include="Content\barcont.png" />
     <Content Include="Content\barint.png" />
+    <Content Include="Content\plug.png" />
+    <Content Include="Content\plugoff.png" />
     <Content Include="Content\scene.png" />
+    <Content Include="Content\scene1hp.png" />
+    <Content Include="Content\scene2hp.png" />
+    <Content Include="Content\scene3hp.png" />
     <Content Include="Content\switchoff.png" />
     <Content Include="Content\switchon.png" />
     <Content Include="Content\test.png" />

@@ -37,7 +37,7 @@ namespace LUDUMDARE39
             velocity.X = (tar_.X - pos.X) / timeToTar_;
             if(pos.X < tar_.X) { xyDir.X = 1; }
             else { xyDir.X = -1; }
-            xyDir.Y = -1;
+            xyDir.Y = 1;
             velLoss.X = 0;
         }
 

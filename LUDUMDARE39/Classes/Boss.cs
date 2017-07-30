@@ -45,7 +45,7 @@ namespace LUDUMDARE39
         
         void SetBulletData()
         {
-            STexture[] ts = new STexture[] { bullettexes[0].Clone() };
+            STexture[] ts = new STexture[] { bullettexes[0].Clone(), bullettexes[1].Clone() };
             int rndX = new Random().Next(0, 2);
             int rndY = new Random().Next(0, 2);
             if (rndX == 0) { rndX = -1; }

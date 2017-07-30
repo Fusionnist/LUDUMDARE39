@@ -56,14 +56,19 @@ namespace LUDUMDARE39
         public void Update(GameTime a_gt)
         {
             frametimer -= (float)a_gt.ElapsedGameTime.TotalSeconds;
-            if (frametimer <= 0 && loops)
+            if (frametimer <= 0)
             {
+                if(!loops) { complete = true; }
+                if (loops)
+                {
+
+                }
                 frametimer = frametime;
                 currentframe++;
                 if (currentframe > framecount)
                     currentframe = 1;
             }
-            else { complete = true; }
+            
         }
 
         public void Draw(SpriteBatch a_sb, Vector2 a_pos)

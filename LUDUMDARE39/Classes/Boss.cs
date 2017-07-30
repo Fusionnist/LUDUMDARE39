@@ -19,7 +19,7 @@ namespace LUDUMDARE39
         Vector2 nearestPlug;
         public float hp, maxhp;
         public List<Bullet> bullets;
-        public Bullet[] bullettypes;
+        public Bullet[][] bullettypes;
         STexture[] bullettexes;
 
         public Boss(STexture[] a_tex, Vector2 a_pos, STexture[] a_bullettexes) : base(a_tex, a_pos)
@@ -45,17 +45,20 @@ namespace LUDUMDARE39
         
         void SetBulletData()
         {
+            Random rng = new Random();
             STexture[] ts = new STexture[] { bullettexes[0].Clone() };
-            int rndX = new Random().Next(0, 2);
-            int rndY = new Random().Next(0, 2);
-            if (rndX == 0) { rndX = -1; }
-            if (rndY == 0) { rndY = -1; }
-            bullettypes = new Bullet[] 
+            bullettypes = new Bullet[] []
             {
-                new Bullet(ts, new Vector2(GetHB().X, GetHB().Y) + new Vector2(0, -16), 1, -1, false, new Vector2(50, 0), Vector2.Zero, new Point(rndX, -1), false, 100),
-                new Bullet(ts, new Vector2(GetHB().X, GetHB().Y) + new Vector2(0, -16), 3, -1, false, new Vector2(50, 0), Vector2.Zero, new Point(rndX, 1), true, 100),
-                new Bullet(ts, new Vector2(GetHB().X, GetHB().Y) + new Vector2(0, -16), 3, -1, false, new Vector2(50, 50), new Vector2(0, 50), new Point(rndX, -1), true, 100),
-                new Bullet(ts, new Vector2(GetHB().X, GetHB().Y) + new Vector2(0, -16), 1000, 5, true, new Vector2(50, 50), new Vector2(0, 50), new Point(rndX, -1), true, 100),
+                new Bullet[] { new Bullet(ts, new Vector2(GetHB().X, GetHB().Y) + new Vector2(0, -16), 1, -1, false, new Vector2(50, 0), Vector2.Zero, new Point(rng.Next(0, 2), -1), false, 100, null)},
+                new Bullet[] { new Bullet(ts, new Vector2(GetHB().X, GetHB().Y) + new Vector2(0, -16), 3, -1, false, new Vector2(50, 0), Vector2.Zero, new Point(rng.Next(0, 2), 1), true, 100, null) },
+                new Bullet[] { new Bullet(ts, new Vector2(GetHB().X, GetHB().Y) + new Vector2(0, -16), 3, -1, false, new Vector2(50, 50), new Vector2(0, 50), new Point(rng.Next(0, 2), -1), true, 100, null) },
+                new Bullet[] { new Bullet(ts, new Vector2(GetHB().X, GetHB().Y) + new Vector2(0, -16), 1000, 5, true, new Vector2(50, 50), new Vector2(0, 50), new Point(rng.Next(0, 2), -1), true, 100, null) },
+                new Bullet[]
+                {
+                    new Bullet(ts, new Vector2(GetHB().X, GetHB().Y) + new Vector2(0, -16), 3, -1, false, new Vector2(50, 50), new Vector2(0, 50), new Point(rng.Next(0, 2), -1), true, 100, (float)(rng.NextDouble() * Math.PI / 2)),
+                    new Bullet(ts, new Vector2(GetHB().X, GetHB().Y) + new Vector2(0, -16), 3, -1, false, new Vector2(50, 50), new Vector2(0, 50), new Point(rng.Next(0, 2), -1), true, 100, (float)(rng.NextDouble() * Math.PI / 2)),
+                    new Bullet(ts, new Vector2(GetHB().X, GetHB().Y) + new Vector2(0, -16), 3, -1, false, new Vector2(50, 50), new Vector2(0, 50), new Point(rng.Next(0, 2), -1), true, 100, (float)(rng.NextDouble() * Math.PI / 2))
+                }
             };
         }
 
@@ -72,7 +75,8 @@ namespace LUDUMDARE39
         void Shoot(Vector2 playerPos)
         {
             int rng = new Random().Next(0, bullettypes.Length);
-            bullets.Add(bullettypes[rng].Clone());
+            foreach (var bullet in bullettypes[4])
+                bullets.Add(bullet.Clone());
             if(rng == 2) { bullets[bullets.Count - 1].CalculateTarget(playerPos, 2f); }
         }
 

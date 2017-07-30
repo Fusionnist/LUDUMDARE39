@@ -13,15 +13,16 @@ namespace LUDUMDARE39
     {
         public int bounces;
         Vector2 velocity, bvel;
-        float lifeTime;
+        float? lifeTime;
         bool lifeTimed;
         Vector2 velLoss;
         Vector2 mov;
         Point xyDir;
+        float? angle;
         float maxv;
         public bool isExploding, isDead, bouncy;
 
-        public Bullet(STexture[] texes_, Vector2 pos_, int bounces_,float lifet_, bool lifeTD_, Vector2 vel_, Vector2 velLoss_, Point xyDir_,bool bouncy_, float maxVel_):base(texes_, pos_)
+        public Bullet(STexture[] texes_, Vector2 pos_, int bounces_, float? lifet_, bool lifeTD_, Vector2 vel_, Vector2 velLoss_, Point xyDir_,bool bouncy_, float maxVel_, float? a_angle):base(texes_, pos_)
         {
             bouncy = bouncy_;
             maxv = maxVel_;
@@ -30,7 +31,14 @@ namespace LUDUMDARE39
             lifeTime = lifet_;
             lifeTimed = lifeTD_;
             velLoss = velLoss_;
+            if (xyDir.X == 0)
+                xyDir.X = -1;
+            if (xyDir.Y == 0)
+                xyDir.Y = -1;
             xyDir = xyDir_;
+            if (a_angle != null)
+            { velocity.X *= (float)Math.Cos((double)a_angle); velocity.Y *= (float)Math.Sin((double)a_angle);}
+            angle = a_angle;
         }
         public void CalculateTarget(Vector2 tar_, float timeToTar_)
         {
@@ -40,7 +48,7 @@ namespace LUDUMDARE39
 
         public Bullet Clone()
         {
-            return new Bullet(texes, pos, bounces, lifeTime, lifeTimed, velocity, velLoss, xyDir, bouncy, maxv);
+            return new Bullet(texes, pos, bounces, lifeTime, lifeTimed, velocity, velLoss, xyDir, bouncy, maxv, angle);
         }
 
         public void Update(GameTime a_gt, Rectangle vdims_)

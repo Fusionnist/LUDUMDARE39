@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Audio;
 using static LUDUMDARE39.Enums;
 
 namespace LUDUMDARE39
@@ -17,18 +18,19 @@ namespace LUDUMDARE39
         public BossMovement movType;
         public bool isPlugged, isNearPlug;
         Vector2 nearestPlug;
+        SoundEffect shotSound;
         public float hp, maxhp;
         public List<Bullet> bullets;
         public Bullet[][] bullettypes;
         STexture[] bullettexes;
 
-        public Boss(STexture[] a_tex, Vector2 a_pos, STexture[] a_bullettexes) : base(a_tex, a_pos)
+        public Boss(STexture[] a_tex, Vector2 a_pos, STexture[] a_bullettexes, SoundEffect a_ss) : base(a_tex, a_pos)
         {
             SetPlatformData();
             movType = BossMovement.Right;
             hp = 100;
             maxhp = 100;
-
+            shotSound = a_ss;
             shotTimer = 1;
             shotTime = 2;
             isPlugged = false;
@@ -78,6 +80,7 @@ namespace LUDUMDARE39
             foreach (var bullet in bullettypes[rng])
                 bullets.Add(bullet.Clone());
             if (rng == 2) { bullets[bullets.Count - 1].CalculateTarget(playerPos, 2f); }
+            shotSound.Play();
         }
 
         public void Update(GameTime a_gt, Rectangle virtualDims, Switch[] switches_, Vector2 playerpos_)

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Audio;
 
 namespace LUDUMDARE39
 {
@@ -14,8 +15,9 @@ namespace LUDUMDARE39
         public Vector2 mov;
         public float Yvel, stunTimer, stunTime;
         public bool isOnGround, isOnBoss, isInHighJump, isStunned;
+        public SoundEffect jump, hurt;
 
-        public Player(STexture[] a_tex, Vector2 a_pos): base(a_tex, a_pos)
+        public Player(STexture[] a_tex, Vector2 a_pos, SoundEffect a_j, SoundEffect a_h): base(a_tex, a_pos)
         {
             mov = Vector2.Zero;
             Yvel = 0;
@@ -23,8 +25,10 @@ namespace LUDUMDARE39
             isOnBoss = false;
             isInHighJump = false;
             isStunned = false;
-            stunTime = 3;
+            stunTime = 1;
             stunTimer = stunTime;
+            jump = a_j;
+            hurt = a_h;
         }
 
         public void Update(GameTime a_gt, Rectangle virtualDims)
@@ -78,6 +82,7 @@ namespace LUDUMDARE39
                     else
                     { Yvel = 5.5f; isInHighJump = true; }
                     isOnGround = false;
+                    jump.Play();
                 }
                 else
                 { Yvel = 0;}

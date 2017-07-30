@@ -62,8 +62,14 @@ namespace LUDUMDARE39
             c2 = new STexture(Content.Load<Texture2D>("scene2hp"), new Rectangle(0, 0, 192, 108), "city2");
             c1 = new STexture(Content.Load<Texture2D>("scene1hp"), new Rectangle(0, 0, 192, 108), "city1");
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            Player player = new Player(new STexture[1] { new STexture(Content.Load<Texture2D>("test"), 4, 16, 0.1f, "test", new Rectangle(0, 0, 16, 16), true) }, new Vector2(50, roomDim.Height - 16));
-            Boss boss = new Boss(new STexture[1] { new STexture(Content.Load<Texture2D>("test"), 4, 16, 0.1f, "test", new Rectangle(0, 0, 16, 16), true) }, new Vector2(10, roomDim.Height - 16), new STexture[2] { new STexture(Content.Load<Texture2D>("test"), 4, 16, 0.1f, "test", new Rectangle(0, 0, 16, 16), true), new STexture(Content.Load<Texture2D>("switchon"), new Rectangle(0, 0, 16, 16), "explosion") });
+            Player player = new Player(new STexture[1] { new STexture(Content.Load<Texture2D>("test"), 4, 16, 0.1f, "test", new Rectangle(2, 0, 12, 16), true) }, new Vector2(50, roomDim.Height - 16));
+            Boss boss = new Boss(
+                new STexture[1] {
+                new STexture(Content.Load<Texture2D>("test"), 4, 16, 0.1f, "test", new Rectangle(0, 0, 16, 16), true) }, 
+                new Vector2(10, roomDim.Height - 16), 
+                new STexture[2] {
+                new STexture(Content.Load<Texture2D>("bullet"), 6, 8, 0.1f, "bullet", new Rectangle(1, 1, 6, 6), true),
+                new STexture(Content.Load<Texture2D>("splode"), 6, 8, 0.1f, "explosion", new Rectangle(1, 1, 6, 6), false) });
             bg = c3;
             Switch[] switches = new Switch[] {
                 new Switch(new STexture[]{

@@ -70,7 +70,7 @@ namespace LUDUMDARE39
             if (player.GetHB().X < boss.GetHB().X && player.GetHB().X > boss.GetHB().X - player.GetHB().Width && player.GetHB().Y > boss.GetHB().Y - player.GetHB().Height)
                 player.pos.X = boss.GetHB().X - player.GetHB().Width;
             if (player.GetHB().X > boss.GetHB().X && player.GetHB().X < boss.GetHB().X + player.GetHB().Width && player.GetHB().Y > boss.GetHB().Y - player.GetHB().Height)
-                player.pos.X = boss.GetHB().X + player.GetHB().Height;
+                player.pos.X = boss.GetHB().X + player.GetHB().Width;
         }
 
         public void BulletCollisions()

@@ -73,6 +73,7 @@ namespace LUDUMDARE39
         {
             int rng = new Random().Next(0, bullettypes.Length);
             bullets.Add(bullettypes[rng].Clone());
+            if(rng == 2) { bullets[bullets.Count - 1].CalculateTarget(playerPos, 2f); }
         }
 
         public void Update(GameTime a_gt, Rectangle virtualDims, Switch[] switches_, Vector2 playerpos_)

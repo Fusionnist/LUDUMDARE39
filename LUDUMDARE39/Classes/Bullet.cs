@@ -31,10 +31,10 @@ namespace LUDUMDARE39
             lifeTime = lifet_;
             lifeTimed = lifeTD_;
             velLoss = velLoss_;
-            if (xyDir.X == 0)
-                xyDir.X = -1;
-            if (xyDir.Y == 0)
-                xyDir.Y = -1;
+            if (xyDir_.X == 0)
+                xyDir_.X = -1;
+            if (xyDir_.Y == 0)
+                xyDir_.Y = -1;
             xyDir = xyDir_;
             if (a_angle != null)
             { velocity.X *= (float)Math.Cos((double)a_angle); velocity.Y *= (float)Math.Sin((double)a_angle);}

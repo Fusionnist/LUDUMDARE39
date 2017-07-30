@@ -46,7 +46,7 @@ namespace LUDUMDARE39
         void SetBulletData()
         {
             Random rng = new Random();
-            STexture[] ts = new STexture[] { bullettexes[0].Clone() };
+            STexture[] ts = new STexture[] { bullettexes[0].Clone(), bullettexes[1].Clone() };
             bullettypes = new Bullet[] []
             {
                 new Bullet[] { new Bullet(ts, new Vector2(GetHB().X, GetHB().Y) + new Vector2(0, -16), 1, -1, false, new Vector2(50, 0), Vector2.Zero, new Point(rng.Next(0, 2), -1), false, 100, null)},

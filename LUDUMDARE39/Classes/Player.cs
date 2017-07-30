@@ -37,8 +37,8 @@ namespace LUDUMDARE39
                 pos.X = virtualDims.X - tex.hb.X;
             if (GetHB().Y + GetHB().Height > virtualDims.Height + virtualDims.Y )
                 pos.Y = virtualDims.Height + virtualDims.Y - GetHB().Height;
-            if (GetHB().Y < 0)
-                pos.Y = 0;
+            if (GetHB().Y < virtualDims.Y)
+                pos.Y = virtualDims.Y;
 
             if (isStunned)
             {

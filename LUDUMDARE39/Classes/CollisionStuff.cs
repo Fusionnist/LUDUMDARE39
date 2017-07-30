@@ -25,9 +25,9 @@ namespace LUDUMDARE39
         public void Update(GameTime a_gt, Rectangle virtualdims, Input input)
         {
             player.Move(a_gt, virtualdims);
-            boss.Move(a_gt);
             CheckPlayerOnBoss();
             player.Update(a_gt, virtualdims);
+            BulletCollisions();
             boss.Update(a_gt, virtualdims, switches, player.pos);
             BossPushPlayer();
             foreach (var switc in switches)
@@ -71,6 +71,15 @@ namespace LUDUMDARE39
                 player.pos.X = boss.GetHB().X - player.GetHB().Width;
             if (player.GetHB().X > boss.GetHB().X && player.GetHB().X < boss.GetHB().X + player.GetHB().Width && player.GetHB().Y > boss.GetHB().Y - player.GetHB().Height)
                 player.pos.X = boss.GetHB().X + player.GetHB().Height;
+        }
+
+        public void BulletCollisions()
+        {
+            foreach(var bullet in boss.bullets)
+            {
+                if (bullet.GetHB().Intersects(player.GetHB()))
+                { bullet.bounces = 0; player.isStunned = true; player.Yvel = 1; }
+            }
         }
     }
 }

@@ -23,6 +23,7 @@ namespace LUDUMDARE39
         public List<Bullet> bullets;
         public Bullet[][] bullettypes;
         STexture[] bullettexes;
+        float movx;
 
         public Boss(STexture[] a_tex, Vector2 a_pos, STexture[] a_bullettexes, SoundEffect a_ss) : base(a_tex, a_pos)
         {
@@ -32,12 +33,13 @@ namespace LUDUMDARE39
             maxhp = 100;
             shotSound = a_ss;
             shotTimer = 1;
-            shotTime = 1;
+            shotTime = 1.5f;
             isPlugged = false;
             plugDist = new Vector2(8);
             bullets = new List<Bullet> { };
             bullettexes = a_bullettexes;
             SetBulletData();
+            movx = 25;
         }
         void SetPlatformData()
         {
@@ -48,21 +50,8 @@ namespace LUDUMDARE39
         void SetBulletData()
         {
             Random rng = new Random();
-            STexture[] ts = new STexture[] { bullettexes[0].Clone(), bullettexes[1].Clone() };
-            bullettypes = new Bullet[][]
-            {
-                new Bullet[] { new Bullet(ts, new Vector2(GetHB().X, GetHB().Y) + new Vector2(0, -16), 1, -1, false, new Vector2(50, 0), Vector2.Zero, new Point(rng.Next(0, 2), -1), false, 100, null)},
-                new Bullet[] { new Bullet(ts, new Vector2(GetHB().X, GetHB().Y) + new Vector2(0, -16), 3, -1, false, new Vector2(50, 0), Vector2.Zero, new Point(rng.Next(0, 2), 1), true, 100, null) },
-                new Bullet[] { new Bullet(ts, new Vector2(GetHB().X, GetHB().Y) + new Vector2(0, -16), 10, -1, false, new Vector2(50, 50), new Vector2(0, 50), new Point(rng.Next(0, 2), -1), true, 100, null) },
-                new Bullet[] { new Bullet(ts, new Vector2(GetHB().X, GetHB().Y) + new Vector2(0, -16), 1000, 5, true, new Vector2(50, 50), new Vector2(0, 50), new Point(rng.Next(0, 2), -1), true, 100, null) },
-                new Bullet[]
-                {
-                    new Bullet(ts, new Vector2(GetHB().X, GetHB().Y) + new Vector2(0, -16), 3, -1, false, new Vector2(50, 50), new Vector2(0, 50), new Point(rng.Next(0, 2), -1), true, 100, (float)(rng.NextDouble() * Math.PI / 2)),
-                    new Bullet(ts, new Vector2(GetHB().X, GetHB().Y) + new Vector2(0, -16), 3, -1, false, new Vector2(50, 50), new Vector2(0, 50), new Point(rng.Next(0, 2), -1), true, 100, (float)(rng.NextDouble() * Math.PI / 2)),
-                    new Bullet(ts, new Vector2(GetHB().X, GetHB().Y) + new Vector2(0, -16), 3, -1, false, new Vector2(50, 50), new Vector2(0, 50), new Point(rng.Next(0, 2), -1), true, 100, (float)(rng.NextDouble() * Math.PI / 2))
-                },
-                new Bullet[] { new Bullet(ts, new Vector2(GetHB().X, GetHB().Y) + new Vector2(0, -16), 5, -1, false, new Vector2(50, 30), Vector2.Zero, new Point(rng.Next(0, 2), -1), true, 100, null) }
-            };
+           
+
         }
 
         void SeekPlug(GameTime a_gt)
@@ -70,19 +59,39 @@ namespace LUDUMDARE39
             if (isNearPlug)
             {
                 if (nearestPlug.X > GetHB().X)
-                { mov.X += 10 * (float)a_gt.ElapsedGameTime.TotalSeconds; tex.isInverted = true; }//temp
+                { mov.X += movx * (float)a_gt.ElapsedGameTime.TotalSeconds; tex.isInverted = true; }//temp
                 if (nearestPlug.X < GetHB().X)
-                { mov.X += -10 * (float)a_gt.ElapsedGameTime.TotalSeconds; tex.isInverted = false; }//temp
+                { mov.X += -movx * (float)a_gt.ElapsedGameTime.TotalSeconds; tex.isInverted = false; }//temp
             }
+        }
+        Bullet[] GetBullets(Vector2 playerpos)
+        {
+            STexture[] ts = new STexture[] { bullettexes[0].Clone(), bullettexes[1].Clone() };
+            Random r = new Random();
+            int c = r.Next(1, 6);
+            List<Bullet> bs = new List<Bullet>();
+            for(int xx = 0; xx<c; xx++)
+            {
+                int bounces = r.Next(4, 20);
+                bool bouncies = false; if (r.Next(0, 2) == 0) { bouncies = true; }
+                float lifetime = r.Next(0, 10);
+                bool life = false; if (r.Next(0, 2) == 0) { life = true; }
+                Vector2 velocity = new Vector2(r.Next(60, 120), r.Next(60, 120));
+                Vector2 loss = new Vector2(r.Next(0, 40), r.Next(0, 40));
+                bool xi = false; if (r.Next(0, 2) == 0) { xi = true; }
+                int x = 1;
+                if (xi) { x = -1; }
+                bool angled = false; if (r.Next(0, 2) == 0) { angled = true; }
+                float? angle = (float)(r.NextDouble() * (Math.PI / 2)); if (angled) { angle = null; }
+                bs.Add(new Bullet(ts, pos, bounces, lifetime, life, velocity, loss, new Point(x, -1), bouncies, 0, angle));
+            }
+            return bs.ToArray();
         }
         void Shoot(Vector2 playerPos)
         {
-            int rng = new Random().Next(0, bullettypes.Length);
-            foreach (var bullet in bullettypes[rng])
+            
+            foreach (var bullet in GetBullets(playerPos))
                 bullets.Add(bullet.Clone());
-            if (rng == 2) { bullets[bullets.Count - 1].CalculateTarget(playerPos, 2f); }
-            if (rng == 1)
-            { }
             shotSound.Play();
         }
         public void Pluggg(Switch[] switches_, GameTime a_gt)
@@ -118,14 +127,6 @@ namespace LUDUMDARE39
                 shotTimer = shotTime; Shoot(playerpos_);
             }
             Pluggg(switches_, a_gt);
-            if (!isPlugged)
-            { hp -= 5 * (float)a_gt.ElapsedGameTime.TotalSeconds;  }
-            else
-            {
-                hp += 8 * (float)a_gt.ElapsedGameTime.TotalSeconds;
-                if (hp > 100)
-                    hp = 100;
-            }
             SetPlatformData();
             SetBulletData();
 

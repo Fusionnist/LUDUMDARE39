@@ -14,7 +14,7 @@ namespace LUDUMDARE39
         RenderTarget2D target;
         int scale, baseScale;
         Rectangle virtualDim, roomDim;
-        CollisionStuff colman;
+        CollisionStuff colman, nextColman;
         Lifebar lifebar, clb;
 
         STexture bg, transition;
@@ -23,8 +23,12 @@ namespace LUDUMDARE39
         float cityHp, blinktime, blinktimer;
         bool blinks, startedTransition;
         STexture c3, c2, c1, start, loss, end, pause, shim;
+        float fallTime, fallTimer;
+        int levelCount, levelCounter;
 
         GameState state; GamePhase phase;
+
+        float cityHpLoss, cityHpGain, bossHpLoss, bossHpGain;
 
         public Game1()
         {
@@ -44,6 +48,14 @@ namespace LUDUMDARE39
             blinktime = 0.5f;
             blinktimer = 0.5f;
             blinks = true;
+
+            cityHpGain = 5f;
+            cityHpLoss = 2f;
+            bossHpGain = 1.5f;
+            bossHpLoss = 30f;
+
+            fallTime = 3f;
+            fallTimer = 3f;
 
             ResetGame();
         }
@@ -78,10 +90,16 @@ namespace LUDUMDARE39
         {
             base.Initialize();        
         }
+        void SetupRoom()
+        {
+
+        }
         void ResetGame()
         {
             phase = GamePhase.BossEnter;
-            cityHp = 3;
+            cityHp = 100;
+            levelCount = 2;
+            levelCounter = 1;
             LoadContent();
         }
         protected override void LoadContent()
@@ -149,7 +167,7 @@ namespace LUDUMDARE39
             colman = new CollisionStuff(player, boss, switches);
 
             lifebar = new Lifebar(new STexture[2] { new STexture(Content.Load<Texture2D>("barcont"), new Rectangle(0, 0, 22, 5), "barcontainer"), new STexture(Content.Load<Texture2D>("barint"), new Rectangle(0, 0, 20, 3), "barinterior") }, new Vector2(0, 0), colman.boss.maxhp);
-            clb = new Lifebar(new STexture[2] { new STexture(Content.Load<Texture2D>("barcont"), new Rectangle(0, 0, 22, 5), "barcontainer"), new STexture(Content.Load<Texture2D>("barint"), new Rectangle(0, 0, 20, 3), "barinterior") }, new Vector2(50, 0),3);
+            clb = new Lifebar(new STexture[2] { new STexture(Content.Load<Texture2D>("barcont"), new Rectangle(0, 0, 22, 5), "barcontainer"), new STexture(Content.Load<Texture2D>("barint"), new Rectangle(0, 0, 20, 3), "barinterior") }, new Vector2(50, 0),100);
         }
 
         protected override void UnloadContent()
@@ -179,6 +197,11 @@ namespace LUDUMDARE39
                             if (colman.boss.isPlugged) { phase = GamePhase.Fight; scale = baseScale; }
                             break;
                         case GamePhase.BossFall:
+                            fallTimer -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+                            if(fallTimer <= 0) {
+                                if(levelCounter > levelCount) { bg = end; state = GameState.End; }
+                                else { fallTimer = fallTime; phase = GamePhase.Fight; }                               
+                            }
                             break;
                         case GamePhase.Fight:
                             foreach (var bullet in colman.boss.bullets)
@@ -190,18 +213,26 @@ namespace LUDUMDARE39
                                 if (switc.isOn)
                                     actSwitches++;
                             }
-                            
-                            if (colman.boss.isPlugged) { cityHp -= 0.1f * (float)gameTime.ElapsedGameTime.TotalSeconds; }
+                            //hp
+                            if (colman.boss.isPlugged) {
+                                colman.boss.hp += bossHpGain * (float)gameTime.ElapsedGameTime.TotalSeconds * actSwitches;
+                                cityHp -= cityHpLoss * (float)gameTime.ElapsedGameTime.TotalSeconds * actSwitches;
+                            }
                             else {
-                                cityHp += 0.05f * (float)gameTime.ElapsedGameTime.TotalSeconds * actSwitches; if (cityHp > 3) { cityHp = 3; }
-                                cityHp -= 0.1f * (float)gameTime.ElapsedGameTime.TotalSeconds;
-                            }                           
-                            if (cityHp <= 3) { bg = c3; }
-                            if (cityHp <= 2) { bg = c2; }
-                            if (cityHp <= 1) { bg = c1; }
+                                colman.boss.hp -= bossHpLoss * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                                cityHp += cityHpGain * (float)gameTime.ElapsedGameTime.TotalSeconds * actSwitches;
+                                cityHp -= cityHpLoss * (float)gameTime.ElapsedGameTime.TotalSeconds * (3-actSwitches);
+                            }
+                            if (cityHp > 100) { cityHp = 100; }
+                            if (colman.boss.hp > 100) { colman.boss.hp = 100; }
+
+                            if (cityHp <= 100) { bg = c3; }
+                            if (cityHp <= 60) { bg = c2; }
+                            if (cityHp <= 30) { bg = c1; }
                             if (cityHp <= 0) { state = GameState.Loss; bg = loss; } //die
-                            if (colman.boss.hp <= 0) { state = GameState.End; bg = end; }
+                            if (colman.boss.hp <= 0) { phase = GamePhase.BossFall; levelCounter++; }
                             colman.Update(gameTime, roomDim, flippy);
+
                             lifebar.hp = colman.boss.hp;
                             clb.hp = cityHp;
 
@@ -260,7 +291,8 @@ namespace LUDUMDARE39
         protected override void Draw(GameTime gameTime)
         {          
             GraphicsDevice.SetRenderTarget(target);
-            spriteBatch.Begin();
+            Matrix tr = Matrix.CreateTranslation(new Vector3(0, (levelCounter-1)*(-192*((fallTime-fallTimer)/fallTime)), 0));
+            spriteBatch.Begin(transformMatrix:tr);
             if (state == GameState.Game) { DrawGame(); }
             if (state == GameState.Start || state == GameState.End || state == GameState.Loss) { DrawStillScreen(); }
             if (state == GameState.Pause) { DrawPause(); }

@@ -42,12 +42,12 @@ namespace LUDUMDARE39
             platformStart = new Vector2(GetHB().X, GetHB().Y);
             platformEnd = new Vector2(GetHB().X + tex.framelength, GetHB().Y);
         }
-        
+
         void SetBulletData()
         {
             Random rng = new Random();
             STexture[] ts = new STexture[] { bullettexes[0].Clone(), bullettexes[1].Clone() };
-            bullettypes = new Bullet[] []
+            bullettypes = new Bullet[][]
             {
                 new Bullet[] { new Bullet(ts, new Vector2(GetHB().X, GetHB().Y) + new Vector2(0, -16), 1, -1, false, new Vector2(50, 0), Vector2.Zero, new Point(rng.Next(0, 2), -1), false, 100, null)},
                 new Bullet[] { new Bullet(ts, new Vector2(GetHB().X, GetHB().Y) + new Vector2(0, -16), 3, -1, false, new Vector2(50, 0), Vector2.Zero, new Point(rng.Next(0, 2), 1), true, 100, null) },
@@ -71,13 +71,13 @@ namespace LUDUMDARE39
                 if (nearestPlug.X < GetHB().X)
                 { mov.X += -10 * (float)a_gt.ElapsedGameTime.TotalSeconds; }//temp
             }
-        }            
+        }
         void Shoot(Vector2 playerPos)
         {
             int rng = new Random().Next(0, bullettypes.Length);
-            foreach (var bullet in bullettypes[4])
+            foreach (var bullet in bullettypes[rng])
                 bullets.Add(bullet.Clone());
-            if(rng == 2) { bullets[bullets.Count - 1].CalculateTarget(playerPos, 2f); }
+            if (rng == 2) { bullets[bullets.Count - 1].CalculateTarget(playerPos, 2f); }
         }
 
         public void Update(GameTime a_gt, Rectangle virtualDims, Switch[] switches_, Vector2 playerpos_)
@@ -85,43 +85,46 @@ namespace LUDUMDARE39
             isNearPlug = false;
             isPlugged = false;
             shotTimer -= (float)a_gt.ElapsedGameTime.TotalSeconds;
-            if (shotTimer <= 0) { shotTimer = shotTime; Shoot(playerpos_); }
-            float record = 1000;
-            foreach (Switch s in switches_)
+            if (shotTimer <= 0)
             {
-                if (s.isOn)
+                shotTimer = shotTime; Shoot(playerpos_); 
+            }
+                float record = 1000;
+                foreach (Switch s in switches_)
                 {
-                    if ((Vector2.Distance(new Vector2(GetHB().X, GetHB().Y), new Vector2(s.plug.GetHB().X, s.plug.GetHB().Y))) < record)
+                    if (s.isOn)
                     {
-                        isNearPlug = true;
-                        record = Vector2.Distance(new Vector2(GetHB().X, GetHB().Y) , new Vector2(s.plug.GetHB().X, s.plug.GetHB().Y));
-                        nearestPlug = new Vector2(s.plug.GetHB().X, s.plug.GetHB().Y);
-                        if (nearestPlug.X - GetHB().X < 1 && nearestPlug.X - GetHB().X > -1)
-                        { pos.X = nearestPlug.X; isPlugged = true; }                        
+                        if ((Vector2.Distance(new Vector2(GetHB().X, GetHB().Y), new Vector2(s.plug.GetHB().X, s.plug.GetHB().Y))) < record)
+                        {
+                            isNearPlug = true;
+                            record = Vector2.Distance(new Vector2(GetHB().X, GetHB().Y), new Vector2(s.plug.GetHB().X, s.plug.GetHB().Y));
+                            nearestPlug = new Vector2(s.plug.GetHB().X, s.plug.GetHB().Y);
+                            if (nearestPlug.X - GetHB().X < 1 && nearestPlug.X - GetHB().X > -1)
+                            { pos.X = nearestPlug.X; isPlugged = true; }
+                        }
                     }
-                }                
-            }
-            if (!isPlugged) { hp -= 2 * (float)a_gt.ElapsedGameTime.TotalSeconds; SeekPlug(a_gt); }
-            else
-            {
-                hp += 8 * (float)a_gt.ElapsedGameTime.TotalSeconds;
-                if (hp > 100)
-                    hp = 100;
-            }
+                }
+                if (!isPlugged) { hp -= 2 * (float)a_gt.ElapsedGameTime.TotalSeconds; SeekPlug(a_gt); }
+                else
+                {
+                    hp += 8 * (float)a_gt.ElapsedGameTime.TotalSeconds;
+                    if (hp > 100)
+                        hp = 100;
+                }
 
-            pos += mov;
-            mov = Vector2.Zero;
-            
-            SetPlatformData();
-            SetBulletData();
+                pos += mov;
+                mov = Vector2.Zero;
 
-            for (int x = bullets.Count - 1; x >= 0; x--)
-            {
-                if (bullets[x].isDead)
-                    bullets.Remove(bullets[x]);
+                SetPlatformData();
+                SetBulletData();
+
+                for (int x = bullets.Count - 1; x >= 0; x--)
+                {
+                    if (bullets[x].isDead)
+                        bullets.Remove(bullets[x]);
+                }
+
+                base.Update(a_gt);
             }
-
-            base.Update(a_gt);
         }
     }
-}

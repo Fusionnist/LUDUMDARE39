@@ -78,7 +78,7 @@ namespace LUDUMDARE39
             foreach(var bullet in boss.bullets)
             {
                 if (bullet.GetHB().Intersects(player.GetHB())&& !bullet.isExploding)
-                { bullet.bounces = 0; player.isStunned = true; player.Yvel = 1; }
+                { bullet.bounces = 0; player.isStunned = true; player.Yvel = 1; player.hurt.Play(); }
             }
         }
     }

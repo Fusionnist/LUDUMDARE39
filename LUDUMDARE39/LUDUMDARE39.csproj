@@ -119,7 +119,10 @@
   <ItemGroup>
     <Content Include="Content\barcont.png" />
     <Content Include="Content\barint.png" />
+    <Content Include="Content\bossshot.wav" />
     <Content Include="Content\bullet.png" />
+    <Content Include="Content\hurt.wav" />
+    <Content Include="Content\jump.wav" />
     <Content Include="Content\plug.png" />
     <Content Include="Content\plugoff.png" />
     <Content Include="Content\scene.png" />
@@ -127,6 +130,7 @@
     <Content Include="Content\scene2hp.png" />
     <Content Include="Content\scene3hp.png" />
     <Content Include="Content\splode.png" />
+    <Content Include="Content\switch.wav" />
     <Content Include="Content\switchoff.png" />
     <Content Include="Content\switchon.png" />
     <Content Include="Content\test.png" />

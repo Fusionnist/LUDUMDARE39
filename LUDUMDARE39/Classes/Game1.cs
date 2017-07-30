@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
@@ -69,7 +70,8 @@ namespace LUDUMDARE39
                 new Vector2(10, 88), 
                 new STexture[2] {
                 new STexture(Content.Load<Texture2D>("bullet"), 6, 8, 0.1f, "bullet", new Rectangle(1, 1, 6, 6), true),
-                new STexture(Content.Load<Texture2D>("splode"), 6, 8, 0.1f, "explosion", new Rectangle(1, 1, 6, 6), false) });
+                new STexture(Content.Load<Texture2D>("splode"), 6, 8, 0.1f, "explosion", new Rectangle(1, 1, 6, 6), false) },
+                Content.Load<SoundEffect>("bossshot") );
             bg = c3;
             Switch[] switches = new Switch[] {
                 new Switch(new STexture[]{
@@ -79,7 +81,8 @@ namespace LUDUMDARE39
                 new Plug(new STexture[]{
                 new STexture(Content.Load<Texture2D>("plug"), new Rectangle(0, 0, 8, 9), "switchon"),
                 new STexture(Content.Load<Texture2D>("plugoff"), new Rectangle(0, 0, 8, 9), "switchoff") },
-                new Vector2(10,83))),
+                new Vector2(10,83)),
+                Content.Load<SoundEffect>("switch")),
 
                 new Switch(new STexture[]{
                 new STexture(Content.Load<Texture2D>("switchon"), new Rectangle(0, 0, 8, 9), "switchon"),
@@ -88,7 +91,8 @@ namespace LUDUMDARE39
                 new Plug(new STexture[]{
                 new STexture(Content.Load<Texture2D>("plug"), new Rectangle(0, 0, 11, 10), "switchon"),
                 new STexture(Content.Load<Texture2D>("plugoff"), new Rectangle(0, 0, 11, 10), "switchoff") },
-                new Vector2(90,83))),
+                new Vector2(90,83)),
+                Content.Load<SoundEffect>("switch")),
 
                 new Switch(new STexture[]{
                 new STexture(Content.Load<Texture2D>("switchon"), new Rectangle(0, 0, 8, 9), "switchon"),
@@ -97,7 +101,8 @@ namespace LUDUMDARE39
                 new Plug(new STexture[]{
                 new STexture(Content.Load<Texture2D>("plug"), new Rectangle(0, 0, 11, 10), "switchon"),
                 new STexture(Content.Load<Texture2D>("plugoff"), new Rectangle(0, 0, 11, 10), "switchoff") },
-                new Vector2(170,83)))
+                new Vector2(170,83)),
+                Content.Load<SoundEffect>("switch"))
             };
             colman = new CollisionStuff(player, boss, switches);
 

@@ -60,7 +60,8 @@ namespace LUDUMDARE39
                     new Bullet(ts, new Vector2(GetHB().X, GetHB().Y) + new Vector2(0, -16), 3, -1, false, new Vector2(50, 50), new Vector2(0, 50), new Point(rng.Next(0, 2), -1), true, 100, (float)(rng.NextDouble() * Math.PI / 2)),
                     new Bullet(ts, new Vector2(GetHB().X, GetHB().Y) + new Vector2(0, -16), 3, -1, false, new Vector2(50, 50), new Vector2(0, 50), new Point(rng.Next(0, 2), -1), true, 100, (float)(rng.NextDouble() * Math.PI / 2)),
                     new Bullet(ts, new Vector2(GetHB().X, GetHB().Y) + new Vector2(0, -16), 3, -1, false, new Vector2(50, 50), new Vector2(0, 50), new Point(rng.Next(0, 2), -1), true, 100, (float)(rng.NextDouble() * Math.PI / 2))
-                }
+                },
+                new Bullet[] { new Bullet(ts, new Vector2(GetHB().X, GetHB().Y) + new Vector2(0, -16), 5, -1, false, new Vector2(50, 30), Vector2.Zero, new Point(rng.Next(0, 2), -1), true, 100, null) }
             };
         }
 
@@ -68,9 +69,9 @@ namespace LUDUMDARE39
         {
             if (isNearPlug)
             {
-                if (nearestPlug.X > GetHB().X + plugDist.X)
+                if (nearestPlug.X > GetHB().X)
                 { mov.X += 10 * (float)a_gt.ElapsedGameTime.TotalSeconds; tex.isInverted = true; }//temp
-                if (nearestPlug.X < GetHB().X + plugDist.X)
+                if (nearestPlug.X < GetHB().X)
                 { mov.X += -10 * (float)a_gt.ElapsedGameTime.TotalSeconds; tex.isInverted = false; }//temp
             }
         }
@@ -80,6 +81,8 @@ namespace LUDUMDARE39
             foreach (var bullet in bullettypes[rng])
                 bullets.Add(bullet.Clone());
             if (rng == 2) { bullets[bullets.Count - 1].CalculateTarget(playerPos, 2f); }
+            if (rng == 1)
+            { }
             shotSound.Play();
         }
         public void Pluggg(Switch[] switches_, GameTime a_gt)
@@ -89,10 +92,10 @@ namespace LUDUMDARE39
             {
                 if (s.isOn)
                 {
-                    if ((Vector2.Distance(new Vector2(GetHB().X + plugDist.X, GetHB().Y + plugDist.Y), new Vector2(s.plug.GetHB().X, s.plug.GetHB().Y))) < record)
+                    if ((Vector2.Distance(new Vector2(GetHB().X, GetHB().Y), new Vector2(s.plug.GetHB().X, s.plug.GetHB().Y))) < record)
                     {
                         isNearPlug = true;
-                        record = Vector2.Distance(new Vector2(GetHB().X + plugDist.X, GetHB().Y + plugDist.Y), new Vector2(s.plug.GetHB().X, s.plug.GetHB().Y));
+                        record = Vector2.Distance(new Vector2(GetHB().X, GetHB().Y), new Vector2(s.plug.GetHB().X, s.plug.GetHB().Y));
                         nearestPlug = new Vector2(s.plug.GetHB().X, s.plug.GetHB().Y);
                         if (nearestPlug.X - (GetHB().X + plugDist.X) < 1 && nearestPlug.X - (GetHB().X + plugDist.X) > -1)
                         { pos.X = nearestPlug.X - plugDist.X; isPlugged = true; }

@@ -94,13 +94,15 @@ namespace LUDUMDARE39
                         isNearPlug = true;
                         record = Vector2.Distance(new Vector2(GetHB().X + plugDist.X, GetHB().Y + plugDist.Y), new Vector2(s.plug.GetHB().X, s.plug.GetHB().Y));
                         nearestPlug = new Vector2(s.plug.GetHB().X, s.plug.GetHB().Y);
-                        if (nearestPlug.X - GetHB().X < 1 && nearestPlug.X - GetHB().X > -1)
-                        { pos.X = nearestPlug.X; isPlugged = true; }
+                        if (nearestPlug.X - (GetHB().X + plugDist.X) < 1 && nearestPlug.X - (GetHB().X + plugDist.X) > -1)
+                        { pos.X = nearestPlug.X - plugDist.X; isPlugged = true; }
                     }
                 }
             }
             if (!isPlugged) { SeekPlug(a_gt); }
             pos += mov;
+            if(mov.X > 0) { plugDist.X = 8 ; } //settung plugdist based on mov
+            if (mov.X < 0) { plugDist.X = -8; }
             mov = Vector2.Zero;
         }
         public void Update(GameTime a_gt, Rectangle virtualDims, Switch[] switches_, Vector2 playerpos_)
@@ -113,7 +115,8 @@ namespace LUDUMDARE39
                 shotTimer = shotTime; Shoot(playerpos_);
             }
             Pluggg(switches_, a_gt);
-            if (!isPlugged) { hp -= 2 * (float)a_gt.ElapsedGameTime.TotalSeconds;  }
+            if (!isPlugged)
+            { hp -= 5 * (float)a_gt.ElapsedGameTime.TotalSeconds;  }
             else
             {
                 hp += 8 * (float)a_gt.ElapsedGameTime.TotalSeconds;

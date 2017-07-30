@@ -51,9 +51,13 @@ namespace LUDUMDARE39
         }
         public void Reset()
         {
-            currentframe = 1;
-            frametimer = frametime;
-            complete = false;
+            if (!loops)
+            {
+                currentframe = 1;
+                frametimer = frametime;
+                complete = false;
+            }
+           
         }
         public void Update(GameTime a_gt)
         {

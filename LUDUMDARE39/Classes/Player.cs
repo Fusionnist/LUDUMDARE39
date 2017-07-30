@@ -12,6 +12,7 @@ namespace LUDUMDARE39
 {
     class Player : Sprite
     {
+        bool inverts;
         public Vector2 mov;
         public float Yvel, stunTimer, stunTime;
         public bool isOnGround, isOnBoss, isInHighJump, isStunned;
@@ -34,6 +35,17 @@ namespace LUDUMDARE39
         public void Update(GameTime a_gt, Rectangle virtualDims)
         {            
             pos += mov;
+            //selecting texture
+            if(Yvel > 0 && !isOnGround)
+            { SelectTexture("up"); }
+            if(Yvel < 0 && !isOnGround)
+            { SelectTexture("down"); }
+            if(isOnGround || isOnBoss && mov.X == 0)
+            { SelectTexture("land"); }
+            if(mov.X != 0 && isOnGround)
+            {
+                SelectTexture("run");
+            }
             mov = Vector2.Zero;
             if (GetHB().X > virtualDims.Width + virtualDims.X - GetHB().Width)
                 pos.X = virtualDims.Width + virtualDims.X - GetHB().Width;
@@ -62,13 +74,13 @@ namespace LUDUMDARE39
             if (!isStunned)
             {
                 if (ks.IsKeyDown(Keys.Left))
-                { mov.X -= 100 * (float)a_gt.ElapsedGameTime.TotalSeconds; tex.isInverted = false; }
+                { mov.X -= 100 * (float)a_gt.ElapsedGameTime.TotalSeconds; inverts = false; }
                 if (ks.IsKeyDown(Keys.Right))
-                { mov.X += 100 * (float)a_gt.ElapsedGameTime.TotalSeconds; tex.isInverted = true; }
+                { mov.X += 100 * (float)a_gt.ElapsedGameTime.TotalSeconds; inverts = true; }
                 if (isInHighJump)
                     mov.X /= 2;
             }
-
+            tex.isInverted = inverts;
 
             if (GetHB().Y >= virtualDims.Height + virtualDims.Y - GetHB().Height)
                 isOnGround = true;

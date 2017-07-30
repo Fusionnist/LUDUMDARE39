@@ -12,7 +12,7 @@ namespace LUDUMDARE39
     class Player : Sprite
     {
         public Vector2 mov;
-        public float Yvel, stunTimer, stunTime;
+        public float Yvel, stunTimer, stunTime, xmov;
         public bool isOnGround, isOnBoss, isInHighJump, isStunned;
 
         public Player(STexture[] a_tex, Vector2 a_pos): base(a_tex, a_pos)
@@ -25,6 +25,7 @@ namespace LUDUMDARE39
             isStunned = false;
             stunTime = 3;
             stunTimer = stunTime;
+            xmov = 150;
         }
 
         public void Update(GameTime a_gt, Rectangle virtualDims)
@@ -58,11 +59,11 @@ namespace LUDUMDARE39
             if (!isStunned)
             {
                 if (ks.IsKeyDown(Keys.Left))
-                    mov.X -= 100 * (float)a_gt.ElapsedGameTime.TotalSeconds;
+                    mov.X -= xmov * (float)a_gt.ElapsedGameTime.TotalSeconds;
                 if (ks.IsKeyDown(Keys.Right))
-                    mov.X += 100 * (float)a_gt.ElapsedGameTime.TotalSeconds;
+                    mov.X += xmov * (float)a_gt.ElapsedGameTime.TotalSeconds;
                 if (isInHighJump)
-                    mov.X /= 2;
+                    mov.X /= 1.6f;
             }
 
 

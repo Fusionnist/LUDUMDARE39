@@ -13,7 +13,7 @@ namespace LUDUMDARE39
     {
         public Texture2D tex;
         public string name;
-        int framecount, currentframe;
+        public int framecount, currentframe;
         float frametime, frametimer;
         public int framelength { get; set; }
         public int frameheight { get; set; }

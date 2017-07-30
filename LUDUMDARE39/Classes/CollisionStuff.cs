@@ -67,8 +67,8 @@ namespace LUDUMDARE39
 
         public void BossPushPlayer()
         {
-            if (player.GetHB().X < boss.GetHB().X && player.GetHB().X > boss.GetHB().X - player.GetHB().Width && player.GetHB().Y > boss.GetHB().Y - player.GetHB().Height)
-                player.pos.X = boss.GetHB().X - player.GetHB().Width;
+            if (player.GetHB().X < boss.GetHB().X && player.GetHB().X + player.GetHB().Width > boss.GetHB().X && player.GetHB().Y > boss.GetHB().Y - player.GetHB().Height)
+                player.pos.X = boss.GetHB().X - player.GetHB().Width - player.tex.hb.X;
             if (player.GetHB().X > boss.GetHB().X && player.GetHB().X < boss.GetHB().X + boss.GetHB().Width && player.GetHB().Y > boss.GetHB().Y - player.GetHB().Height)
                 player.pos.X = boss.GetHB().X + boss.GetHB().Width - player.tex.hb.X;
         }

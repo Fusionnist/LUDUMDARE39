@@ -33,8 +33,8 @@ namespace LUDUMDARE39
             mov = Vector2.Zero;
             if (GetHB().X > virtualDims.Width + virtualDims.X - GetHB().Width)
                 pos.X = virtualDims.Width + virtualDims.X - GetHB().Width;
-            if (GetHB().X < 0)
-                pos.X = 0;
+            if (GetHB().X < virtualDims.X)
+                pos.X = virtualDims.X - tex.hb.X;
             if (GetHB().Y + GetHB().Height > virtualDims.Height + virtualDims.Y )
                 pos.Y = virtualDims.Height + virtualDims.Y - GetHB().Height;
             if (GetHB().Y < 0)

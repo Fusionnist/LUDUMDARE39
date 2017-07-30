@@ -55,7 +55,7 @@ namespace LUDUMDARE39
                 new Bullet(ts, new Vector2(GetHB().X, GetHB().Y) + new Vector2(0, -16), 1, -1, false, new Vector2(50, 0), Vector2.Zero, new Point(rndX, -1), false, 100),
                 new Bullet(ts, new Vector2(GetHB().X, GetHB().Y) + new Vector2(0, -16), 3, -1, false, new Vector2(50, 0), Vector2.Zero, new Point(rndX, 1), true, 100),
                 new Bullet(ts, new Vector2(GetHB().X, GetHB().Y) + new Vector2(0, -16), 3, -1, false, new Vector2(50, 50), new Vector2(0, 50), new Point(rndX, -1), true, 100),
-                new Bullet(ts, new Vector2(GetHB().X, GetHB().Y) + new Vector2(0, -16), 1000, 5, true, new Vector2(50, 50), new Vector2(0, 50), new Point(rndX, -1), true, 100)
+                new Bullet(ts, new Vector2(GetHB().X, GetHB().Y) + new Vector2(0, -16), 1000, 5, true, new Vector2(50, 50), new Vector2(0, 50), new Point(rndX, -1), true, 100),
             };
         }
 
@@ -69,7 +69,7 @@ namespace LUDUMDARE39
                 { mov.X += -10 * (float)a_gt.ElapsedGameTime.TotalSeconds; }//temp
             }
         }            
-        void Shoot()
+        void Shoot(Vector2 playerPos)
         {
             int rng = new Random().Next(0, bullettypes.Length);
             bullets.Add(bullettypes[rng].Clone());
@@ -80,7 +80,7 @@ namespace LUDUMDARE39
             isNearPlug = false;
             isPlugged = false;
             shotTimer -= (float)a_gt.ElapsedGameTime.TotalSeconds;
-            if (shotTimer <= 0) { shotTimer = shotTime; Shoot(); }
+            if (shotTimer <= 0) { shotTimer = shotTime; Shoot(playerpos_); }
             float record = 1000;
             foreach (Switch s in switches_)
             {

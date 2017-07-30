@@ -27,6 +27,7 @@ namespace LUDUMDARE39
             framelength = a_tex.Width;
             hb = a_hb;
             currentframe = 1;
+            framecount = 1;
             name = name_;
         }
 

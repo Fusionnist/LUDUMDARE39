@@ -51,7 +51,7 @@ namespace LUDUMDARE39
             {
                 new Bullet[] { new Bullet(ts, new Vector2(GetHB().X, GetHB().Y) + new Vector2(0, -16), 1, -1, false, new Vector2(50, 0), Vector2.Zero, new Point(rng.Next(0, 2), -1), false, 100, null)},
                 new Bullet[] { new Bullet(ts, new Vector2(GetHB().X, GetHB().Y) + new Vector2(0, -16), 3, -1, false, new Vector2(50, 0), Vector2.Zero, new Point(rng.Next(0, 2), 1), true, 100, null) },
-                new Bullet[] { new Bullet(ts, new Vector2(GetHB().X, GetHB().Y) + new Vector2(0, -16), 3, -1, false, new Vector2(50, 50), new Vector2(0, 50), new Point(rng.Next(0, 2), -1), true, 100, null) },
+                new Bullet[] { new Bullet(ts, new Vector2(GetHB().X, GetHB().Y) + new Vector2(0, -16), 10, -1, false, new Vector2(50, 50), new Vector2(0, 50), new Point(rng.Next(0, 2), -1), true, 100, null) },
                 new Bullet[] { new Bullet(ts, new Vector2(GetHB().X, GetHB().Y) + new Vector2(0, -16), 1000, 5, true, new Vector2(50, 50), new Vector2(0, 50), new Point(rng.Next(0, 2), -1), true, 100, null) },
                 new Bullet[]
                 {

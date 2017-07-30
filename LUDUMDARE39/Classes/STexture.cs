@@ -57,16 +57,13 @@ namespace LUDUMDARE39
         {
             frametimer -= (float)a_gt.ElapsedGameTime.TotalSeconds;
             if (frametimer <= 0)
-            {
-                if(!loops) { complete = true; }
-                if (loops)
-                {
-
-                }
+            {               
                 frametimer = frametime;
                 currentframe++;
-                if (currentframe > framecount)
+                if (currentframe > framecount && loops)
                     currentframe = 1;
+                if (!loops && currentframe > framecount)
+                { complete = true; currentframe = framecount; }
             }
             
         }

@@ -25,7 +25,6 @@ namespace LUDUMDARE39
         public void Update(GameTime a_gt, Rectangle virtualdims, Input input)
         {
             player.Move(a_gt, virtualdims);
-            boss.Move(a_gt);
             CheckPlayerOnBoss();
             player.Update(a_gt, virtualdims);
             BulletCollisions();

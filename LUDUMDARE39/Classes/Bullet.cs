@@ -37,6 +37,12 @@ namespace LUDUMDARE39
             velocity.X = tar_.X - pos.X / timeToTar_;
             velLoss.X = 0;
         }
+
+        public Bullet Clone()
+        {
+            return new Bullet(texes, pos, bounces, lifeTime, lifeTimed, velocity, velLoss, xyDir, bouncy, maxv);
+        }
+
         public void Update(GameTime a_gt, Rectangle vdims_)
         {
             base.Update(a_gt);

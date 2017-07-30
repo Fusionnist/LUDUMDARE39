@@ -99,7 +99,7 @@ namespace LUDUMDARE39
             c2 = new STexture(Content.Load<Texture2D>("scene2hp"), new Rectangle(0, 0, 192, 108), "city2");
             c1 = new STexture(Content.Load<Texture2D>("scene1hp"), new Rectangle(0, 0, 192, 108), "city1");
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            Player player = new Player(new STexture[1] { new STexture(Content.Load<Texture2D>("test"), 4, 16, 0.1f, "test", new Rectangle(2, 0, 12, 16), true) }, new Vector2(140,88), Content.Load<SoundEffect>("jump"), Content.Load<SoundEffect>("hurt"));
+            Player player = new Player(new STexture[1] { new STexture(Content.Load<Texture2D>("test"), 4, 16, 0.1f, "test", new Rectangle(0, 0, 16, 16), true) }, new Vector2(140,88), Content.Load<SoundEffect>("jump"), Content.Load<SoundEffect>("hurt"));
             Boss boss = new Boss(
                 new STexture[1] {
                 new STexture(Content.Load<Texture2D>("test"), 4, 16, 0.1f, "test", new Rectangle(0, 0, 16, 16), true) }, 
@@ -185,7 +185,7 @@ namespace LUDUMDARE39
                                     actSwitches++;
                             }
                             if (colman.boss.isPlugged) { cityHp -= 0.1f * (float)gameTime.ElapsedGameTime.TotalSeconds; }
-                            else { cityHp += 0.05f * (float)gameTime.ElapsedGameTime.TotalSeconds * actSwitches; }
+                            else { cityHp += 0.05f * (float)gameTime.ElapsedGameTime.TotalSeconds * actSwitches; if (cityHp > 3) { cityHp = 3; } }
 
                             if (cityHp <= 3) { bg = c3; }
                             if (cityHp <= 2) { bg = c2; }

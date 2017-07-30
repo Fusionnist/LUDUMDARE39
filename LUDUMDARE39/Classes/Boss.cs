@@ -69,9 +69,9 @@ namespace LUDUMDARE39
             if (isNearPlug)
             {
                 if (nearestPlug.X > GetHB().X)
-                { mov.X += 10 * (float)a_gt.ElapsedGameTime.TotalSeconds; }//temp
+                { mov.X += 10 * (float)a_gt.ElapsedGameTime.TotalSeconds; tex.isInverted = true; }//temp
                 if (nearestPlug.X < GetHB().X)
-                { mov.X += -10 * (float)a_gt.ElapsedGameTime.TotalSeconds; }//temp
+                { mov.X += -10 * (float)a_gt.ElapsedGameTime.TotalSeconds; tex.isInverted = false; }//temp
             }
         }
         void Shoot(Vector2 playerPos)

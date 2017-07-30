@@ -18,7 +18,7 @@ namespace LUDUMDARE39
         public int framelength { get; set; }
         public int frameheight { get; set; }
         public Rectangle hb;
-        public bool loops, complete;
+        public bool loops, complete, isInverted;
 
         public STexture(Texture2D a_tex, Rectangle a_hb, string name_)
         {
@@ -29,6 +29,7 @@ namespace LUDUMDARE39
             currentframe = 1;
             framecount = 1;
             name = name_;
+            isInverted = false;
         }
 
         public STexture(Texture2D a_tex, int a_FC, int a_FL, float a_FT, string name_, Rectangle a_hb, bool loops_)
@@ -71,7 +72,10 @@ namespace LUDUMDARE39
 
         public void Draw(SpriteBatch a_sb, Vector2 a_pos)
         {
-            a_sb.Draw(tex, a_pos - new Vector2(hb.X, hb.Y), sourceRectangle: new Rectangle(framelength * (currentframe - 1), 0, framelength, tex.Height));
+            if (!isInverted)
+                a_sb.Draw(tex, a_pos - new Vector2(hb.X, hb.Y), sourceRectangle: new Rectangle(framelength * (currentframe - 1), 0, framelength, tex.Height));
+            else
+                a_sb.Draw(tex, a_pos - new Vector2(hb.X, hb.Y), sourceRectangle: new Rectangle(framelength * (currentframe - 1), 0, framelength, tex.Height), effects: SpriteEffects.FlipHorizontally);
         }
     }
 }

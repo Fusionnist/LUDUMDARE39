@@ -178,8 +178,14 @@ namespace LUDUMDARE39
                             foreach (var bullet in colman.boss.bullets)
                                 bullet.Update(gameTime, roomDim);
 
+                            int actSwitches = 0;
+                            foreach (var switc in colman.switches)
+                            {
+                                if (switc.isOn)
+                                    actSwitches++;
+                            }
                             if (colman.boss.isPlugged) { cityHp -= 0.1f * (float)gameTime.ElapsedGameTime.TotalSeconds; }
-                            else { cityHp += 0.05f * (float)gameTime.ElapsedGameTime.TotalSeconds; }
+                            else { cityHp += 0.05f * (float)gameTime.ElapsedGameTime.TotalSeconds * actSwitches; }
 
                             if (cityHp <= 3) { bg = c3; }
                             if (cityHp <= 2) { bg = c2; }

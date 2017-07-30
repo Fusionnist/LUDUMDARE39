@@ -62,9 +62,9 @@ namespace LUDUMDARE39
             if (!isStunned)
             {
                 if (ks.IsKeyDown(Keys.Left))
-                    mov.X -= 100 * (float)a_gt.ElapsedGameTime.TotalSeconds;
+                { mov.X -= 100 * (float)a_gt.ElapsedGameTime.TotalSeconds; tex.isInverted = false; }
                 if (ks.IsKeyDown(Keys.Right))
-                    mov.X += 100 * (float)a_gt.ElapsedGameTime.TotalSeconds;
+                { mov.X += 100 * (float)a_gt.ElapsedGameTime.TotalSeconds; tex.isInverted = true; }
                 if (isInHighJump)
                     mov.X /= 2;
             }

@@ -13,20 +13,20 @@ namespace LUDUMDARE39
     class Switch : Sprite
     {
         public bool isOn;
-        public Plug plug;
+        public Plug[] plugs;
         public SoundEffect switchSound;
 
-        public Switch(STexture[] a_texes, Vector2 a_pos, Plug a_plug, SoundEffect a_switchSound):base(a_texes, a_pos)
+        public Switch(STexture[] a_texes, Vector2 a_pos, Plug[] a_plug, SoundEffect a_switchSound):base(a_texes, a_pos)
         {
             isOn = true;
-            plug = a_plug;
+            plugs = a_plug;
             switchSound = a_switchSound;
         }
 
         public void Activate()
         {
             isOn = !isOn;
-            plug.Activate();
+            foreach (Plug p in plugs) { p.Activate(); }
             if (isOn) { SelectTexture("switchon"); }
             if (!isOn) { SelectTexture("switchoff"); }
             switchSound.Play();
@@ -35,7 +35,7 @@ namespace LUDUMDARE39
         public override void Draw(SpriteBatch a_sb)
         {
             base.Draw(a_sb);
-            plug.Draw(a_sb);
+            foreach(Plug p in plugs) { p.Draw(a_sb); }
         }
     }
 }

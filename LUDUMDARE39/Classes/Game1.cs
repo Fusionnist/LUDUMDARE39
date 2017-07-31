@@ -11,7 +11,7 @@ namespace LUDUMDARE39
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        RenderTarget2D target;
+        RenderTarget2D target, nextTarget, fuckingTarget;
         int scale, baseScale;
         Rectangle virtualDim, roomDim;
         CollisionStuff colman, nextColman;
@@ -22,11 +22,12 @@ namespace LUDUMDARE39
 
         float cityHp, blinktime, blinktimer;
         bool blinks, startedTransition;
-        STexture c3, c2, c1, start, loss, end, pause, shim;
-        float fallTime, fallTimer;
+        STexture start, loss, end, pause, shim;
+        double fallTime, fallTimer;
         int levelCount, levelCounter;
 
         GameState state; GamePhase phase;
+        Player pl; Boss bl;
 
         float cityHpLoss, cityHpGain, bossHpLoss, bossHpGain;
 
@@ -34,8 +35,8 @@ namespace LUDUMDARE39
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height/2;
-            graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width/2;
+            graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
+            graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
             Window.IsBorderless = true;
             graphics.ApplyChanges();
 
@@ -50,12 +51,12 @@ namespace LUDUMDARE39
             blinks = true;
 
             cityHpGain = 5f;
-            cityHpLoss = 2f;
+            cityHpLoss = 2.6f;
             bossHpGain = 1.5f;
-            bossHpLoss = 30f;
+            bossHpLoss = 4.8f;
 
-            fallTime = 3f;
-            fallTimer = 3f;
+            fallTime = 1;
+            fallTimer = fallTime;
 
             ResetGame();
         }
@@ -83,6 +84,8 @@ namespace LUDUMDARE39
             baseScale = scale;
 
             target = new RenderTarget2D(GraphicsDevice, virtualDim.Width, virtualDim.Height);
+            nextTarget = new RenderTarget2D(GraphicsDevice, virtualDim.Width, virtualDim.Height);
+            fuckingTarget = new RenderTarget2D(GraphicsDevice, virtualDim.Width, virtualDim.Height);
             virtualDim.X = (int)((GraphicsDevice.Viewport.Width/scale- virtualDim.Width) /2);
             virtualDim.Y = (int)((GraphicsDevice.Viewport.Height/scale - virtualDim.Height) /2);
         }
@@ -102,6 +105,94 @@ namespace LUDUMDARE39
             levelCounter = 1;
             LoadContent();
         }
+        CollisionStuff getColman(int number)
+        {
+            STexture[] bgs = new STexture[0];
+            Switch[] switches = new Switch[0];
+            if (number == 1)
+            {
+                bgs = new STexture[] {
+                new STexture(Content.Load<Texture2D>("scene3hp"), new Rectangle(0, 0, 192, 108), "city3"),
+                new STexture(Content.Load<Texture2D>("scene2hp"), new Rectangle(0, 0, 192, 108), "city2"),
+                new STexture(Content.Load<Texture2D>("scene1hp"), new Rectangle(0, 0, 192, 108), "city1"),
+            };
+                switches = new Switch[] {
+                new Switch(new STexture[]{
+                new STexture(Content.Load<Texture2D>("switchon"), new Rectangle(0, 0, 8, 9), "switchon"),
+                new STexture(Content.Load<Texture2D>("switchoff"), new Rectangle(0, 0, 8, 9), "switchoff") },
+                new Vector2(12,19),
+                new Plug[]{new Plug(new STexture[]{
+                new STexture(Content.Load<Texture2D>("plug"), new Rectangle(0, 0, 8, 9), "switchon"),
+                new STexture(Content.Load<Texture2D>("plugoff"), new Rectangle(0, 0, 8, 9), "switchoff") },
+                new Vector2(10,83)) },
+                Content.Load<SoundEffect>("switch")),
+
+                new Switch(new STexture[]{
+                new STexture(Content.Load<Texture2D>("switchon"), new Rectangle(0, 0, 8, 9), "switchon"),
+                new STexture(Content.Load<Texture2D>("switchoff"), new Rectangle(0, 0, 8, 9), "switchoff") },
+                new Vector2(92,19),
+                new Plug[]{new Plug(new STexture[]{
+                new STexture(Content.Load<Texture2D>("plug"), new Rectangle(0, 0, 11, 10), "switchon"),
+                new STexture(Content.Load<Texture2D>("plugoff"), new Rectangle(0, 0, 11, 10), "switchoff") },
+                new Vector2(90,83)) },
+                Content.Load<SoundEffect>("switch")),
+
+                new Switch(new STexture[]{
+                new STexture(Content.Load<Texture2D>("switchon"), new Rectangle(0, 0, 8, 9), "switchon"),
+                new STexture(Content.Load<Texture2D>("switchoff"), new Rectangle(0, 0, 8, 9), "switchoff") },
+                new Vector2(172,19),
+                new Plug[]{new Plug(new STexture[]{
+                new STexture(Content.Load<Texture2D>("plug"), new Rectangle(0, 0, 11, 10), "switchon"),
+                new STexture(Content.Load<Texture2D>("plugoff"), new Rectangle(0, 0, 11, 10), "switchoff") },
+                new Vector2(170,83)) },
+                Content.Load<SoundEffect>("switch"))
+            }; }
+            if (number == 2)
+            {
+                Plug plug1 = new Plug(new STexture[]{
+                new STexture(Content.Load<Texture2D>("plug"), new Rectangle(0, 0, 8, 9), "switchon"),
+                new STexture(Content.Load<Texture2D>("plugoff"), new Rectangle(0, 0, 8, 9), "switchoff") },
+                new Vector2(13, 83));
+
+                Plug plug2 = new Plug(new STexture[]{
+                new STexture(Content.Load<Texture2D>("plug"), new Rectangle(0, 0, 8, 9), "switchon"),
+                new STexture(Content.Load<Texture2D>("plugoff"), new Rectangle(0, 0, 8, 9), "switchoff") },
+                new Vector2(52, 83));
+
+                Plug plug3 = new Plug(new STexture[]{
+                new STexture(Content.Load<Texture2D>("plug"), new Rectangle(0, 0, 8, 9), "switchon"),
+                new STexture(Content.Load<Texture2D>("plugoff"), new Rectangle(0, 0, 8, 9), "switchoff") },
+                new Vector2(156, 83));
+
+                bgs = new STexture[] {
+                new STexture(Content.Load<Texture2D>("uscene3"), new Rectangle(0, 0, 192, 108), "city3"),
+                new STexture(Content.Load<Texture2D>("uscene2"), new Rectangle(0, 0, 192, 108), "city2"),
+                new STexture(Content.Load<Texture2D>("uscene1"), new Rectangle(0, 0, 192, 108), "city1"),
+            };
+                switches = new Switch[] {
+                new Switch(new STexture[]{
+                new STexture(Content.Load<Texture2D>("switchon"), new Rectangle(0, 0, 8, 9), "switchon"),
+                new STexture(Content.Load<Texture2D>("switchoff"), new Rectangle(0, 0, 8, 9), "switchoff") },
+                new Vector2(15,17),
+                new Plug[]{plug1, plug3},
+                Content.Load<SoundEffect>("switch")),
+
+                new Switch(new STexture[]{
+                new STexture(Content.Load<Texture2D>("switchon"), new Rectangle(0, 0, 8, 9), "switchon"),
+                new STexture(Content.Load<Texture2D>("switchoff"), new Rectangle(0, 0, 8, 9), "switchoff") },
+                new Vector2(85,17),
+                new Plug[]{plug2, plug3},
+                Content.Load<SoundEffect>("switch")),
+
+                new Switch(new STexture[]{
+                new STexture(Content.Load<Texture2D>("switchon"), new Rectangle(0, 0, 8, 9), "switchon"),
+                new STexture(Content.Load<Texture2D>("switchoff"), new Rectangle(0, 0, 8, 9), "switchoff") },
+                new Vector2(167,17),
+                new Plug[]{plug3},
+                Content.Load<SoundEffect>("switch"))
+            }; }
+            return new CollisionStuff(pl, bl, switches, bgs);
+        }
         protected override void LoadContent()
         {
             shim = new STexture(Content.Load<Texture2D>("stophim"), Rectangle.Empty, "wow");
@@ -113,9 +204,7 @@ namespace LUDUMDARE39
             transition = new STexture(Content.Load<Texture2D>("transition"), 10, 192, 0.1f, "test", Rectangle.Empty, false);
             transition.currentframe = 10;
 
-            c3 = new STexture(Content.Load<Texture2D>("scene3hp"), new Rectangle(0, 0, 192, 108), "city3");
-            c2 = new STexture(Content.Load<Texture2D>("scene2hp"), new Rectangle(0, 0, 192, 108), "city2");
-            c1 = new STexture(Content.Load<Texture2D>("scene1hp"), new Rectangle(0, 0, 192, 108), "city1");
+           
             spriteBatch = new SpriteBatch(GraphicsDevice);
             Player player = new Player(
                 new STexture[] {
@@ -125,49 +214,29 @@ namespace LUDUMDARE39
                     new STexture(Content.Load<Texture2D>("flippyrun"), 4, 16, 0.1f, "run", new Rectangle(0, 0, 16, 16), true)},
                 new Vector2(140,88), Content.Load<SoundEffect>("jump"), Content.Load<SoundEffect>("hurt"));
             Boss boss = new Boss(
-                new STexture[1] {
-                new STexture(Content.Load<Texture2D>("test"), 4, 16, 0.1f, "test", new Rectangle(0, 0, 16, 16), true) }, 
-                new Vector2(36, 88), 
+                new STexture[] {
+                new STexture(Content.Load<Texture2D>("terry4"), 4, 32, 0.1f, "4", new Rectangle(0, 0, 32, 32), true),
+                new STexture(Content.Load<Texture2D>("terry3"), 4, 32, 0.1f, "3", new Rectangle(0, 0, 32, 32), true),
+                new STexture(Content.Load<Texture2D>("terry2"), 4, 32, 0.1f, "2", new Rectangle(0, 0, 32, 32), true),
+                new STexture(Content.Load<Texture2D>("terry1"), 4, 32, 0.1f, "1", new Rectangle(0, 0, 32, 32), true),
+                new STexture(Content.Load<Texture2D>("charge"), 4, 32, 0.1f, "charge", new Rectangle(0, 0, 32, 32), true)}, 
+                new Vector2(36, 72), 
                 new STexture[2] {
                 new STexture(Content.Load<Texture2D>("bullet"), 6, 8, 0.1f, "bullet", new Rectangle(3, 3, 2, 2), true),
                 new STexture(Content.Load<Texture2D>("splode"), 6, 8, 0.1f, "explosion", new Rectangle(1, 1, 6, 6), false) },
-                Content.Load<SoundEffect>("bossshot") );
-            bg = c3;
-            Switch[] switches = new Switch[] {
-                new Switch(new STexture[]{
-                new STexture(Content.Load<Texture2D>("switchon"), new Rectangle(0, 0, 8, 9), "switchon"),
-                new STexture(Content.Load<Texture2D>("switchoff"), new Rectangle(0, 0, 8, 9), "switchoff") },
-                new Vector2(12,19),
-                new Plug(new STexture[]{
-                new STexture(Content.Load<Texture2D>("plug"), new Rectangle(0, 0, 8, 9), "switchon"),
-                new STexture(Content.Load<Texture2D>("plugoff"), new Rectangle(0, 0, 8, 9), "switchoff") },
-                new Vector2(10,83)),
-                Content.Load<SoundEffect>("switch")),
+                Content.Load<SoundEffect>("bossshot"),
+                new STexture(Content.Load<Texture2D>("plugger"), Rectangle.Empty, "wow"),
+                new STexture(Content.Load<Texture2D>("splodey"), 9, 16, 0.05f, "4", new Rectangle(0, 0, 32, 32), false));
+            pl = player;
+            bl = boss;
 
-                new Switch(new STexture[]{
-                new STexture(Content.Load<Texture2D>("switchon"), new Rectangle(0, 0, 8, 9), "switchon"),
-                new STexture(Content.Load<Texture2D>("switchoff"), new Rectangle(0, 0, 8, 9), "switchoff") },
-                new Vector2(92,19),
-                new Plug(new STexture[]{
-                new STexture(Content.Load<Texture2D>("plug"), new Rectangle(0, 0, 11, 10), "switchon"),
-                new STexture(Content.Load<Texture2D>("plugoff"), new Rectangle(0, 0, 11, 10), "switchoff") },
-                new Vector2(90,83)),
-                Content.Load<SoundEffect>("switch")),
+            colman = getColman(levelCounter);
 
-                new Switch(new STexture[]{
-                new STexture(Content.Load<Texture2D>("switchon"), new Rectangle(0, 0, 8, 9), "switchon"),
-                new STexture(Content.Load<Texture2D>("switchoff"), new Rectangle(0, 0, 8, 9), "switchoff") },
-                new Vector2(172,19),
-                new Plug(new STexture[]{
-                new STexture(Content.Load<Texture2D>("plug"), new Rectangle(0, 0, 11, 10), "switchon"),
-                new STexture(Content.Load<Texture2D>("plugoff"), new Rectangle(0, 0, 11, 10), "switchoff") },
-                new Vector2(170,83)),
-                Content.Load<SoundEffect>("switch"))
-            };
-            colman = new CollisionStuff(player, boss, switches);
+            bg = colman.bgs[0];
 
-            lifebar = new Lifebar(new STexture[2] { new STexture(Content.Load<Texture2D>("barcont"), new Rectangle(0, 0, 22, 5), "barcontainer"), new STexture(Content.Load<Texture2D>("barint"), new Rectangle(0, 0, 20, 3), "barinterior") }, new Vector2(0, 0), colman.boss.maxhp);
-            clb = new Lifebar(new STexture[2] { new STexture(Content.Load<Texture2D>("barcont"), new Rectangle(0, 0, 22, 5), "barcontainer"), new STexture(Content.Load<Texture2D>("barint"), new Rectangle(0, 0, 20, 3), "barinterior") }, new Vector2(50, 0),100);
+
+            lifebar = new Lifebar(new STexture[2] { new STexture(Content.Load<Texture2D>("barcont"), new Rectangle(0, 0, 22, 5), "barcontainer"), new STexture(Content.Load<Texture2D>("barint"), new Rectangle(0, 0, 20, 3), "barinterior") }, new Vector2(1, 1), colman.boss.maxhp);
+            clb = new Lifebar(new STexture[2] { new STexture(Content.Load<Texture2D>("barcont"), new Rectangle(0, 0, 22, 5), "barcontainer"), new STexture(Content.Load<Texture2D>("barint"), new Rectangle(0, 0, 20, 3), "barinterior") }, new Vector2(152, 1),100);
         }
 
         protected override void UnloadContent()
@@ -194,13 +263,18 @@ namespace LUDUMDARE39
                         case GamePhase.BossEnter:
                             MakeBlink(gameTime);
                             colman.boss.Pluggg(colman.switches, gameTime);
+                            colman.boss.tex.Update(gameTime);
                             if (colman.boss.isPlugged) { phase = GamePhase.Fight; scale = baseScale; }
                             break;
                         case GamePhase.BossFall:
                             fallTimer -= (float)gameTime.ElapsedGameTime.TotalSeconds;
                             if(fallTimer <= 0) {
-                                if(levelCounter > levelCount) { bg = end; state = GameState.End; }
-                                else { fallTimer = fallTime; phase = GamePhase.Fight; }                               
+                                colman = nextColman;
+                                nextColman = getColman(1);                                
+                                fallTimer = fallTime;
+                                colman.boss.hp = colman.boss.maxhp;
+                                cityHp = 100;
+                                phase = GamePhase.Fight;                             
                             }
                             break;
                         case GamePhase.Fight:
@@ -226,11 +300,25 @@ namespace LUDUMDARE39
                             if (cityHp > 100) { cityHp = 100; }
                             if (colman.boss.hp > 100) { colman.boss.hp = 100; }
 
-                            if (cityHp <= 100) { bg = c3; }
-                            if (cityHp <= 60) { bg = c2; }
-                            if (cityHp <= 30) { bg = c1; }
-                            if (cityHp <= 0) { state = GameState.Loss; bg = loss; } //die
-                            if (colman.boss.hp <= 0) { phase = GamePhase.BossFall; levelCounter++; }
+                            if (cityHp <= 100) { colman.bg = colman.bgs[0]; }
+                            if (cityHp <= 60) { colman.bg = colman.bgs[1]; }
+                            if (cityHp <= 30) { colman.bg = colman.bgs[2]; }
+                            if (cityHp <= 0) {
+                                if (!startedTransition) { startedTransition = true; transition.Reset(); }
+                                else if(transition.currentframe >= 4) { startedTransition = false; state = GameState.Loss; bg = loss; }
+
+                            } //die
+                            if (colman.boss.hp <= 0) {
+                                if(levelCounter < levelCount)
+                                {
+                                    phase = GamePhase.BossFall; levelCounter++; nextColman = getColman(levelCounter);
+                                }
+                                else {
+                                    if (!startedTransition) { startedTransition = true; transition.Reset(); }
+                                    else if (transition.currentframe >= 4) { startedTransition = false; state = GameState.End; bg = end; }
+                                    
+                                }
+                            }
                             colman.Update(gameTime, roomDim, flippy);
 
                             lifebar.hp = colman.boss.hp;
@@ -263,17 +351,10 @@ namespace LUDUMDARE39
         }
 
         void DrawGame()
-        {
-            
-            bg.Draw(spriteBatch, Vector2.Zero);
-            foreach (Switch s in colman.switches) { s.Draw(spriteBatch); }
-            colman.player.Draw(spriteBatch);
-            colman.boss.Draw(spriteBatch);
-            foreach (var bullet in colman.boss.bullets)
-                bullet.Draw(spriteBatch);
+        {            
+            colman.DrawOnlyScene(spriteBatch);
             lifebar.Draw(spriteBatch);
-            clb.Draw(spriteBatch);
-
+            clb.Draw(spriteBatch);            
             if (phase == GamePhase.BossEnter)
             {
                 if (blinks) { shim.Draw(spriteBatch, Vector2.Zero); }
@@ -291,18 +372,34 @@ namespace LUDUMDARE39
         protected override void Draw(GameTime gameTime)
         {          
             GraphicsDevice.SetRenderTarget(target);
-            Matrix tr = Matrix.CreateTranslation(new Vector3(0, (levelCounter-1)*(-192*((fallTime-fallTimer)/fallTime)), 0));
-            spriteBatch.Begin(transformMatrix:tr);
+            spriteBatch.Begin();
             if (state == GameState.Game) { DrawGame(); }
             if (state == GameState.Start || state == GameState.End || state == GameState.Loss) { DrawStillScreen(); }
             if (state == GameState.Pause) { DrawPause(); }
             transition.Draw(spriteBatch, Vector2.Zero);
             spriteBatch.End();
 
-            Matrix m = Matrix.CreateScale(scale);
+            GraphicsDevice.SetRenderTarget(nextTarget);
+            spriteBatch.Begin();
+            if (nextColman != null) {
+                nextColman.DrawOnlyScene(spriteBatch);
+            }
+            spriteBatch.End();
+
+            Matrix m = Matrix.CreateTranslation(new Vector3(0, (108 * (float)((fallTimer - fallTime)/fallTime)), 0));
+            GraphicsDevice.SetRenderTarget(fuckingTarget);
+            spriteBatch.Begin(transformMatrix:m);
+            spriteBatch.Draw(texture: target,position:Vector2.Zero);
+            Rectangle r = new Rectangle(0, 108, 192, 108);
+            spriteBatch.Draw(texture: nextTarget, destinationRectangle: r);
+            spriteBatch.End();
+
+            m = Matrix.CreateScale(scale);
             GraphicsDevice.SetRenderTarget(null);
-            spriteBatch.Begin(transformMatrix:m, samplerState:SamplerState.PointWrap);
-            spriteBatch.Draw(texture: target,destinationRectangle:virtualDim);
+            spriteBatch.Begin(transformMatrix: m,samplerState:SamplerState.PointWrap);
+            spriteBatch.Draw(fuckingTarget, destinationRectangle: virtualDim);
+            if (state == GameState.Game)
+                colman.Draw(spriteBatch);
             spriteBatch.End();
             base.Draw(gameTime);
         }

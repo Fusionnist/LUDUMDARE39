@@ -14,12 +14,14 @@ namespace LUDUMDARE39
         public Player player { get; set; }
         public Boss boss { get; set; }
         public Switch[] switches { get; set; }
-
-        public CollisionStuff(Player a_pl, Boss a_bs, Switch[] a_sws)
+        public STexture[] bgs; public STexture bg;
+        public CollisionStuff(Player a_pl, Boss a_bs, Switch[] a_sws, STexture[] bgs_)
         {
+            bgs = bgs_;
             player = a_pl;
             boss = a_bs;
             switches = a_sws;
+            bg = bgs[0];
         }
 
         public void Update(GameTime a_gt, Rectangle virtualdims, Input input)
@@ -34,7 +36,6 @@ namespace LUDUMDARE39
                 switc.Update(a_gt);
             FlipSwitches(input);
         }
-
         public void CheckPlayerOnBoss()
         {
             if (player.mov.Y > 0 && player.GetHB().X + player.mov.X > boss.platformStart.X - player.GetHB().Width && player.GetHB().X + player.mov.X < boss.platformEnd.X && player.GetHB().Y + player.GetHB().Height <= boss.platformStart.Y && player.GetHB().Y + player.GetHB().Height + player.mov.Y > boss.platformStart.Y)
@@ -62,6 +63,26 @@ namespace LUDUMDARE39
             {
                 if (sw.GetHB().Intersects(player.GetHB()) && input.IsPressed())
                     sw.Activate();
+            }
+        }
+
+        public void Draw(SpriteBatch sb_)
+        {
+            player.Draw(sb_);
+            boss.Draw(sb_);
+            
+            foreach(Bullet b in boss.bullets)
+            {
+                b.Draw(sb_);
+            }
+
+        }
+        public void DrawOnlyScene(SpriteBatch sb_)
+        {
+            bg.Draw(sb_, Vector2.Zero);
+            foreach (Switch s in switches)
+            {
+                s.Draw(sb_);
             }
         }
 

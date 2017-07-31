@@ -121,6 +121,7 @@
     <Content Include="Content\barint.png" />
     <Content Include="Content\bossshot.wav" />
     <Content Include="Content\bullet.png" />
+    <Content Include="Content\charge.png" />
     <Content Include="Content\flippyhitground.png" />
     <Content Include="Content\flippyjump.png" />
     <Content Include="Content\flippyland.png" />
@@ -128,19 +129,28 @@
     <Content Include="Content\hurt.wav" />
     <Content Include="Content\jump.wav" />
     <Content Include="Content\plug.png" />
+    <Content Include="Content\plugger.png" />
     <Content Include="Content\plugoff.png" />
     <Content Include="Content\scene.png" />
     <Content Include="Content\scene1hp.png" />
     <Content Include="Content\scene2hp.png" />
     <Content Include="Content\scene3hp.png" />
     <Content Include="Content\splode.png" />
+    <Content Include="Content\splodey.png" />
     <Content Include="Content\stophim.png" />
     <Content Include="Content\switch.wav" />
     <Content Include="Content\switchoff.png" />
     <Content Include="Content\switchon.png" />
+    <Content Include="Content\terry1.png" />
+    <Content Include="Content\terry2.png" />
+    <Content Include="Content\terry3.png" />
+    <Content Include="Content\terry4.png" />
     <Content Include="Content\test.png" />
     <Content Include="Content\titlescreen.png" />
     <Content Include="Content\transition.png" />
+    <Content Include="Content\uscene1.png" />
+    <Content Include="Content\uscene2.png" />
+    <Content Include="Content\uscene3.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Content.Builder.targets" />

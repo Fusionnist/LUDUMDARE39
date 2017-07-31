@@ -11,7 +11,7 @@ namespace LUDUMDARE39
 {
     class Plug : Sprite
     {
-        bool isOn;
+        public bool isOn;
 
         public Plug(STexture[] a_texes, Vector2 a_pos): base(a_texes, a_pos)
         {

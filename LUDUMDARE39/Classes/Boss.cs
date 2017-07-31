@@ -88,7 +88,7 @@ namespace LUDUMDARE39
                 int x = 1;
                 if (tex.isInverted) { x = -1; }
                 bool angled = false; if (r.Next(0, 2) == 0) { angled = true; }
-                float? angle = (float)(r.NextDouble() * (Math.PI / 2)); if (angled) { angle = null; }
+                float? angle = (float)(r.NextDouble() * (Math.PI / 2) - Math.PI / 4); if (angled) { angle = null; }
 
 
                 bs.Add(new Bullet(ts, shotPos, bounces, lifetime, life, velocity, loss, new Point(x, -1), bouncies, 0, angle));
@@ -107,7 +107,11 @@ namespace LUDUMDARE39
                 plugTex.Draw(a_sb, pos + plugPos);
             }
             base.Draw(a_sb);
-            splodey.Draw(a_sb, shotPos); //temp
+            if(splodey.currentframe != 9)
+            {
+                splodey.Draw(a_sb, shotPos); //temp
+            }
+
         }
         void Shoot(Vector2 playerPos)
         {

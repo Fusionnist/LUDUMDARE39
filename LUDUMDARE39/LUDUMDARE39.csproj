@@ -123,6 +123,7 @@
     <Content Include="Content\bullet.png" />
     <Content Include="Content\charge.png" />
     <Content Include="Content\ded.png" />
+    <Content Include="Content\end.png" />
     <Content Include="Content\flippyhitground.png" />
     <Content Include="Content\flippyjump.png" />
     <Content Include="Content\flippyland.png" />
@@ -130,6 +131,7 @@
     <Content Include="Content\htp.png" />
     <Content Include="Content\hurt.wav" />
     <Content Include="Content\jump.wav" />
+    <Content Include="Content\loss.png" />
     <Content Include="Content\pause.png" />
     <Content Include="Content\plug.png" />
     <Content Include="Content\plugger.png" />

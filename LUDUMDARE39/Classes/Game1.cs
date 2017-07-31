@@ -50,10 +50,10 @@ namespace LUDUMDARE39
             blinktimer = 0.5f;
             blinks = true;
 
-            cityHpGain = 5f;
-            cityHpLoss = 3.4f;
-            bossHpGain = 1.5f;
-            bossHpLoss = 5f;
+            cityHpGain = 7f;
+            cityHpLoss = 3.6f;
+            bossHpGain = 1.2f;
+            bossHpLoss = 5.3f;
 
             fallTime = 1;
             fallTimer = fallTime;
@@ -202,8 +202,8 @@ namespace LUDUMDARE39
             shim = new STexture(Content.Load<Texture2D>("stophim"), Rectangle.Empty, "wow");
             start = new STexture(Content.Load<Texture2D>("titlescreen"), Rectangle.Empty, "wow");
             pause = new STexture(Content.Load<Texture2D>("pause"), Rectangle.Empty, "wow");
-            loss = new STexture(Content.Load<Texture2D>("titlescreen"), Rectangle.Empty, "wow");
-            end = new STexture(Content.Load<Texture2D>("titlescreen"), Rectangle.Empty, "wow");
+            loss = new STexture(Content.Load<Texture2D>("loss"), Rectangle.Empty, "wow");
+            end = new STexture(Content.Load<Texture2D>("end"), Rectangle.Empty, "wow");
             htp = new STexture(Content.Load<Texture2D>("htp"), Rectangle.Empty, "wow");
 
             transition = new STexture(Content.Load<Texture2D>("transition"), 10, 192, 0.1f, "test", Rectangle.Empty, false);

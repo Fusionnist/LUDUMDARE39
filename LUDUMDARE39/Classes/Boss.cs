@@ -79,7 +79,7 @@ namespace LUDUMDARE39
             List<Bullet> bs = new List<Bullet>();
             for (int xx = 0; xx < c; xx++)
             {
-                int bounces = r.Next(2, 5);
+                int bounces = r.Next(4, 10);
                 bool bouncies = false; if (r.Next(0, 2) == 0) { bouncies = true; }
                 float lifetime = r.Next(3, 5);
                 bool life = false; if (r.Next(0, 2) == 0) { life = true; }

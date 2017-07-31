@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 
 namespace LUDUMDARE39
 {
@@ -9,6 +10,8 @@ namespace LUDUMDARE39
     enum GamePhase { BossEnter, Fight, BossFall}
     public class Game1 : Game
     {
+        Song currentSong, games, gamesss, starts;
+        SoundEffect losss;
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         RenderTarget2D target, nextTarget, fuckingTarget, wowtarget;
@@ -26,6 +29,7 @@ namespace LUDUMDARE39
         double fallTime, fallTimer;
         int levelCount, levelCounter;
 
+        bool isPLaying;
         GameState state; GamePhase phase;
         Player pl; Boss bl;
 
@@ -104,7 +108,7 @@ namespace LUDUMDARE39
         {
             phase = GamePhase.BossEnter;
             cityHp = 100;
-            levelCount = 2;
+            levelCount = 3;
             levelCounter = 1;
             deadtimer = 3;
             LoadContent();
@@ -185,7 +189,7 @@ namespace LUDUMDARE39
                 new STexture(Content.Load<Texture2D>("switchon"), new Rectangle(0, 0, 8, 9), "switchon"),
                 new STexture(Content.Load<Texture2D>("switchoff"), new Rectangle(0, 0, 8, 9), "switchoff") },
                 new Vector2(85,17),
-                new Plug[]{plug2, plug3},
+                new Plug[]{plug1, plug2, plug3},
                 Content.Load<SoundEffect>("switch")),
 
                 new Switch(new STexture[]{
@@ -195,16 +199,82 @@ namespace LUDUMDARE39
                 new Plug[]{plug3},
                 Content.Load<SoundEffect>("switch"))
             }; }
+            if (number == 3)
+            {
+                Plug plug1 = new Plug(new STexture[]{
+                new STexture(Content.Load<Texture2D>("plug"), new Rectangle(0, 0, 8, 9), "switchon"),
+                new STexture(Content.Load<Texture2D>("plugoff"), new Rectangle(0, 0, 8, 9), "switchoff") },
+                new Vector2(11, 83));
+
+                Plug plug2 = new Plug(new STexture[]{
+                new STexture(Content.Load<Texture2D>("plug"), new Rectangle(0, 0, 8, 9), "switchon"),
+                new STexture(Content.Load<Texture2D>("plugoff"), new Rectangle(0, 0, 8, 9), "switchoff") },
+                new Vector2(70, 83));
+
+                Plug plug3 = new Plug(new STexture[]{
+                new STexture(Content.Load<Texture2D>("plug"), new Rectangle(0, 0, 8, 9), "switchon"),
+                new STexture(Content.Load<Texture2D>("plugoff"), new Rectangle(0, 0, 8, 9), "switchoff") },
+                new Vector2(100, 83));
+
+                Plug plug4 = new Plug(new STexture[]{
+                new STexture(Content.Load<Texture2D>("plug"), new Rectangle(0, 0, 8, 9), "switchon"),
+                new STexture(Content.Load<Texture2D>("plugoff"), new Rectangle(0, 0, 8, 9), "switchoff") },
+                new Vector2(168, 83));
+
+                bgs = new STexture[] {
+                new STexture(Content.Load<Texture2D>("lv33"), new Rectangle(0, 0, 192, 108), "city3"),
+                new STexture(Content.Load<Texture2D>("lv32"), new Rectangle(0, 0, 192, 108), "city2"),
+                new STexture(Content.Load<Texture2D>("lv31"), new Rectangle(0, 0, 192, 108), "city1"),
+            };
+                switches = new Switch[] {
+                new Switch(new STexture[]{
+                new STexture(Content.Load<Texture2D>("switchon"), new Rectangle(0, 0, 8, 9), "switchon"),
+                new STexture(Content.Load<Texture2D>("switchoff"), new Rectangle(0, 0, 8, 9), "switchoff") },
+                new Vector2(13,16),
+                new Plug[]{plug1, plug3},
+                Content.Load<SoundEffect>("switch")),
+
+                new Switch(new STexture[]{
+                new STexture(Content.Load<Texture2D>("switchon"), new Rectangle(0, 0, 8, 9), "switchon"),
+                new STexture(Content.Load<Texture2D>("switchoff"), new Rectangle(0, 0, 8, 9), "switchoff") },
+                new Vector2(43,16),
+                new Plug[]{plug2, plug3, plug4},
+                Content.Load<SoundEffect>("switch")),
+
+                new Switch(new STexture[]{
+                new STexture(Content.Load<Texture2D>("switchon"), new Rectangle(0, 0, 8, 9), "switchon"),
+                new STexture(Content.Load<Texture2D>("switchoff"), new Rectangle(0, 0, 8, 9), "switchoff") },
+                new Vector2(140,16),
+                new Plug[]{plug2, plug3, plug4},
+                Content.Load<SoundEffect>("switch")),
+
+                new Switch(new STexture[]{
+                new STexture(Content.Load<Texture2D>("switchon"), new Rectangle(0, 0, 8, 9), "switchon"),
+                new STexture(Content.Load<Texture2D>("switchoff"), new Rectangle(0, 0, 8, 9), "switchoff") },
+                new Vector2(170,16),
+                new Plug[]{plug2, plug3, plug4},
+                Content.Load<SoundEffect>("switch"))
+            };
+            }
             return new CollisionStuff(pl, bl, switches, bgs);
         }
         void LoadOneTime()
         {
+            MediaPlayer.Volume = 10;
+            MediaPlayer.IsRepeating = true;
             shim = new STexture(Content.Load<Texture2D>("stophim"), Rectangle.Empty, "wow");
             start = new STexture(Content.Load<Texture2D>("titlescreen"), Rectangle.Empty, "wow");
             pause = new STexture(Content.Load<Texture2D>("pause"), Rectangle.Empty, "wow");
             loss = new STexture(Content.Load<Texture2D>("loss"), Rectangle.Empty, "wow");
             end = new STexture(Content.Load<Texture2D>("end"), Rectangle.Empty, "wow");
             htp = new STexture(Content.Load<Texture2D>("htp"), Rectangle.Empty, "wow");
+
+            losss = Content.Load<SoundEffect>("u lose");
+
+            starts = Content.Load<Song>("startscreen");
+            games = Content.Load<Song>("lv1");
+            gamesss = Content.Load<Song>("lv2");
+            currentSong = starts;
 
             transition = new STexture(Content.Load<Texture2D>("transition"), 10, 192, 0.1f, "test", Rectangle.Empty, false);
             transition.currentframe = 10;
@@ -254,6 +324,13 @@ namespace LUDUMDARE39
 
         protected override void Update(GameTime gameTime)
         {
+            if(currentSong!=null && !isPLaying)
+            {
+                MediaPlayer.Play(currentSong);
+                isPLaying = true;
+            }              
+            else if(currentSong == null){ MediaPlayer.Stop(); isPLaying = false; }
+
             KeyboardState kbs = Keyboard.GetState();
             if (kbs.IsKeyDown(Keys.Escape))
                 Exit();
@@ -314,7 +391,7 @@ namespace LUDUMDARE39
                             if (cityHp <= 30) { colman.bg = colman.bgs[2]; }
                             if (cityHp <= 0) {
                                 if (!startedTransition) { startedTransition = true; transition.Reset(); }
-                                else if(transition.currentframe >= 4) { startedTransition = false; state = GameState.Loss; bg = loss; }
+                                else if(transition.currentframe >= 4) { startedTransition = false; state = GameState.Loss; currentSong = null; bg = loss; losss.Play(); }
 
                             } //die
                             if (colman.boss.hp <= 0) {
@@ -323,13 +400,15 @@ namespace LUDUMDARE39
                                     
                                     if (levelCounter < levelCount)
                                     {
+                                        currentSong = gamesss;
+                                        isPLaying = false;
                                         deadtimer = 3;
                                         phase = GamePhase.BossFall; levelCounter++; nextColman = getColman(levelCounter);
                                     }
                                     else
                                     {
                                         if (!startedTransition) { startedTransition = true; transition.Reset(); }
-                                        else if (transition.currentframe >= 4) { startedTransition = false; deadtimer = 3; state = GameState.End; bg = end; }
+                                        else if (transition.currentframe >= 4) { startedTransition = false; deadtimer = 3; state = GameState.End;  bg = end; }
                                     }
                                 }
                                 else { deadtimer -= (float)gameTime.ElapsedGameTime.TotalSeconds; }
@@ -346,12 +425,12 @@ namespace LUDUMDARE39
                 case GameState.End:
                     
                     if (flippy.IsPressed() && !startedTransition) { transition.Reset(); startedTransition = true; }
-                    if (transition.currentframe >= 4 && startedTransition){ state = GameState.Game; ResetGame(); startedTransition = false; }
+                    if (transition.currentframe >= 4 && startedTransition){ state = GameState.Game; ResetGame(); currentSong = games; isPLaying = false; startedTransition = false; }
                     break;
                 case GameState.Loss:
                     
                     if (flippy.IsPressed() && !startedTransition) { transition.Reset(); startedTransition = true; }
-                    if (transition.currentframe >= 4 && startedTransition) { state = GameState.Game; ResetGame(); startedTransition = false; }
+                    if (transition.currentframe >= 4 && startedTransition) { state = GameState.Game; ResetGame(); currentSong = games; isPLaying = false; startedTransition = false; }
                     break;
                 case GameState.Start:
                     bg = start;
@@ -361,7 +440,7 @@ namespace LUDUMDARE39
                 case GameState.Htp:
 
                     if (flippy.IsPressed() && !startedTransition) { transition.Reset(); startedTransition = true; }
-                    if (transition.currentframe >= 4 && startedTransition) { state = GameState.Game; ResetGame(); startedTransition = false; }
+                    if (transition.currentframe >= 4 && startedTransition) { state = GameState.Game; ResetGame(); currentSong = games; isPLaying = false; startedTransition = false; }
                     break;
                 case (GameState.Pause):
                     if (paused.IsPressed()) { state = GameState.Game; }

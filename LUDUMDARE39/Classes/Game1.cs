@@ -5,13 +5,13 @@ using Microsoft.Xna.Framework.Input;
 
 namespace LUDUMDARE39
 {
-    enum GameState { Start, Game, End, Loss, Pause}
+    enum GameState { Start, Game, End, Loss, Pause, Htp}
     enum GamePhase { BossEnter, Fight, BossFall}
     public class Game1 : Game
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        RenderTarget2D target, nextTarget, fuckingTarget;
+        RenderTarget2D target, nextTarget, fuckingTarget, wowtarget;
         int scale, baseScale;
         Rectangle virtualDim, roomDim;
         CollisionStuff colman, nextColman;
@@ -20,9 +20,9 @@ namespace LUDUMDARE39
         STexture bg, transition;
         Input flippy, paused;
 
-        float cityHp, blinktime, blinktimer;
+        float cityHp, blinktime, blinktimer, deadtimer;
         bool blinks, startedTransition;
-        STexture start, loss, end, pause, shim;
+        STexture start, loss, end, pause, shim, htp;
         double fallTime, fallTimer;
         int levelCount, levelCounter;
 
@@ -51,14 +51,16 @@ namespace LUDUMDARE39
             blinks = true;
 
             cityHpGain = 5f;
-            cityHpLoss = 2.6f;
+            cityHpLoss = 3.4f;
             bossHpGain = 1.5f;
-            bossHpLoss = 4.8f;
+            bossHpLoss = 5f;
 
             fallTime = 1;
             fallTimer = fallTime;
 
             ResetGame();
+
+            LoadOneTime();
         }
         void MakeBlink(GameTime gt_)
         {
@@ -86,6 +88,7 @@ namespace LUDUMDARE39
             target = new RenderTarget2D(GraphicsDevice, virtualDim.Width, virtualDim.Height);
             nextTarget = new RenderTarget2D(GraphicsDevice, virtualDim.Width, virtualDim.Height);
             fuckingTarget = new RenderTarget2D(GraphicsDevice, virtualDim.Width, virtualDim.Height);
+            wowtarget = new RenderTarget2D(GraphicsDevice, virtualDim.Width, virtualDim.Height);
             virtualDim.X = (int)((GraphicsDevice.Viewport.Width/scale- virtualDim.Width) /2);
             virtualDim.Y = (int)((GraphicsDevice.Viewport.Height/scale - virtualDim.Height) /2);
         }
@@ -103,6 +106,7 @@ namespace LUDUMDARE39
             cityHp = 100;
             levelCount = 2;
             levelCounter = 1;
+            deadtimer = 3;
             LoadContent();
         }
         CollisionStuff getColman(int number)
@@ -193,18 +197,20 @@ namespace LUDUMDARE39
             }; }
             return new CollisionStuff(pl, bl, switches, bgs);
         }
-        protected override void LoadContent()
+        void LoadOneTime()
         {
             shim = new STexture(Content.Load<Texture2D>("stophim"), Rectangle.Empty, "wow");
             start = new STexture(Content.Load<Texture2D>("titlescreen"), Rectangle.Empty, "wow");
-            pause = new STexture(Content.Load<Texture2D>("titlescreen"), Rectangle.Empty, "wow");
+            pause = new STexture(Content.Load<Texture2D>("pause"), Rectangle.Empty, "wow");
             loss = new STexture(Content.Load<Texture2D>("titlescreen"), Rectangle.Empty, "wow");
             end = new STexture(Content.Load<Texture2D>("titlescreen"), Rectangle.Empty, "wow");
+            htp = new STexture(Content.Load<Texture2D>("htp"), Rectangle.Empty, "wow");
 
             transition = new STexture(Content.Load<Texture2D>("transition"), 10, 192, 0.1f, "test", Rectangle.Empty, false);
             transition.currentframe = 10;
-
-           
+        }
+        protected override void LoadContent()
+        {
             spriteBatch = new SpriteBatch(GraphicsDevice);
             Player player = new Player(
                 new STexture[] {
@@ -212,15 +218,17 @@ namespace LUDUMDARE39
                     new STexture(Content.Load<Texture2D>("flippyland"), 2, 16, 0.1f, "down", new Rectangle(0, 0, 16, 16), false),
                     new STexture(Content.Load<Texture2D>("flippyjump"), 2, 16, 0.1f, "up", new Rectangle(0, 0, 16, 16), false),
                     new STexture(Content.Load<Texture2D>("flippyrun"), 4, 16, 0.1f, "run", new Rectangle(0, 0, 16, 16), true)},
-                new Vector2(140,88), Content.Load<SoundEffect>("jump"), Content.Load<SoundEffect>("hurt"));
+                new Vector2(40,88), Content.Load<SoundEffect>("jump"), Content.Load<SoundEffect>("hurt"));
+            player.tex.isInverted = true;
             Boss boss = new Boss(
                 new STexture[] {
                 new STexture(Content.Load<Texture2D>("terry4"), 4, 32, 0.1f, "4", new Rectangle(0, 0, 32, 32), true),
                 new STexture(Content.Load<Texture2D>("terry3"), 4, 32, 0.1f, "3", new Rectangle(0, 0, 32, 32), true),
                 new STexture(Content.Load<Texture2D>("terry2"), 4, 32, 0.1f, "2", new Rectangle(0, 0, 32, 32), true),
                 new STexture(Content.Load<Texture2D>("terry1"), 4, 32, 0.1f, "1", new Rectangle(0, 0, 32, 32), true),
-                new STexture(Content.Load<Texture2D>("charge"), 4, 32, 0.1f, "charge", new Rectangle(0, 0, 32, 32), true)}, 
-                new Vector2(36, 72), 
+                new STexture(Content.Load<Texture2D>("charge"), 4, 32, 0.1f, "charge", new Rectangle(0, 0, 32, 32), true),
+                new STexture(Content.Load<Texture2D>("ded"), 4, 32, 0.1f, "dead", new Rectangle(0, 0, 32, 32), true)}, 
+                new Vector2(90, 72), 
                 new STexture[2] {
                 new STexture(Content.Load<Texture2D>("bullet"), 6, 8, 0.1f, "bullet", new Rectangle(3, 3, 2, 2), true),
                 new STexture(Content.Load<Texture2D>("splode"), 6, 8, 0.1f, "explosion", new Rectangle(1, 1, 6, 6), false) },
@@ -295,7 +303,8 @@ namespace LUDUMDARE39
                             else {
                                 colman.boss.hp -= bossHpLoss * (float)gameTime.ElapsedGameTime.TotalSeconds;
                                 cityHp += cityHpGain * (float)gameTime.ElapsedGameTime.TotalSeconds * actSwitches;
-                                cityHp -= cityHpLoss * (float)gameTime.ElapsedGameTime.TotalSeconds * (3-actSwitches);
+                                if(colman.boss.hp > 0)
+                                    cityHp -= cityHpLoss * (float)gameTime.ElapsedGameTime.TotalSeconds * (3-actSwitches);
                             }
                             if (cityHp > 100) { cityHp = 100; }
                             if (colman.boss.hp > 100) { colman.boss.hp = 100; }
@@ -309,15 +318,21 @@ namespace LUDUMDARE39
 
                             } //die
                             if (colman.boss.hp <= 0) {
-                                if(levelCounter < levelCount)
+                                if (deadtimer <= 0)
                                 {
-                                    phase = GamePhase.BossFall; levelCounter++; nextColman = getColman(levelCounter);
-                                }
-                                else {
-                                    if (!startedTransition) { startedTransition = true; transition.Reset(); }
-                                    else if (transition.currentframe >= 4) { startedTransition = false; state = GameState.End; bg = end; }
                                     
+                                    if (levelCounter < levelCount)
+                                    {
+                                        deadtimer = 3;
+                                        phase = GamePhase.BossFall; levelCounter++; nextColman = getColman(levelCounter);
+                                    }
+                                    else
+                                    {
+                                        if (!startedTransition) { startedTransition = true; transition.Reset(); }
+                                        else if (transition.currentframe >= 4) { startedTransition = false; deadtimer = 3; state = GameState.End; bg = end; }
+                                    }
                                 }
+                                else { deadtimer -= (float)gameTime.ElapsedGameTime.TotalSeconds; }
                             }
                             colman.Update(gameTime, roomDim, flippy);
 
@@ -341,8 +356,12 @@ namespace LUDUMDARE39
                 case GameState.Start:
                     bg = start;
                     if (flippy.IsPressed() && !startedTransition) { transition.Reset(); startedTransition = true; }
-                    if (transition.currentframe >= 4 && startedTransition)
-                    { state = GameState.Game; ResetGame(); startedTransition = false; }
+                    if (transition.currentframe >= 4 && startedTransition) { state = GameState.Htp; bg = htp; startedTransition = false; }
+                    break;
+                case GameState.Htp:
+
+                    if (flippy.IsPressed() && !startedTransition) { transition.Reset(); startedTransition = true; }
+                    if (transition.currentframe >= 4 && startedTransition) { state = GameState.Game; ResetGame(); startedTransition = false; }
                     break;
                 case (GameState.Pause):
                     if (paused.IsPressed()) { state = GameState.Game; }
@@ -372,11 +391,11 @@ namespace LUDUMDARE39
         protected override void Draw(GameTime gameTime)
         {          
             GraphicsDevice.SetRenderTarget(target);
-            spriteBatch.Begin();
+            spriteBatch.Begin(sortMode: SpriteSortMode.Immediate);
             if (state == GameState.Game) { DrawGame(); }
-            if (state == GameState.Start || state == GameState.End || state == GameState.Loss) { DrawStillScreen(); }
+            if (state == GameState.Start || state == GameState.End || state == GameState.Loss || state == GameState.Htp) { DrawStillScreen(); }
             if (state == GameState.Pause) { DrawPause(); }
-            transition.Draw(spriteBatch, Vector2.Zero);
+            
             spriteBatch.End();
 
             GraphicsDevice.SetRenderTarget(nextTarget);
@@ -394,12 +413,19 @@ namespace LUDUMDARE39
             spriteBatch.Draw(texture: nextTarget, destinationRectangle: r);
             spriteBatch.End();
 
+            GraphicsDevice.SetRenderTarget(wowtarget);
+            GraphicsDevice.Clear(Color.TransparentBlack);
+            spriteBatch.Begin();
+            if (state == GameState.Game)
+                colman.Draw(spriteBatch);
+            transition.Draw(spriteBatch, Vector2.Zero);
+            spriteBatch.End();
+
             m = Matrix.CreateScale(scale);
             GraphicsDevice.SetRenderTarget(null);
             spriteBatch.Begin(transformMatrix: m,samplerState:SamplerState.PointWrap);
             spriteBatch.Draw(fuckingTarget, destinationRectangle: virtualDim);
-            if (state == GameState.Game)
-                colman.Draw(spriteBatch);
+            spriteBatch.Draw(wowtarget, destinationRectangle: virtualDim);
             spriteBatch.End();
             base.Draw(gameTime);
         }

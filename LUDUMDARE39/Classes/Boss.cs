@@ -46,7 +46,7 @@ namespace LUDUMDARE39
             bullets = new List<Bullet> { };
             bullettexes = a_bullettexes;
             SetBulletData();
-            movx = 25;
+            movx = 22;
         }
         void SetPlatformData()
         {
@@ -57,7 +57,7 @@ namespace LUDUMDARE39
         void SetBulletData()
         {
             Random rng = new Random();
-           
+
 
         }
 
@@ -77,7 +77,7 @@ namespace LUDUMDARE39
             Random r = new Random();
             int c = r.Next(1, 6);
             List<Bullet> bs = new List<Bullet>();
-            for(int xx = 0; xx<c; xx++)
+            for (int xx = 0; xx < c; xx++)
             {
                 int bounces = r.Next(2, 5);
                 bool bouncies = false; if (r.Next(0, 2) == 0) { bouncies = true; }
@@ -90,7 +90,7 @@ namespace LUDUMDARE39
                 bool angled = false; if (r.Next(0, 2) == 0) { angled = true; }
                 float? angle = (float)(r.NextDouble() * (Math.PI / 2)); if (angled) { angle = null; }
 
-                
+
                 bs.Add(new Bullet(ts, shotPos, bounces, lifetime, life, velocity, loss, new Point(x, -1), bouncies, 0, angle));
             }
             return bs.ToArray();
@@ -98,11 +98,11 @@ namespace LUDUMDARE39
         public override void Draw(SpriteBatch a_sb)
         {
             tex.isInverted = inverts;
-            if (!isNearPlug) { tex.currentframe = 2; }
+            if (!isNearPlug && hp > 0) { tex.currentframe = 2; }
             if (isPlugged)
             {
-                Vector2 plugPos = new Vector2( 32, 0);
-                if (tex.isInverted) { plugPos.X =- 12; }
+                Vector2 plugPos = new Vector2(32, 0);
+                if (tex.isInverted) { plugPos.X = -12; }
                 plugTex.isInverted = tex.isInverted;
                 plugTex.Draw(a_sb, pos + plugPos);
             }
@@ -138,7 +138,7 @@ namespace LUDUMDARE39
             }
             if (!isPlugged) { SeekPlug(a_gt); }
             pos += mov;
-            if(mov.X > 0) { plugDist.X = 36 ; } //setting plugdist based on mov
+            if (mov.X > 0) { plugDist.X = 36; } //setting plugdist based on mov
             if (mov.X < 0) { plugDist.X = -12; }
             mov = Vector2.Zero;
         }
@@ -147,7 +147,9 @@ namespace LUDUMDARE39
             shotPos = new Vector2(pos.X + 24, pos.Y - 2);
             if (tex.isInverted) { shotPos = new Vector2(pos.X - 8, pos.Y - 2); }
             splodey.Update(a_gt);
-            if(!isPlugged)
+            if (hp <= 0)
+        { SelectTexture("dead"); }
+            else if (!isPlugged)
             {
                 if (hp <= 20) { SelectTexture("1"); }
                 else if (hp <= 40) { SelectTexture("2"); }
@@ -160,14 +162,21 @@ namespace LUDUMDARE39
             }
             isNearPlug = false;
             isPlugged = false;
-            shotTimer -= (float)a_gt.ElapsedGameTime.TotalSeconds;
-            if (shotTimer <= 0)
+
+            if (hp > 0)
             {
-                shotTimer = shotTime; Shoot(playerpos_);
+                SetBulletData();
+                shotTimer -= (float)a_gt.ElapsedGameTime.TotalSeconds;
+                if (shotTimer <= 0)
+                {
+                    shotTimer = shotTime; Shoot(playerpos_);
+                }
+                Pluggg(switches_, a_gt);
             }
-            Pluggg(switches_, a_gt);
+
+
             SetPlatformData();
-            SetBulletData();
+
 
             for (int x = bullets.Count - 1; x >= 0; x--)
             {
@@ -178,4 +187,4 @@ namespace LUDUMDARE39
             base.Update(a_gt);
         }
     }
-    }
+}
